@@ -1,5 +1,5 @@
-import 'package:clean_archetructure/classes/route_manager.dart';
-import 'package:clean_archetructure/core/app_theme.dart';
+import 'package:clean_archetructure/core/classes/route_manager.dart';
+import 'package:clean_archetructure/config/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

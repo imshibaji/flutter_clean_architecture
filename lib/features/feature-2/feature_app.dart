@@ -1,4 +1,4 @@
-import '../../classes/route_manager.dart';
+import '../../core/classes/route_manager.dart';
 import 'controllers/controller.dart';
 
 class FeatureApp extends RouteManager {

@@ -1,5 +1,5 @@
-import '../classes/theme_manager.dart';
-import '../classes/theme_provider.dart';
+import '../core/classes/theme_manager.dart';
+import '../core/classes/theme_provider.dart';
 
 class ThemeProvider extends BaseThemeProvider {
   int _index = 0;

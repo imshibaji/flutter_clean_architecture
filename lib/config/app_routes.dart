@@ -1,4 +1,4 @@
-import '../classes/route_manager.dart';
+import '../core/classes/route_manager.dart';
 import '../features/feature-2/feature_app.dart';
 import '../features/main_app/app.dart';
 

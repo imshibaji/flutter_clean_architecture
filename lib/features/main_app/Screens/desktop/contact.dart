@@ -1,4 +1,4 @@
-import 'package:clean_archetructure/classes/route_manager.dart';
+import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/widget.dart';
