@@ -33,7 +33,7 @@
 /build/
 
 # Remove App Auth
-/lib/config/app_config.dart
+lib/config/app_config.dart
 
 # Web related
 lib/generated_plugin_registrant.dart
