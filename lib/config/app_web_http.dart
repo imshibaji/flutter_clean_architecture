@@ -1,6 +1,6 @@
-import 'package:clean_archetructure/classes/http_manager.dart';
-import 'package:clean_archetructure/core/api_endpoints.dart';
-import 'package:clean_archetructure/core/app_config.dart';
+import 'package:clean_archetructure/core/classes/http_manager.dart';
+import 'package:clean_archetructure/config/api_endpoints.dart';
+import 'package:clean_archetructure/config/app_config.dart';
 
 class Http extends HttpManager {
   Http([String? baseUrl, String? host, String? key])

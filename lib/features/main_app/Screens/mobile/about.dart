@@ -1,4 +1,4 @@
-import 'package:clean_archetructure/classes/route_manager.dart';
+import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:clean_archetructure/features/main_app/widgets/bottom_bar.dart';
 import 'package:clean_archetructure/features/main_app/widgets/day_night_switch.dart';
 import 'package:flutter/material.dart';

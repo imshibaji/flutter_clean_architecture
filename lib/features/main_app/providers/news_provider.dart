@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../core/api_endpoints.dart';
-import '../../../core/app_config.dart';
-import '../../../core/app_web_http.dart';
+import '../../../config/api_endpoints.dart';
+import '../../../config/app_config.dart';
+import '../../../config/app_web_http.dart';
 import '../models/model.dart';
 
 class NewsProvider extends ChangeNotifier {

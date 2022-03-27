@@ -2,7 +2,7 @@ import 'package:clean_archetructure/features/main_app/providers/news_provider.da
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import '../classes/global_state_manager.dart';
+import '../core/classes/global_state_manager.dart';
 import 'app_theme.dart';
 
 List<SingleChildWidget> appProviders = [
