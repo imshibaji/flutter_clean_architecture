@@ -7,7 +7,7 @@ import '../../../config/app_web_http.dart';
 import '../models/model.dart';
 
 class NewsProvider extends ChangeNotifier {
-  final Http _http = Http(ApiEndpoint.baseUrl, Config.newsHost, Config.key);
+  final Http _http = Http(ApiEndpoint.baseUrl, Config.host, Config.key);
   NewsResponseModel? _nrm;
   bool isLoading = false;
 
