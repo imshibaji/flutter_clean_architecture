@@ -6,6 +6,9 @@ A new Flutter Enterprize project structure. If you are interested to build Bigge
 
 This project is a Flutter application building frameworks. This structure to helps you to build a big multi-platform software development process.
 
+## Software Building Architecture
+This Project Making for focusing to Develop Bigger project. 
+
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
