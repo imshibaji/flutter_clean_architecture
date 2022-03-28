@@ -24,7 +24,7 @@ This Project Making for focusing to Develop Bigger project.
 - Core
 - Features (Modules)
 
-## If you are new in Flutter then Learning about basic concepts
+## If you are Beginner in Flutter then Learning about basic concepts
 
 A few resources to get you started if this is your first Flutter project:
 
