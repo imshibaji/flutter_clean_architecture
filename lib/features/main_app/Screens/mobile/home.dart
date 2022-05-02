@@ -1,7 +1,7 @@
 import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:clean_archetructure/config/app_theme.dart';
+import 'package:clean_archetructure/core/helpers/actions_helper.dart';
 import 'package:clean_archetructure/features/main_app/widgets/bottom_bar.dart';
-import 'package:clean_archetructure/features/main_app/widgets/day_night_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title!),
-        actions: const [DayNightSwitch()],
+        actions: actionsMenu(context),
       ),
       body: SizedBox(
         width: double.infinity,
