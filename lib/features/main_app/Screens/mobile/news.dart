@@ -1,9 +1,9 @@
 import 'dart:developer';
 
+import 'package:clean_archetructure/core/helpers/actions_helper.dart';
 import 'package:clean_archetructure/features/main_app/models/main/news_model.dart';
 import 'package:clean_archetructure/features/main_app/providers/news_provider.dart';
 import 'package:clean_archetructure/features/main_app/widgets/bottom_bar.dart';
-import 'package:clean_archetructure/features/main_app/widgets/day_night_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +33,7 @@ class _NewsState extends State<News> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('News Area'),
-        actions: const [DayNightSwitch()],
+        actions: actionsMenu(context),
       ),
       body: Center(
         child: Column(
