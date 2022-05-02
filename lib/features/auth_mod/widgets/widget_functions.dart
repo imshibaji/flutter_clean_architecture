@@ -1,3 +1,4 @@
+import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:flutter/material.dart';
 
 Padding passwordField({
@@ -49,10 +50,11 @@ Padding usernameField({String? Function(String?)? onValid}) {
   );
 }
 
-Padding loginRegisterButtons({
+Padding loginRegisterButtons(
+  BuildContext context, {
   GlobalKey<FormState>? key,
-  void Function()? onLogin,
-  void Function()? onRegister,
+  bool Function()? onLogin,
+  bool Function()? onRegister,
 }) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -63,16 +65,20 @@ Padding loginRegisterButtons({
           onPressed: () {
             if (key!.currentState!.validate()) {
               debugPrint('Login Validate');
-              onLogin!();
+              bool isLogin = onLogin!();
+              if (isLogin && isLogin == true) {
+                Nav.to(context, '/');
+              }
             }
           },
           child: const Text('Login Now'),
         ),
         ElevatedButton(
           onPressed: () {
-            if (key!.currentState!.validate()) {
-              debugPrint('Register now');
-              onRegister!();
+            debugPrint('Register now');
+            bool isRegister = onRegister!();
+            if (isRegister && isRegister == true) {
+              Nav.to(context, '/register');
             }
           },
           child: const Text('Register Now'),
@@ -82,21 +88,26 @@ Padding loginRegisterButtons({
   );
 }
 
-Padding forgetButton() {
+Padding forgetButton(
+  BuildContext context, {
+  bool Function()? onForget,
+}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-    child: Row(
-      children: [
-        GestureDetector(
-          onTap: () {
-            debugPrint('Forget Password Click');
-          },
-          child: const Text(
-            'Forget Password',
-            style: TextStyle(color: Colors.blue),
-          ),
+    child: GestureDetector(
+      onTap: () {
+        debugPrint('Forget Password Click');
+        var check = onForget!();
+        if (check && check == true) {
+          Nav.to(context, '/forget');
+        }
+      },
+      child: const Center(
+        child: Text(
+          'Forget Password',
+          style: TextStyle(color: Colors.blue),
         ),
-      ],
+      ),
     ),
   );
 }

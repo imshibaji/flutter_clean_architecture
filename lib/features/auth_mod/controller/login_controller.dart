@@ -1,4 +1,4 @@
-import 'package:clean_archetructure/features/login_mod/screens/mobile/login_mobile_screen.dart';
+import 'package:clean_archetructure/features/auth_mod/screens/mobile/login_mobile_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginController extends StatelessWidget {

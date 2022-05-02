@@ -39,8 +39,8 @@ class _LoginDesktopScreenState extends State<LoginDesktopScreen> {
             passwordField(passHide: _isPasswordHide),
 
             // Buttons Fields
-            forgetButton(),
-            loginRegisterButtons(key: _globalKey),
+            forgetButton(context),
+            loginRegisterButtons(context, key: _globalKey),
           ],
         ),
       ),
