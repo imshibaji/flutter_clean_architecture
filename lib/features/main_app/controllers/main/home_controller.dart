@@ -1,3 +1,4 @@
+import 'package:clean_archetructure/core/helpers/login_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../Screens/mobile/home.dart' as mobile;
@@ -10,6 +11,8 @@ class HomeController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    checkLogin(context);
+
     Size size = MediaQuery.of(context).size;
     // log(size.width.toString());
 
