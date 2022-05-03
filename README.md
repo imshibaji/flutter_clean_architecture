@@ -8,6 +8,13 @@ This project is a Flutter application building frameworks. This structure to hel
 
 First download this project after then you get error from ```features/main_app/providers/news_provider.dart``` this file.
 
+Screenhots of Application
+
+| --------------- | ------------------ |
+| ![Dark Login Screen](./screenshots/Screenshot_1.png) | ![Light Login Screen](./screenshots/Screenshot_2.png) |
+| ![Light News Screen](./screenshots/Screenshot_3.png) | ![Dark News Screen](./screenshots/Screenshot_4.png) |
+| --------------- | ------------------- |
+
 ### Why it happen?
 
 Config file is missing. So ***rename*** config file from config folder `config/app_config_sample.dart` to `config/app_config.dart`

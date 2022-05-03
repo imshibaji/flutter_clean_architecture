@@ -16,7 +16,7 @@ class News extends StatefulWidget {
 
 class _NewsState extends State<News> {
   final TextEditingController _controller =
-      TextEditingController(text: 'Kolkata');
+      TextEditingController(text: 'Software Development');
   NewsProvider? np;
 
   @override
