@@ -16,7 +16,6 @@ First download this project after then you get error from ```features/main_app/p
 | Light News Screen |  Dark News Screen |
 | ------------------- | ----------------- |
 | ![Light News Screen](./screenshots/Screenshot_3.png) | ![Dark News Screen](./screenshots/Screenshot_4.png) |
-| --------------- | ------------------- |
 
 ### Why it happen?
 
