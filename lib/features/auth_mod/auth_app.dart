@@ -1,8 +1,5 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
-import 'package:clean_archetructure/features/auth_mod/controller/forget_controller.dart';
-import 'package:clean_archetructure/features/auth_mod/controller/login_controller.dart';
-import 'package:clean_archetructure/features/auth_mod/controller/profile_controller.dart';
-import 'package:clean_archetructure/features/auth_mod/controller/register_controller.dart';
+import '../../core/classes/route_manager.dart';
+import 'controllers/controllers.dart';
 
 class AuthApp extends RouteManager {
   AuthApp() {

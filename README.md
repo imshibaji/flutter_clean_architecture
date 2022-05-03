@@ -2,6 +2,21 @@
 
 A new Flutter Enterprize project structure. If you are interested to build Bigger Application then you can use this application structure.
 
+**Screenhots of Application**
+
+| Application Boilerplate or Structure |
+| --------------------- |
+| ![Application Structure](./screenshots/application_structure.png) |
+
+**Application Overview**
+| Dark Login Screen |  Light Login Screen |
+| ------------------- | ----------------- |
+|![Dark Login Screen](./screenshots/Screenshot_1.png)|![Light Login Screen](./screenshots/Screenshot_2.png) |
+
+| Light News Screen |  Dark News Screen |
+| ------------------- | ----------------- |
+| ![Light News Screen](./screenshots/Screenshot_3.png) | ![Dark News Screen](./screenshots/Screenshot_4.png) |
+
 ## Getting Started
 
 This project is a Flutter application building frameworks. This structure to helps you to build a big multi-platform software development process.
@@ -11,8 +26,15 @@ First download this project after then you get error from ```features/main_app/p
 ### Why it happen?
 
 Config file is missing. So ***rename*** config file from config folder `config/app_config_sample.dart` to `config/app_config.dart`
+![Configuration File Rename](./screenshots/Configuration_file_rename.png)
 
 Here have a news api integrated from `rapidapi.com` apis. So for the first time you need to register on that website. then search ***free news*** api from here and subscribe this api. then goto under ***Header Parameters*** then copy `X-RapidAPI-Key` value and paste this value in `config/app_config.dart` file as a `key` value.
+
+**Find API Key**
+![Access Web API Key](./screenshots/Access_Web_API_Key.png)
+
+**Use API Key**
+![Use API Key](./screenshots/Use_API_KEY.png)
 
 After all this process you can start your project easily in your emmulators or devices. And this project will be working fine.
 

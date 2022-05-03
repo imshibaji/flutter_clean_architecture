@@ -19,7 +19,7 @@ class NewsProvider extends ChangeNotifier {
 
     Response res = await _http
         .get(ApiEndpoint.news, params: {'q': searchTerm, 'lang': 'en'});
-    if (res.statusCode == 200) {
+    if (res.statusCode == 200 && res.statusCode != 429) {
       // print(res);
       _nrm = NewsResponseModel.fromJson(res.toString());
       isLoading = true;
