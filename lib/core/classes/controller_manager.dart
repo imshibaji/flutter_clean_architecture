@@ -1,4 +1,4 @@
-import 'package:clean_archetructure/features/auth_mod/auth_app.dart';
+import 'package:clean_archetructure/config/app_config.dart';
 import 'package:flutter/material.dart';
 
 import 'package:clean_archetructure/core/classes/display_manager.dart';
@@ -10,7 +10,7 @@ abstract class StatelessController extends StatelessWidget {
 
   bool get auth => false;
 
-  String get loginUrl => AuthApp.login;
+  String get loginUrl => Config.loginUrl;
 
   Display view(BuildContext context);
 
@@ -29,7 +29,7 @@ abstract class StatefulController extends StatefulWidget {
 abstract class ControllerState<T extends StatefulController> extends State<T> {
   bool get auth => false;
 
-  String get loginUrl => AuthApp.login;
+  String get loginUrl => Config.loginUrl;
 
   Display view(BuildContext context);
 

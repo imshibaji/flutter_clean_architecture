@@ -1,6 +1,6 @@
 import 'package:clean_archetructure/config/app_cache.dart';
+import 'package:clean_archetructure/config/app_config.dart';
 import 'package:clean_archetructure/core/classes/route_manager.dart';
-import 'package:clean_archetructure/features/auth_mod/auth_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -28,7 +28,7 @@ void doLogout(BuildContext context) async {
 void checkLogin(
   BuildContext context, {
   bool? auth = false,
-  String? loginUrl = AuthApp.login,
+  String? loginUrl = Config.loginUrl,
 }) {
   AppCache ac = AppCache();
   ac.isLogin().then((value) {
