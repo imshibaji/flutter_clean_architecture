@@ -2,11 +2,11 @@ import '../../core/classes/route_manager.dart';
 import 'controllers/controller.dart';
 
 class App extends RouteManager {
-  static String name = '';
-  static String home = App.name + '/';
-  static String about = App.name + '/about';
-  static String contact = App.name + '/contact';
-  static String news = App.name + '/news';
+  static const String name = '';
+  static const String home = App.name + '/';
+  static const String about = App.name + '/about';
+  static const String contact = App.name + '/contact';
+  static const String news = App.name + '/news';
 
   App() {
     addRoute(App.home, (context) => const HomeController());

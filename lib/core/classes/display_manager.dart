@@ -24,7 +24,6 @@ class Display extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     // log(size.width.toString());
-
     double width = size.width;
     return Title(
       color: headerColor ?? Theme.of(context).primaryColor,
