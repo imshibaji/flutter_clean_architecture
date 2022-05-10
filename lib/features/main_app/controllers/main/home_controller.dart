@@ -1,35 +1,25 @@
-import 'package:clean_archetructure/core/helpers/login_helper.dart';
+import 'package:clean_archetructure/core/classes/controller_manager.dart';
+import 'package:clean_archetructure/core/classes/display_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../Screens/mobile/home.dart' as mobile;
 import '../../Screens/tablet/home.dart' as tablet;
 import '../../Screens/desktop/home.dart' as desktop;
 
-class HomeController extends StatelessWidget {
+class HomeController extends StatelessController {
   final String _title = 'Home Page';
   const HomeController({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    checkLogin(context);
+  bool get auth => true;
 
-    Size size = MediaQuery.of(context).size;
-    // log(size.width.toString());
-
-    double width = size.width;
-
-    return Container(
-      child: width < 500
-          ? mobile.Home(
-              title: _title,
-            )
-          : width < 1024
-              ? tablet.Home(
-                  title: _title,
-                )
-              : desktop.Home(
-                  title: _title,
-                ),
+  @override
+  Display view(BuildContext context) {
+    return Display(
+      title: _title,
+      mobile: mobile.Home(title: _title),
+      tabletLandscape: tablet.Home(title: _title),
+      desktop: desktop.Home(title: _title),
     );
   }
 }

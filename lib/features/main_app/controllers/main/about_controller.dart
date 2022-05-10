@@ -1,29 +1,32 @@
+import 'package:clean_archetructure/core/classes/controller_manager.dart';
+import 'package:clean_archetructure/core/classes/display_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../Screens/mobile/about.dart' as mobile;
-import '../../Screens/tablet/about.dart' as laptop;
+import '../../Screens/tablet/about.dart' as tablet;
 import '../../Screens/desktop/about.dart' as desktop;
 
-class AboutController extends StatelessWidget {
+class AboutController extends StatefulController {
   final String _title = 'About Page';
   const AboutController({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double width = size.width;
-    return Container(
-      child: width < 500
-          ? mobile.About(
-              title: _title,
-            )
-          : width < 1024
-              ? laptop.About(
-                  title: _title,
-                )
-              : desktop.About(
-                  title: _title,
-                ),
+  _AboutControllerState createState() => _AboutControllerState();
+}
+
+class _AboutControllerState extends ControllerState<AboutController> {
+  @override
+  bool get auth => true;
+
+  @override
+  Display view(BuildContext context) {
+    return Display(
+      title: widget._title,
+      mobile: mobile.About(
+        title: widget._title,
+      ),
+      tabletLandscape: tablet.About(title: widget._title),
+      desktop: desktop.About(title: widget._title),
     );
   }
 }

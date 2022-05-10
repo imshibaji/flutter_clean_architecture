@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,7 @@ class News extends StatefulWidget {
 class _NewsState extends State<News> {
   final TextEditingController _controller =
       TextEditingController(text: 'Kolkata');
+  NewsProvider? np;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class _NewsState extends State<News> {
       ),
       body: Center(
         child: Column(
-          children: [newsDisplay(context)],
+          children: [newsDisplay()],
         ),
       ),
       // bottomNavigationBar: const BottomBar(),
@@ -57,7 +60,7 @@ class _NewsState extends State<News> {
     );
   }
 
-  Expanded newsDisplay(BuildContext context) {
+  Expanded newsDisplay() {
     return Expanded(
       child: Consumer<NewsProvider>(
         builder: (_, np, __) {
@@ -67,37 +70,47 @@ class _NewsState extends State<News> {
             );
           } else if (np.newsResponse.status == 'ok') {
             List<Article>? articles = np.newsResponse.articles!;
-            return GridView.builder(
-              // physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
+            return ListView.builder(
               itemCount: articles.length,
-              itemBuilder: (context, index) => Card(
-                margin: const EdgeInsets.all(8.0),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+              itemBuilder: (context, index) => ListTile(
+                style: ListTileStyle.drawer,
+                title: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      (articles[index].media != null)
-                          ? Flexible(
-                              child: Image.network(articles[index].media!))
-                          : Container(),
-                      Text(
-                        'News ${index + 1}: ' + articles[index].title!,
-                        style: const TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                      Flexible(
-                          child: Padding(
+                      Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(articles[index].summary!),
-                      )),
+                        child: (articles[index].media != null)
+                            ? Image.network(articles[index].media!)
+                            : Container(),
+                      ),
+                      Text('News ${index + 1}: ' + articles[index].title!),
                     ],
                   ),
                 ),
+                subtitle: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  child: Column(
+                    children: [
+                      Text(articles[index].summary!),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Published At: ' +
+                              articles[index].publishedDate!),
+                          ElevatedButton(
+                            onPressed: () {
+                              log(articles[index].link!);
+                            },
+                            child: const Text('View Full News'),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                dense: true,
+                shape: Border.all(width: 0.5),
               ),
             );
           } else {

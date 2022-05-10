@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
     var tm = context.read<ThemeProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title!),
+        title: Text("Mobile: " + widget.title!),
         actions: actionsMenu(context),
       ),
       body: SizedBox(
