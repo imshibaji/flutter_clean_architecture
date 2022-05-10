@@ -27,6 +27,8 @@ class AppTheme {
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: AppColors.teal,
             selectedItemColor: Color.fromARGB(255, 248, 250, 250),
+            elevation: 10,
+            showSelectedLabels: true,
           ),
           bottomAppBarTheme: const BottomAppBarTheme(color: AppColors.teal),
         );
@@ -38,7 +40,8 @@ class AppTheme {
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: AppColors.space,
             selectedItemColor: AppColors.teal,
-            elevation: 8,
+            elevation: 10,
+            showSelectedLabels: true,
           ),
         );
   }
