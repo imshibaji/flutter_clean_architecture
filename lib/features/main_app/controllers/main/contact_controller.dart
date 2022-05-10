@@ -1,3 +1,4 @@
+import 'package:clean_archetructure/core/classes/display_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../Screens//mobile/contact.dart' as mobile;
@@ -10,20 +11,13 @@ class ContactController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double width = size.width;
-    return Container(
-      child: width < 500
-          ? mobile.Contact(
-              title: _title,
-            )
-          : width < 1024
-              ? tablet.Contact(
-                  title: _title,
-                )
-              : desktop.Contact(
-                  title: _title,
-                ),
+    return Display(
+      title: _title,
+      xs: mobile.Contact(
+        title: _title,
+      ),
+      md: tablet.Contact(title: _title),
+      lg: desktop.Contact(title: _title),
     );
   }
 }

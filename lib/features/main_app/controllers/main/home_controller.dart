@@ -1,3 +1,4 @@
+import 'package:clean_archetructure/core/classes/display_manager.dart';
 import 'package:clean_archetructure/core/helpers/login_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -13,23 +14,11 @@ class HomeController extends StatelessWidget {
   Widget build(BuildContext context) {
     checkLogin(context);
 
-    Size size = MediaQuery.of(context).size;
-    // log(size.width.toString());
-
-    double width = size.width;
-
-    return Container(
-      child: width < 500
-          ? mobile.Home(
-              title: _title,
-            )
-          : width < 1024
-              ? tablet.Home(
-                  title: _title,
-                )
-              : desktop.Home(
-                  title: _title,
-                ),
+    return Display(
+      title: _title,
+      xs: mobile.Home(title: _title),
+      md: tablet.Home(title: _title),
+      lg: desktop.Home(title: _title),
     );
   }
 }

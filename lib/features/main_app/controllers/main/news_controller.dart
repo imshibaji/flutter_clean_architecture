@@ -1,3 +1,4 @@
+import 'package:clean_archetructure/core/classes/display_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../Screens/desktop/news.dart' as desktop;
@@ -9,13 +10,11 @@ class NewsController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      child: size.width < 500
-          ? const mobile.News()
-          : size.width < 1024
-              ? const tablet.News()
-              : const desktop.News(),
+    return Display(
+      title: 'News Area',
+      xs: const mobile.News(),
+      md: const tablet.News(),
+      lg: const desktop.News(),
     );
   }
 }

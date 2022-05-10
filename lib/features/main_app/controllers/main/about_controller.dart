@@ -1,7 +1,8 @@
+import 'package:clean_archetructure/core/classes/display_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../Screens/mobile/about.dart' as mobile;
-import '../../Screens/tablet/about.dart' as laptop;
+import '../../Screens/tablet/about.dart' as tablet;
 import '../../Screens/desktop/about.dart' as desktop;
 
 class AboutController extends StatelessWidget {
@@ -10,20 +11,13 @@ class AboutController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double width = size.width;
-    return Container(
-      child: width < 500
-          ? mobile.About(
-              title: _title,
-            )
-          : width < 1024
-              ? laptop.About(
-                  title: _title,
-                )
-              : desktop.About(
-                  title: _title,
-                ),
+    return Display(
+      title: _title,
+      xs: mobile.About(
+        title: _title,
+      ),
+      md: tablet.About(title: _title),
+      lg: desktop.About(title: _title),
     );
   }
 }
