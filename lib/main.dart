@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
       themeMode: tm.themeMode,
       initialRoute: '/',
       routes: Routes().routes,
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }

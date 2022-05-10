@@ -15,9 +15,7 @@ class RouteManager {
   Map<String, WidgetBuilder> get links => _routes;
 }
 
-class Nav extends Navigator {
-  const Nav({Key? key}) : super(key: key);
-
+class Nav {
   static void to(BuildContext context, String url) {
     Navigator.pushReplacementNamed(context, url);
   }

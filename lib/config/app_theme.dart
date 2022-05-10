@@ -12,4 +12,4 @@ class ThemeProvider extends BaseThemeProvider {
   }
 }
 
-class MyTheme extends ThemeManager {}
+class MyTheme extends AppTheme {}
