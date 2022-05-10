@@ -3,10 +3,15 @@ import 'controllers/controller.dart';
 
 class App extends RouteManager {
   static String name = '';
+  static String home = App.name + '/';
+  static String about = App.name + '/about';
+  static String contact = App.name + '/contact';
+  static String news = App.name + '/news';
+
   App() {
-    addRoute(App.name + '/', (context) => const HomeController());
-    addRoute(App.name + '/about', (context) => const AboutController());
-    addRoute(App.name + '/contact', (context) => const ContactController());
-    addRoute(App.name + '/news', (context) => const NewsController());
+    addRoute(App.home, (context) => const HomeController());
+    addRoute(App.about, (context) => const AboutController());
+    addRoute(App.contact, (context) => const ContactController());
+    addRoute(App.news, (context) => const NewsController());
   }
 }

@@ -3,10 +3,13 @@ import 'controllers/controller.dart';
 
 class FeatureApp extends RouteManager {
   static String name = '/feature';
+  static String home = FeatureApp.name + '';
+  static String about = FeatureApp.name + '/about';
+  static String contact = FeatureApp.name + '/contact';
+
   FeatureApp() {
-    addRoute(FeatureApp.name + '', (context) => const HomeController());
-    addRoute(FeatureApp.name + '/about', (context) => const AboutController());
-    addRoute(
-        FeatureApp.name + '/contact', (context) => const ContactController());
+    addRoute(FeatureApp.home, (context) => const HomeController());
+    addRoute(FeatureApp.about, (context) => const AboutController());
+    addRoute(FeatureApp.contact, (context) => const ContactController());
   }
 }
