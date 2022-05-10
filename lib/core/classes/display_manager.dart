@@ -5,18 +5,18 @@ class Display extends StatelessWidget {
   String title;
   Color? headerColor;
 
-  Widget xs;
-  Widget? xxl, xl, lg, md, sm;
+  Widget mobile;
+  Widget? desktopLarge, desktop, tabletLandscape, tablet, mobileLandscape;
 
   Display({
     Key? key,
     required this.title,
-    required this.xs,
-    this.sm,
-    this.md,
-    this.lg,
-    this.xl,
-    this.xxl,
+    required this.mobile,
+    this.mobileLandscape,
+    this.tablet,
+    this.tabletLandscape,
+    this.desktop,
+    this.desktopLarge,
     this.headerColor,
   }) : super(key: key);
 
@@ -29,17 +29,17 @@ class Display extends StatelessWidget {
       color: headerColor ?? Theme.of(context).primaryColor,
       title: title,
       child: Container(
-        child: (width > 1400 && xxl != null)
-            ? xxl
-            : (width > 1200 && xl != null)
-                ? xl
-                : (width > 992 && lg != null)
-                    ? lg
-                    : (width > 768 && md != null)
-                        ? md
-                        : (width > 576 && sm != null)
-                            ? sm
-                            : xs,
+        child: (width > 1400 && desktopLarge != null)
+            ? desktopLarge
+            : (width > 1200 && desktop != null)
+                ? desktop
+                : (width > 992 && tabletLandscape != null)
+                    ? tabletLandscape
+                    : (width > 768 && tablet != null)
+                        ? tablet
+                        : (width > 576 && mobileLandscape != null)
+                            ? mobileLandscape
+                            : mobile,
       ),
     );
   }

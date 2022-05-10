@@ -6,7 +6,7 @@ import '../../Screens//mobile/contact.dart' as mobile;
 import '../../Screens/tablet/contact.dart' as tablet;
 import '../../Screens/desktop/contact.dart' as desktop;
 
-class ContactController extends Controller {
+class ContactController extends StatelessController {
   final String _title = 'Contact Page';
   const ContactController({Key? key}) : super(key: key);
 
@@ -17,11 +17,11 @@ class ContactController extends Controller {
   Display view(BuildContext context) {
     return Display(
       title: _title,
-      xs: mobile.Contact(
+      mobile: mobile.Contact(
         title: _title,
       ),
-      md: tablet.Contact(title: _title),
-      lg: desktop.Contact(title: _title),
+      tabletLandscape: tablet.Contact(title: _title),
+      desktop: desktop.Contact(title: _title),
     );
   }
 }

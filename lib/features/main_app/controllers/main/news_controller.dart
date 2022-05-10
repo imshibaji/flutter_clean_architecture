@@ -6,7 +6,7 @@ import '../../Screens/desktop/news.dart' as desktop;
 import '../../Screens/mobile/news.dart' as mobile;
 import '../../Screens/tablet/news.dart' as tablet;
 
-class NewsController extends Controller {
+class NewsController extends StatelessController {
   const NewsController({Key? key}) : super(key: key);
 
   @override
@@ -16,9 +16,9 @@ class NewsController extends Controller {
   Display view(BuildContext context) {
     return Display(
       title: 'News Area',
-      xs: const mobile.News(),
-      md: const tablet.News(),
-      lg: const desktop.News(),
+      mobile: const mobile.News(),
+      tabletLandscape: const tablet.News(),
+      desktop: const desktop.News(),
     );
   }
 }

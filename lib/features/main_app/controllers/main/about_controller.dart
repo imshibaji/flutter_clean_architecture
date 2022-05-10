@@ -6,22 +6,27 @@ import '../../Screens/mobile/about.dart' as mobile;
 import '../../Screens/tablet/about.dart' as tablet;
 import '../../Screens/desktop/about.dart' as desktop;
 
-class AboutController extends Controller {
+class AboutController extends StatefulController {
   final String _title = 'About Page';
   const AboutController({Key? key}) : super(key: key);
 
+  @override
+  _AboutControllerState createState() => _AboutControllerState();
+}
+
+class _AboutControllerState extends ControllerState<AboutController> {
   @override
   bool get auth => true;
 
   @override
   Display view(BuildContext context) {
     return Display(
-      title: _title,
-      xs: mobile.About(
-        title: _title,
+      title: widget._title,
+      mobile: mobile.About(
+        title: widget._title,
       ),
-      md: tablet.About(title: _title),
-      lg: desktop.About(title: _title),
+      tabletLandscape: tablet.About(title: widget._title),
+      desktop: desktop.About(title: widget._title),
     );
   }
 }
