@@ -21,40 +21,43 @@ class ForgetMobileScreen extends StatelessWidget {
         actions: const [DayNightSwitch()],
       ),
       body: Form(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Forget Password?',
-            style: TextStyle(fontSize: 24),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          TextInputField(
-            labelTextStr: 'Input Your Register Email Address',
-            prefixIcon: Icons.email_outlined,
-          ),
-          AuthButton(
-            label: 'Send Recovery Email',
-            onPressed: () {},
-            paddingValue: 10,
-          ),
-          const Divider(
-            thickness: 2,
-          ),
-          const SizedBox(
-            height: 45,
-          ),
-          const Text(
-            'If you are not getting email. Then Press',
-            // style: TextStyle(fontSize: 24),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          AuthButton(label: 'Resend Email', onPressed: () {}),
-        ],
+          child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Forget Password?',
+              style: TextStyle(fontSize: 24),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextInputField(
+              labelTextStr: 'Input Your Register Email Address',
+              prefixIcon: Icons.email_outlined,
+            ),
+            AuthButton(
+              label: 'Send Recovery Email',
+              onPressed: () {},
+              paddingValue: 10,
+            ),
+            const Divider(
+              thickness: 2,
+            ),
+            const SizedBox(
+              height: 45,
+            ),
+            const Text(
+              'If you are not getting email. Then Press',
+              // style: TextStyle(fontSize: 24),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            AuthButton(label: 'Resend Email', onPressed: () {}),
+          ],
+        ),
       )),
     );
   }
