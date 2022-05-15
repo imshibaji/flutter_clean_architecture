@@ -22,7 +22,7 @@ class ForgetMobileScreen extends StatelessWidget {
       ),
       body: Form(
           child: Padding(
-        padding: const EdgeInsets.all(9.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
