@@ -1,113 +1,100 @@
 import 'package:clean_archetructure/core/classes/route_manager.dart';
+import 'package:clean_archetructure/features/auth_mod/widgets/auth_button.dart';
+import 'package:clean_archetructure/features/auth_mod/widgets/link_button.dart';
+import 'package:clean_archetructure/features/auth_mod/widgets/text_input_field.dart';
 import 'package:flutter/material.dart';
 
-Padding passwordField({
+TextInputField passwordField({
   String? Function(String?)? onValid,
   bool passHide = true,
   void Function(bool)? onKeyBtnPressed,
 }) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: TextFormField(
-      obscureText: passHide,
-      decoration: InputDecoration(
-        hintText: 'Password',
-        prefixIcon: const Icon(Icons.lock),
-        suffixIcon: IconButton(
-            onPressed: () {
-              passHide = !passHide;
-              onKeyBtnPressed!(passHide);
-            },
-            icon: Icon(passHide ? Icons.key : Icons.key_off)),
-      ),
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Please Input password';
-        }
-        onValid!(val);
-        return null;
+  return TextInputField(
+    prefixIcon: Icons.security_outlined,
+    labelTextStr: 'Input Password',
+    validator: (val) {
+      if (val == null || val.isEmpty) {
+        return 'Please Input password';
+      }
+      onValid!(val);
+      return null;
+    },
+    obscureText: passHide,
+    suffixIcon: IconButton(
+      onPressed: () {
+        passHide = !passHide;
+        onKeyBtnPressed!(passHide);
       },
+      icon: Icon(
+        passHide ? Icons.visibility : Icons.visibility_off_outlined,
+      ),
     ),
   );
 }
 
-Padding usernameField({String? Function(String?)? onValid}) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: TextFormField(
-      decoration: const InputDecoration(
-        hintText: 'Username',
-        prefixIcon: Icon(Icons.face),
-      ),
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Please Input username';
-        }
-        onValid!(val);
-        return null;
-      },
-    ),
+TextInputField usernameField({String? Function(String?)? onValid}) {
+  return TextInputField(
+    prefixIcon: Icons.account_circle_outlined,
+    labelTextStr: 'Input Username',
+    validator: (val) {
+      if (val == null || val.isEmpty) {
+        return 'Please Input username';
+      }
+      onValid!(val);
+      return null;
+    },
   );
 }
 
-Padding loginRegisterButtons(
+Row loginRegisterButtons(
   BuildContext context, {
   GlobalKey<FormState>? key,
   bool Function()? onLogin,
   bool Function()? onRegister,
 }) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            if (key!.currentState!.validate()) {
-              debugPrint('Login Validate');
-              bool isLogin = onLogin!();
-              if (isLogin && isLogin == true) {
-                Nav.to(context, '/');
-              }
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      AuthButton(
+        onPressed: () {
+          if (key!.currentState!.validate()) {
+            debugPrint('Login Validate');
+            bool isLogin = onLogin!();
+            if (isLogin && isLogin == true) {
+              Nav.to(context, '/');
             }
-          },
-          child: const Text('Login Now'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            debugPrint('Register now');
-            bool isRegister = onRegister!();
-            if (isRegister && isRegister == true) {
-              Nav.to(context, '/register');
-            }
-          },
-          child: const Text('Register Now'),
-        ),
-      ],
-    ),
+          }
+        },
+        label: 'Login Now',
+        stretch: true,
+      ),
+      AuthButton(
+        onPressed: () {
+          debugPrint('Register now');
+          bool isRegister = onRegister!();
+          if (isRegister && isRegister == true) {
+            Nav.to(context, '/register');
+          }
+        },
+        label: 'Register Now',
+        stretch: true,
+      ),
+    ],
   );
 }
 
-Padding forgetButton(
+LinkButton forgetButton(
   BuildContext context, {
   bool Function()? onForget,
 }) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-    child: GestureDetector(
-      onTap: () {
-        debugPrint('Forget Password Click');
-        var check = onForget!();
-        if (check && check == true) {
-          Nav.to(context, '/forget');
-        }
-      },
-      child: const Center(
-        child: Text(
-          'Forget Password',
-          style: TextStyle(color: Colors.blue),
-        ),
-      ),
-    ),
+  return LinkButton(
+    onPressed: () {
+      debugPrint('Forget Password Click');
+      var check = onForget!();
+      if (check && check == true) {
+        Nav.to(context, '/forget');
+      }
+    },
+    labelStr: 'Forget Password',
   );
 }

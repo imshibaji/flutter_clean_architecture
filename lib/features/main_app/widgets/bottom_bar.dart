@@ -1,5 +1,6 @@
 import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:clean_archetructure/config/app_theme.dart';
+import 'package:clean_archetructure/core/utils/bottom_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +27,7 @@ class _BottomBarState extends State<BottomBar> {
   Widget build(BuildContext context) {
     var tm = context.read<ThemeProvider>();
     return BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: index,
         onTap: (val) {
           tm.setNavIndex(val);
@@ -34,32 +36,16 @@ class _BottomBarState extends State<BottomBar> {
             navigator();
           });
         },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.cyan,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'About',
-            backgroundColor: Colors.blueAccent,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.contact_mail),
-            label: 'Contact',
-            backgroundColor: Colors.redAccent,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper),
-            label: 'News',
-            backgroundColor: Colors.pink,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.ac_unit),
-            label: 'Feature',
-            backgroundColor: Colors.cyan,
-          ),
+        items: [
+          bottomNavigationBarItem(icon: const Icon(Icons.home), label: 'Home'),
+          bottomNavigationBarItem(
+              icon: const Icon(Icons.people), label: 'About'),
+          bottomNavigationBarItem(
+              icon: const Icon(Icons.contact_mail), label: 'Contact'),
+          bottomNavigationBarItem(
+              icon: const Icon(Icons.newspaper), label: 'News'),
+          bottomNavigationBarItem(
+              icon: const Icon(Icons.ac_unit), label: 'Feature'),
         ]);
   }
 
