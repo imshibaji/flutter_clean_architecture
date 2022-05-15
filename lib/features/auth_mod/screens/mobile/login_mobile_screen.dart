@@ -67,7 +67,7 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
                 },
               ),
               const SizedBox(
-                height: 25,
+                height: 15,
               ),
 
               // Buttons Fields
@@ -76,6 +76,9 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
                 onForget: () {
                   return true;
                 },
+              ),
+              const SizedBox(
+                height: 15,
               ),
               loginRegisterButtons(
                 context,
