@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:clean_archetructure/core/helpers/login_helper.dart';
+import 'package:clean_archetructure/core/widgets/day_night_switch.dart';
+import 'package:clean_archetructure/features/auth_mod/widgets/text_input_field.dart';
 import 'package:clean_archetructure/features/auth_mod/widgets/widget_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +27,7 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
       appBar: AppBar(
         title: const Text('Login Screen'),
         centerTitle: true,
-        // actions: actionsMenu(context),
+        actions: const [DayNightSwitch()],
       ),
       body: Form(
         key: _globalKey,
@@ -43,20 +45,55 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
             ),
 
             // Username Fields
-            usernameField(
-              onValid: (user) => username = user,
-            ),
-
-            // Password Fields
-            passwordField(
-              onValid: (pass) => password = pass,
-              passHide: _isPasswordHide,
-              onKeyBtnPressed: (val) {
-                setState(() {
-                  _isPasswordHide = val;
-                });
+            TextInputField(
+              prefixIcon: Icons.account_circle_outlined,
+              labelTextStr: 'Input Username',
+              validator: (user) {
+                if (user != null) {
+                  username = user;
+                  return null;
+                }
+                return 'Please Input your Username';
               },
             ),
+            // usernameField(
+            //   onValid: (user) => username = user,
+            // ),
+
+            // Password Fields
+            TextInputField(
+              prefixIcon: Icons.security_outlined,
+              labelTextStr: 'Input Password',
+              validator: (pass) {
+                if (pass != null) {
+                  password = pass;
+                  return null;
+                }
+                return 'Please Input Your Password';
+              },
+              obscureText: _isPasswordHide,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _isPasswordHide = !_isPasswordHide;
+                  });
+                },
+                icon: Icon(
+                  _isPasswordHide
+                      ? Icons.visibility
+                      : Icons.visibility_off_outlined,
+                ),
+              ),
+            ),
+            // passwordField(
+            //   onValid: (pass) => password = pass,
+            //   passHide: _isPasswordHide,
+            //   onKeyBtnPressed: (val) {
+            //     setState(() {
+            //       _isPasswordHide = val;
+            //     });
+            //   },
+            // ),
 
             // Buttons Fields
             forgetButton(

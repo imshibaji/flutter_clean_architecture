@@ -37,6 +37,10 @@ class AppTheme {
         ThemeData(
           brightness: Brightness.dark,
           primarySwatch: Colors.yellow,
+          buttonTheme: const ButtonThemeData(
+            textTheme: ButtonTextTheme.primary,
+            buttonColor: Colors.white,
+          ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: AppColors.space,
             selectedItemColor: AppColors.teal,
