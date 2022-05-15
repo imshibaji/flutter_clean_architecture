@@ -7,27 +7,6 @@ A new Flutter Enterprize project structure. If you are interested to build Bigge
 | --------------------- |
 | ![Application Structure](./screenshots/application_structure.png) |
 
-**Application Overview**
-| Dark Login Screen |  Light Login Screen |
-| ------------------- | ----------------- |
-|![Dark Login Screen](./screenshots/Screenshot_1.png)|![Light Login Screen](./screenshots/Screenshot_2.png) |
-
-| Light News Screen |  Dark News Screen |
-| ------------------- | ----------------- |
-| ![Light News Screen](./screenshots/Screenshot_3.png) | ![Dark News Screen](./screenshots/Screenshot_4.png) |
-
-| Light Register Screen |  Dark Register Screen |
-| ------------------- | ----------------- |
-| ![Light Register Screen](./screenshots/Screenshot_5.png) | ![Dark Register Screen](./screenshots/Screenshot_6.png) |
-
-| Dark Profile Screen |  Light Profile Screen |
-| ------------------- | ----------------- |
-| ![Dark Profile Screen](./screenshots/Screenshot_7.png) | ![Light Profile Screen](./screenshots/Screenshot_8.png) |
-
-| Light Forget Screen |  Dark Forget Screen |
-| ------------------- | ----------------- |
-| ![Light Forget Screen](./screenshots/Screenshot_9.png) | ![Dark Register Screen](./screenshots/Screenshot_10.png) |
-
 ## Getting Started
 
 This project is a Flutter application building frameworks. This structure to helps you to build a big multi-platform software development process.
@@ -56,6 +35,27 @@ This Project Making for focusing to Develop Bigger project.
 - Config
 - Core
 - Features (Modules)
+
+**Application Screenshots Overview**
+| Dark Login Screen |  Light Login Screen |
+| ------------------- | ----------------- |
+|![Dark Login Screen](./screenshots/Screenshot_1.png)|![Light Login Screen](./screenshots/Screenshot_2.png) |
+
+| Light News Screen |  Dark News Screen |
+| ------------------- | ----------------- |
+| ![Light News Screen](./screenshots/Screenshot_3.png) | ![Dark News Screen](./screenshots/Screenshot_4.png) |
+
+| Light Register Screen |  Dark Register Screen |
+| ------------------- | ----------------- |
+| ![Light Register Screen](./screenshots/Screenshot_5.png) | ![Dark Register Screen](./screenshots/Screenshot_6.png) |
+
+| Dark Profile Screen |  Light Profile Screen |
+| ------------------- | ----------------- |
+| ![Dark Profile Screen](./screenshots/Screenshot_7.png) | ![Light Profile Screen](./screenshots/Screenshot_8.png) |
+
+| Light Forget Screen |  Dark Forget Screen |
+| ------------------- | ----------------- |
+| ![Light Forget Screen](./screenshots/Screenshot_9.png) | ![Dark Register Screen](./screenshots/Screenshot_10.png) |
 
 ## If you are Beginner in Flutter then Learning about basic concepts
 
