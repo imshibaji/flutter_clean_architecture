@@ -1,5 +1,6 @@
-import 'package:clean_archetructure/config/app_colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../config/config.dart';
 
 class AppTheme {
   ThemeData? light;

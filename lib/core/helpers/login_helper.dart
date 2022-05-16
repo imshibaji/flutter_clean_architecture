@@ -1,15 +1,16 @@
-import 'package:clean_archetructure/config/app_cache.dart';
-import 'package:clean_archetructure/config/app_config.dart';
-import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
+import '../../config/config.dart';
+import '../core.dart';
 
 void doAuth(BuildContext context, String username, String password) async {
   AppCache ac = AppCache();
   ac.doLogin(username, password);
   if (await ac.isLogin()) {
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       Nav.to(context, '/');
+      showMessage(context, 'Login Successful');
     });
   }
 }
@@ -23,17 +24,18 @@ void doLogout(BuildContext context) async {
   AppCache ac = AppCache();
   ac.doLogout();
   checkLogin(context, auth: true);
+  showMessage(context, 'Logout Successfull');
 }
 
 void checkLogin(
   BuildContext context, {
   bool? auth = false,
-  String? loginUrl = Config.loginUrl,
+  String? loginUrl = ApiEndpoint.appLoginUrl,
 }) {
   AppCache ac = AppCache();
   ac.isLogin().then((value) {
     if (value == false && auth! == true) {
-      SchedulerBinding.instance!.addPostFrameCallback((_) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
         Nav.to(context, loginUrl!);
       });
     }

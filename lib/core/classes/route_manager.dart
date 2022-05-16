@@ -16,6 +16,8 @@ class RouteManager {
 }
 
 class Nav {
+  static void toNamed(BuildContext context, String url) =>
+      Navigator.pushNamed(context, url);
   static void to(BuildContext context, String url) {
     Navigator.pushReplacementNamed(context, url);
   }

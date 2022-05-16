@@ -1,9 +1,8 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
-import 'package:clean_archetructure/core/helpers/login_helper.dart';
-import 'package:clean_archetructure/core/widgets/day_night_switch.dart';
-import 'package:clean_archetructure/features/auth_mod/widgets/auth_button.dart';
-import 'package:clean_archetructure/features/auth_mod/widgets/text_input_field.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/core.dart';
+import '../../widgets/auth_button.dart';
+import '../../widgets/text_input_field.dart';
 
 class ProfileMobileScreen extends StatelessWidget {
   const ProfileMobileScreen({Key? key}) : super(key: key);
@@ -21,12 +20,7 @@ class ProfileMobileScreen extends StatelessWidget {
         ),
         actions: [
           const DayNightSwitch(),
-          IconButton(
-            onPressed: () {
-              doLogout(context);
-            },
-            icon: const Icon(Icons.logout),
-          )
+          ActionButtons(),
         ],
       ),
       body: Padding(

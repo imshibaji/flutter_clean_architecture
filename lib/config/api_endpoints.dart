@@ -1,7 +1,14 @@
+import '../features/features.dart';
+
 /// In this file we will be writing all API Endpoints using this application
 
 class ApiEndpoint {
-  static const baseUrl = 'https://free-news.p.rapidapi.com';
+  // Server Links
+  static const baseUrl = 'https://apps.shibajidebnath.com/';
+  static const api = baseUrl + 'api/';
 
-  static const news = baseUrl + '/v1/search';
+  static const enqueries = api + 'enqueries?populate=*';
+
+  // Apps Internals Links
+  static const appLoginUrl = AuthApp.login;
 }

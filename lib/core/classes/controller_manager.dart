@@ -1,8 +1,7 @@
-import 'package:clean_archetructure/config/app_config.dart';
 import 'package:flutter/material.dart';
 
-import 'package:clean_archetructure/core/classes/display_manager.dart';
-import 'package:clean_archetructure/core/helpers/login_helper.dart';
+import '../../config/config.dart';
+import '../core.dart';
 
 // ignore: must_be_immutable
 abstract class StatelessController extends StatelessWidget {
@@ -10,7 +9,7 @@ abstract class StatelessController extends StatelessWidget {
 
   bool get auth => false;
 
-  String get loginUrl => Config.loginUrl;
+  String get loginUrl => ApiEndpoint.appLoginUrl;
 
   Display view(BuildContext context);
 
@@ -29,7 +28,7 @@ abstract class StatefulController extends StatefulWidget {
 abstract class ControllerState<T extends StatefulController> extends State<T> {
   bool get auth => false;
 
-  String get loginUrl => Config.loginUrl;
+  String get loginUrl => ApiEndpoint.appLoginUrl;
 
   Display view(BuildContext context);
 

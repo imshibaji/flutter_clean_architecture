@@ -1,8 +1,9 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
-import 'package:clean_archetructure/features/auth_mod/widgets/auth_button.dart';
-import 'package:clean_archetructure/features/auth_mod/widgets/link_button.dart';
-import 'package:clean_archetructure/features/auth_mod/widgets/text_input_field.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/core.dart';
+import 'auth_button.dart';
+import 'link_button.dart';
+import 'text_input_field.dart';
 
 TextInputField passwordField({
   String? Function(String?)? onValid,

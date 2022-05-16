@@ -1,5 +1,6 @@
-import 'package:clean_archetructure/features/auth_mod/screens/mobile/login_mobile_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../screens/mobile/login_mobile_screen.dart';
 
 class LoginController extends StatelessWidget {
   const LoginController({Key? key}) : super(key: key);
