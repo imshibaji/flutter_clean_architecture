@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/classes/controller_manager.dart';
 import '../../../core/classes/display_manager.dart';
-import '../views/views.dart';
+import '../lead_mod.dart';
 
 class DashboardController extends StatelessController {
   const DashboardController({Key? key}) : super(key: key);
@@ -12,6 +13,9 @@ class DashboardController extends StatelessController {
 
   @override
   Display view(BuildContext context) {
+    var ep = context.read<EnqueryProvider>();
+    ep.setEnquery();
+
     return Display(title: 'Dashboard', mobile: const DashboardForMobile());
   }
 }

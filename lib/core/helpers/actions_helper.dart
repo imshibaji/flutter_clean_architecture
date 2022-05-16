@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../config/config.dart';
 import '../core.dart';
 
 List<Widget> actionsMenu(BuildContext context) {
@@ -16,6 +17,6 @@ List<Widget> actionsMenu(BuildContext context) {
     //   },
     //   icon: const Icon(Icons.logout),
     // ),
-    ActionButtons(),
+    ActionTopButtons()
   ];
 }
