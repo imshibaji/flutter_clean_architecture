@@ -21,7 +21,7 @@ class LeadAppBottomBar extends BottomBar {
           ButtonData(
             icon: Icons.add_task,
             label: 'Add Lead',
-            link: LeadApp.about,
+            link: LeadApp.addEnquery,
           ),
         ]);
 }

@@ -17,9 +17,11 @@ class NewsProvider extends ChangeNotifier {
 
   NewsResponseModel get newsResponse => _nrm!;
 
-  void search(String searchTerm) async {
-    isLoading = false;
-    notifyListeners();
+  void search(String searchTerm, {bool input = true}) async {
+    if (isLoading == true && input == true) {
+      isLoading = false;
+      notifyListeners();
+    }
 
     Response res = await _http
         .get(ApiEndpoint.news, params: {'q': searchTerm, 'lang': 'en'});
@@ -27,6 +29,7 @@ class NewsProvider extends ChangeNotifier {
       // print(res);
       _nrm = NewsResponseModel.fromJson(res.toString());
       isLoading = true;
+      input = false;
       notifyListeners();
     }
   }

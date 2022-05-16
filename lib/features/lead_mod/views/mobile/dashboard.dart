@@ -31,7 +31,6 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
         title: const Text('Enqueries / Leads'),
         actions: actionsMenu(context),
       ),
-      bottomNavigationBar: LeadAppBottomBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Nav.to(context, LeadApp.addEnquery);
@@ -41,6 +40,7 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
       body: Consumer<EnqueryProvider>(
         builder: (context, ep, child) => infoList(ep),
       ),
+      bottomNavigationBar: LeadAppBottomBar(),
     );
   }
 

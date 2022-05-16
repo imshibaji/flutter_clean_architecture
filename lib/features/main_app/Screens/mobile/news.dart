@@ -17,19 +17,18 @@ class News extends StatefulWidget {
 class _NewsState extends State<News> {
   final TextEditingController _controller =
       TextEditingController(text: 'Software Development');
-  NewsProvider? np;
 
   @override
   void initState() {
-    np = Provider.of<NewsProvider>(context, listen: false);
+    NewsProvider np = Provider.of<NewsProvider>(context, listen: false);
+    if (np.isLoading == false) {
+      np.search(_controller.text);
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (mounted) {
-      np!.search(_controller.text);
-    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('News Area'),
@@ -37,14 +36,14 @@ class _NewsState extends State<News> {
       ),
       body: Center(
         child: Column(
-          children: [searchBar(np!), newsDisplay()],
+          children: [searchBar(), newsDisplay()],
         ),
       ),
       bottomNavigationBar: BottomBar(),
     );
   }
 
-  Container searchBar(NewsProvider np) {
+  Container searchBar() {
     return Container(
       color: Theme.of(context).secondaryHeaderColor,
       padding: const EdgeInsets.all(8.0),
@@ -61,7 +60,8 @@ class _NewsState extends State<News> {
           alignLabelWithHint: true,
         ),
         controller: _controller,
-        onChanged: (val) {
+        onSubmitted: (val) {
+          NewsProvider np = Provider.of<NewsProvider>(context, listen: false);
           np.search(val);
         },
       ),

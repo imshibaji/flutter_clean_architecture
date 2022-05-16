@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lead_book/config/config.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/classes/controller_manager.dart';
@@ -15,6 +16,10 @@ class DashboardController extends StatelessController {
   Display view(BuildContext context) {
     var ep = context.read<EnqueryProvider>();
     ep.setEnquery();
+
+    // Navigation Bug Fixes
+    var tm = context.read<ThemeProvider>();
+    tm.setNavIndex(0);
 
     return Display(title: 'Dashboard', mobile: const DashboardForMobile());
   }
