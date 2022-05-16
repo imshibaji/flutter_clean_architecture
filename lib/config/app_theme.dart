@@ -8,7 +8,9 @@ class ThemeProvider extends BaseThemeProvider {
 
   setNavIndex(int index) {
     _index = index;
-    notifyListeners();
+    if (index != 0) {
+      notifyListeners();
+    }
   }
 }
 
