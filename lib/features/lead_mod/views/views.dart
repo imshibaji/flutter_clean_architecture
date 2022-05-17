@@ -1,4 +1,5 @@
 export './mobile/dashboard.dart';
-export './mobile/about.dart';
+export 'mobile/search.dart';
 export './mobile/add_enquery.dart';
 export './mobile/edit_enquery.dart';
+export './mobile/followup.dart';

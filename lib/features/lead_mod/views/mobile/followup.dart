@@ -1,16 +1,16 @@
+import 'package:clean_architecture/features/lead_mod/lead_mod.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../lead_mod.dart';
 
-class AboutForMobile extends StatelessWidget {
-  const AboutForMobile({Key? key}) : super(key: key);
+class FollowupForMobile extends StatelessWidget {
+  const FollowupForMobile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('About'),
+        title: const Text('Followup'),
         actions: actionsMenu(context),
       ),
       bottomNavigationBar: LeadAppBottomBar(),
