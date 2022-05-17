@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../Screens//mobile/contact.dart' as mobile;
+import '../../Screens/mobile/contact.dart' as mobile;
 import '../../Screens/desktop/contact.dart' as desktop;
 import '../../Screens/tablet/contact.dart' as tablet;
 

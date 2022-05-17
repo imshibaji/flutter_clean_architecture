@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lead_book/core/helpers/actions_helper.dart';
-import 'package:lead_book/features/lead_mod/widgets/button_bar.dart';
+
+import '../../../../core/core.dart';
+import '../../lead_mod.dart';
 
 class AboutForMobile extends StatelessWidget {
   const AboutForMobile({Key? key}) : super(key: key);

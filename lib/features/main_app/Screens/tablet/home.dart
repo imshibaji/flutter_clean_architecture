@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lead_book/core/classes/classes.dart';
 
+import '../../../../core/classes/classes.dart';
 import '../../widgets/day_night_switch.dart';
 import '../../widgets/menu_buttons.dart';
 

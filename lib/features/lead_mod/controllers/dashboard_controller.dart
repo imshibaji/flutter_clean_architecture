@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lead_book/config/config.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/app_theme.dart';
 import '../../../core/classes/controller_manager.dart';
 import '../../../core/classes/display_manager.dart';
 import '../lead_mod.dart';

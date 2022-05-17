@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lead_book/features/lead_mod/lead_app.dart';
 
 import '../core/core.dart';
+import '../features/lead_mod/lead_app.dart';
 import '../features/main_app/app.dart';
 
 // ignore: must_be_immutable

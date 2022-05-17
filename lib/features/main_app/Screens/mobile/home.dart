@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lead_book/config/config.dart';
-import 'package:lead_book/core/core.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../config/config.dart';
+import '../../../../core/core.dart';
 
 class Home extends StatefulWidget {
   final String? title;

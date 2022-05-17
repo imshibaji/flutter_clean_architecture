@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'package:lead_book/core/classes/classes.dart';
-import 'package:lead_book/core/helpers/actions_helper.dart';
-import 'package:lead_book/core/widgets/widget.dart';
+import '../../../../core/core.dart';
 
-class Contact extends StatefulWidget {
-  final String? title;
-  const Contact({Key? key, this.title}) : super(key: key);
+// ignore: must_be_immutable
+class Contact extends StatelessWidget {
+  String? title;
 
-  @override
-  State<Contact> createState() => _ContactState();
-}
-
-class _ContactState extends State<Contact> {
+  Contact({Key? key, this.title}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title!),
+        title: Text(title!),
         actions: actionsMenu(context),
       ),
       body: SizedBox(

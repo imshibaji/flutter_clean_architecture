@@ -21,9 +21,8 @@ class _NewsState extends State<News> {
   @override
   void initState() {
     NewsProvider np = Provider.of<NewsProvider>(context, listen: false);
-    if (np.isLoading == false) {
-      np.search(_controller.text);
-    }
+    np.search(_controller.text);
+
     super.initState();
   }
 

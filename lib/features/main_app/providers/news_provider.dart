@@ -18,9 +18,8 @@ class NewsProvider extends ChangeNotifier {
   NewsResponseModel get newsResponse => _nrm!;
 
   void search(String searchTerm, {bool input = true}) async {
-    if (isLoading == true && input == true) {
+    if (isLoading == true) {
       isLoading = false;
-      notifyListeners();
     }
 
     Response res = await _http

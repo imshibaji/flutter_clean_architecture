@@ -12,7 +12,7 @@ class ApiEndpoint {
   static const baseUrl = 'https://apps.shibajidebnath.com/';
   static const api = baseUrl + 'api/';
 
-  static const enqueries = api + 'enqueries?populate=*';
+  static const enqueries = api + 'enqueries?populate=*&sort[0]=id%3Adesc';
 
   // Apps Internals Links
   static const appLoginUrl = AuthApp.login;

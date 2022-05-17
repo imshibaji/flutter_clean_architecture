@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:lead_book/core/core.dart';
 
+import '../../../../core/core.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/widget_functions.dart';
 
