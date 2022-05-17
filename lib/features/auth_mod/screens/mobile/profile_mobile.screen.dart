@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
 import '../../widgets/auth_button.dart';
-import '../../widgets/text_input_field.dart';
 
 class ProfileMobileScreen extends StatelessWidget {
   const ProfileMobileScreen({Key? key}) : super(key: key);

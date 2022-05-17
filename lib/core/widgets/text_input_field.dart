@@ -9,7 +9,7 @@ class TextInputField extends StatelessWidget {
   TextInputType? keyboardType;
   TextInputAction? textInputAction;
   TextEditingController? controller;
-  Function(String? value)? validator;
+  Function(String? value)? validator, onSaved;
   Widget? suffixIcon;
 
   TextInputField({
@@ -22,6 +22,7 @@ class TextInputField extends StatelessWidget {
     this.textInputAction,
     this.controller,
     this.validator,
+    this.onSaved,
     this.suffixIcon,
   }) : super(key: key);
 
@@ -35,6 +36,7 @@ class TextInputField extends StatelessWidget {
         keyboardType: keyboardType,
         textInputAction: textInputAction,
         controller: controller,
+        onSaved: (value) => onSaved!(value),
         decoration: InputDecoration(
           prefixIcon: Icon(prefixIcon),
           labelText: labelTextStr,

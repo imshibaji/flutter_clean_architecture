@@ -103,8 +103,10 @@ class _NewsState extends State<News> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Published At: ' +
-                              articles[index].publishedDate!),
+                          Expanded(
+                            child: Text('Published At: ' +
+                                articles[index].publishedDate!),
+                          ),
                           ElevatedButton(
                             onPressed: () {
                               log(articles[index].link!);
