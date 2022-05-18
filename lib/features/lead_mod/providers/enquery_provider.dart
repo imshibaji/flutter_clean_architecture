@@ -5,6 +5,7 @@ import '../services/services.dart';
 
 class EnqueryProvider extends ChangeNotifier {
   List<EnqueryData>? _enqueries;
+  EnqueryData? _enquery;
   bool isLoaded = false;
 
   // EnqueryProvider() {
@@ -32,5 +33,33 @@ class EnqueryProvider extends ChangeNotifier {
       return _enqueries!;
     }
     return null;
+  }
+
+  void findEnqeryData(int id) {
+    Future.microtask(() async {
+      isLoaded = false;
+      EnqueryService es = EnqueryService();
+      EnquerySingle? eq = await es.getOne(id);
+      _enquery = eq!.data!;
+      isLoaded = true;
+      notifyListeners();
+    });
+  }
+
+  EnqueryData? get enquery {
+    if (_enquery != null) {
+      return _enquery!;
+    }
+    return null;
+  }
+
+  Future<EnqueryData>? getEnqeryData(int id) async {
+    isLoaded = false;
+    EnqueryService es = EnqueryService();
+    EnquerySingle? eq = await es.getOne(id);
+    _enquery = eq!.data!;
+    isLoaded = true;
+    notifyListeners();
+    return _enquery!;
   }
 }

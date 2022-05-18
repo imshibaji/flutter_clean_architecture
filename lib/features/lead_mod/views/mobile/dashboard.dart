@@ -57,15 +57,41 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
                 ' | ' +
                 (lead.customer_mobile ?? 'No Number');
 
-            return ListTile(
-              title: Text(title),
-              subtitle: Text(details),
-              trailing: IconButton(
-                onPressed: () {
-                  Nav.to(context, LeadApp.viewEnquery, arguments: lead);
+            return Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: ListTile(
+                title: Row(
+                  children: [
+                    Text(title),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    StatusText(label: lead.status!),
+                  ],
+                ),
+                subtitle: Text(details),
+                shape: Border.all(width: 0.5),
+                leading: const Icon(
+                  Icons.touch_app_sharp,
+                  size: 36,
+                ),
+                onTap: () {
+                  Nav.to(
+                    context,
+                    LeadApp.viewEnquery,
+                    arguments: ep.enqueries![index],
+                  );
                 },
-                icon: const Icon(Icons.view_compact),
-                tooltip: 'View Details',
+                trailing: IconButton(
+                  onPressed: () async {
+                    EnqueryService es = EnqueryService();
+                    await es.delete(ep.enqueries![index].id!.toInt());
+                    ep.setEnquery();
+                    showMessage(context, 'Lead Data Deleteted');
+                  },
+                  icon: const Icon(Icons.delete_forever),
+                  tooltip: 'Delete Lead',
+                ),
               ),
             );
           });

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-class EnqueryPost {
+class EnquerySingle {
   EnqueryData? data;
   MetaData? meta;
-  EnqueryPost({
+  EnquerySingle({
     this.data,
     this.meta,
   });
@@ -15,8 +15,8 @@ class EnqueryPost {
     };
   }
 
-  factory EnqueryPost.fromMap(Map<String, dynamic> map) {
-    return EnqueryPost(
+  factory EnquerySingle.fromMap(Map<String, dynamic> map) {
+    return EnquerySingle(
       data: map['data'] != null ? EnqueryData.fromMap(map['data']) : null,
       meta: map['meta'] != null ? MetaData.fromMap(map['meta']) : null,
     );
@@ -24,8 +24,8 @@ class EnqueryPost {
 
   String toJson() => json.encode(toMap());
 
-  factory EnqueryPost.fromJson(String source) =>
-      EnqueryPost.fromMap(json.decode(source));
+  factory EnquerySingle.fromJson(String source) =>
+      EnquerySingle.fromMap(json.decode(source));
 }
 
 class Enquery {

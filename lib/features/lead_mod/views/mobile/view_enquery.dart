@@ -1,3 +1,5 @@
+import 'package:clean_architecture/features/lead_mod/providers/providers.dart';
+import 'package:clean_architecture/features/lead_mod/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,12 +21,27 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   String? discussion, status;
   List<Followup>? followups;
+  List<Map<String, dynamic>>? addFollowups;
+  EnqueryData? ed;
+  Lead? lead;
+
+  @override
+  void initState() {
+    super.initState();
+
+    var ep = context.read<EnqueryProvider>();
+    ep.setEnquery();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Lead lead = ModalRoute.of(context)!.settings.arguments! as Lead;
+    ed = (ModalRoute.of(context)!.settings.arguments == null)
+        ? EnqueryData()
+        : ModalRoute.of(context)!.settings.arguments! as EnqueryData;
+
     setState(() {
-      followups = lead.followup;
+      lead = ed!.attributes!;
+      followups = lead!.followup;
     });
 
     return Scaffold(
@@ -42,21 +59,21 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
         children: [
           Stack(
             children: [
-              leadInformation(context, lead),
+              leadInformation(context, lead!),
               Positioned(
                 right: 0,
                 child: ElevatedButton(
                   onPressed: () {
-                    Nav.to(context, LeadApp.editEnquery, arguments: lead);
+                    Nav.to(context, LeadApp.editEnquery, arguments: ed);
                   },
                   child: const Icon(
                     Icons.touch_app_sharp,
                   ),
                 ),
-              )
+              ),
             ],
           ),
-          followupTasks(lead.followup!),
+          followupTasks(lead!.followup!),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -123,13 +140,13 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
               prefixIcon: Icons.water_drop_outlined,
               labelTextStr: 'Status',
               options: const [
-                'new',
                 'pending',
+                'processing',
                 'success',
                 'rejected',
-                'expaired',
+                'expired',
               ],
-              selected: 'new',
+              selected: 'pending',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   status = val;
@@ -142,14 +159,33 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
               children: [
                 AppButton(
                   label: 'Save Now',
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formState.currentState!.validate()) {
-                      setState(() {});
-                      followups!.add(Followup(
-                        discuss_details: discussion,
-                        status: status,
-                      ));
-                      Nav.close(context);
+                      setState(() {
+                        followups!.add(Followup(
+                          discuss_details: discussion,
+                          status: status,
+                        ));
+                        addFollowups = followups!
+                            .map((e) => {
+                                  'discuss_details': e.discuss_details ?? '',
+                                  'status': e.status ?? 'pending',
+                                })
+                            .toList();
+                      });
+                      EnqueryService es = EnqueryService();
+                      var res = await es.addFollowup(
+                        ed!.id!.toInt(),
+                        lead!,
+                        addFollowups!,
+                      );
+                      if (res != null) {
+                        // setState(() {
+                        //   var ep = context.read<EnqueryProvider>();
+                        //   ep.getEnqeryData(ed!.id!.toInt());
+                        // });
+                        Nav.close(context);
+                      }
                     }
                   },
                   stretch: true,
@@ -190,6 +226,12 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
                     fontSize: 20,
                   ),
                 ),
+                const SizedBox(
+                  width: 3,
+                ),
+                StatusText(
+                  label: lead.status!,
+                )
               ],
             ),
           ),

@@ -6,3 +6,5 @@ export 'link_button.dart';
 export 'app_button.dart';
 export 'text_input_field.dart';
 export 'select_option_field.dart';
+export 'badge_view.dart';
+export 'status_text.dart';
