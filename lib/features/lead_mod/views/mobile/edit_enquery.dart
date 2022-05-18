@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
 import '../../lead_app.dart';
+import '../../models/enquery_get_models.dart';
 import '../../widgets/button_bar.dart';
 
 class EditEnqueryForMobile extends StatelessWidget {
@@ -9,6 +10,9 @@ class EditEnqueryForMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Lead lead = (ModalRoute.of(context)!.settings.arguments == null)
+        ? Lead()
+        : ModalRoute.of(context)!.settings.arguments! as Lead;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -21,7 +25,7 @@ class EditEnqueryForMobile extends StatelessWidget {
       ),
       bottomNavigationBar: LeadAppBottomBar(),
       body: Form(
-        child: ListView(
+        child: Column(
           children: [
             const SizedBox(
               height: 15,
@@ -29,22 +33,27 @@ class EditEnqueryForMobile extends StatelessWidget {
             TextInputField(
               prefixIcon: Icons.edit_note,
               labelTextStr: 'Purpose',
+              initialValue: lead.purpose ?? '',
             ),
             TextInputField(
               prefixIcon: Icons.face,
               labelTextStr: 'Customer Name',
+              initialValue: lead.customer_name ?? '',
             ),
             TextInputField(
               prefixIcon: Icons.email,
               labelTextStr: 'Customer Email',
+              initialValue: lead.customer_email ?? '',
             ),
             TextInputField(
               prefixIcon: Icons.phone,
               labelTextStr: 'Customer Phone Number',
+              initialValue: lead.customer_mobile ?? '',
             ),
             TextInputField(
               prefixIcon: Icons.source_outlined,
               labelTextStr: 'Source of Contact',
+              initialValue: lead.source ?? '',
             ),
             SelectOptionField(
               prefixIcon: Icons.water_drop_outlined,
@@ -56,12 +65,16 @@ class EditEnqueryForMobile extends StatelessWidget {
                 'rejected',
                 'expaired',
               ],
-              selected: 'new',
+              selected: lead.status ?? 'new',
             ),
-            AppButton(
-              label: 'Save Now',
-              onPressed: () {},
-              stretch: true,
+            Row(
+              children: [
+                AppButton(
+                  label: 'Save Now',
+                  onPressed: () {},
+                  stretch: true,
+                ),
+              ],
             ),
           ],
         ),

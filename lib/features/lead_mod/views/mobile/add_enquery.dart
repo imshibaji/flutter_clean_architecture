@@ -21,7 +21,7 @@ class AddEnqueryForMobile extends StatelessWidget {
       ),
       bottomNavigationBar: LeadAppBottomBar(),
       body: Form(
-        child: ListView(
+        child: Column(
           children: [
             const SizedBox(
               height: 15,
@@ -58,10 +58,14 @@ class AddEnqueryForMobile extends StatelessWidget {
               ],
               selected: 'new',
             ),
-            AppButton(
-              label: 'Save Now',
-              onPressed: () {},
-              stretch: true,
+            Row(
+              children: [
+                AppButton(
+                  label: 'Save Now',
+                  onPressed: () {},
+                  stretch: true,
+                ),
+              ],
             ),
           ],
         ),

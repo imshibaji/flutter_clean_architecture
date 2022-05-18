@@ -40,4 +40,8 @@ class Nav {
       arguments: arguments,
     );
   }
+
+  static void close(BuildContext context, [Object? result]) {
+    Navigator.pop(context, result);
+  }
 }

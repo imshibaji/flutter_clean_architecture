@@ -1,5 +1,33 @@
 import 'dart:convert';
 
+class EnqueryPost {
+  EnqueryData? data;
+  MetaData? meta;
+  EnqueryPost({
+    this.data,
+    this.meta,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'data': data?.toMap(),
+      'meta': meta?.toMap(),
+    };
+  }
+
+  factory EnqueryPost.fromMap(Map<String, dynamic> map) {
+    return EnqueryPost(
+      data: map['data'] != null ? EnqueryData.fromMap(map['data']) : null,
+      meta: map['meta'] != null ? MetaData.fromMap(map['meta']) : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory EnqueryPost.fromJson(String source) =>
+      EnqueryPost.fromMap(json.decode(source));
+}
+
 class Enquery {
   List<EnqueryData>? data;
   MetaData? meta;

@@ -21,4 +21,47 @@ class EnqueryService {
     }
     return null;
   }
+
+  Future<Enquery?> create(Lead lead) async {
+    Response res = await _http.post(
+      ApiEndpoint.enqueries,
+      params: jsonDecode(
+        EnqueryPost(
+          data: EnqueryData(attributes: lead),
+        ).toJson(),
+      ),
+    );
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      Enquery enquery = Enquery.fromJson(jsonEncode(res.data));
+      return enquery;
+    }
+    return null;
+  }
+
+  Future<Enquery?> update(int id, Lead lead) async {
+    Response res = await _http.put(
+      ApiEndpoint.enqueries + '/' + id.toString(),
+      data: jsonDecode(
+        EnqueryPost(
+          data: EnqueryData(attributes: lead),
+        ).toJson(),
+      ),
+    );
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      Enquery enquery = Enquery.fromJson(jsonEncode(res.data));
+      return enquery;
+    }
+    return null;
+  }
+
+  Future<Enquery?> delete(int id) async {
+    Response res = await _http.put(
+      ApiEndpoint.enqueries + '/' + id.toString(),
+    );
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      Enquery enquery = Enquery.fromJson(jsonEncode(res.data));
+      return enquery;
+    }
+    return null;
+  }
 }

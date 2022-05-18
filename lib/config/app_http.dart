@@ -12,5 +12,6 @@ class Http extends HttpManager {
           'x-rapidapi-host': host ?? Config.host,
           'x-rapidapi-key': key ?? Config.key,
           'Authorization': token ?? Config.token,
+          'Content-Type': 'application/json',
         });
 }

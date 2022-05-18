@@ -5,6 +5,7 @@ class TextInputField extends StatelessWidget {
   IconData? prefixIcon = Icons.ac_unit;
   String? labelTextStr;
   String? hintTextStr;
+  String? initialValue;
   bool obscureText;
   TextInputType? keyboardType;
   TextInputAction? textInputAction;
@@ -17,6 +18,7 @@ class TextInputField extends StatelessWidget {
     this.prefixIcon,
     this.labelTextStr,
     this.hintTextStr,
+    this.initialValue,
     this.obscureText = false,
     this.keyboardType,
     this.textInputAction,
@@ -37,6 +39,7 @@ class TextInputField extends StatelessWidget {
         textInputAction: textInputAction,
         controller: controller,
         onSaved: (value) => onSaved!(value),
+        initialValue: initialValue,
         decoration: InputDecoration(
           prefixIcon: Icon(prefixIcon),
           labelText: labelTextStr,

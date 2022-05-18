@@ -62,7 +62,7 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
               subtitle: Text(details),
               trailing: IconButton(
                 onPressed: () {
-                  Nav.to(context, LeadApp.viewEnquery);
+                  Nav.to(context, LeadApp.viewEnquery, arguments: lead);
                 },
                 icon: const Icon(Icons.view_compact),
                 tooltip: 'View Details',
