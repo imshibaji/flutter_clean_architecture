@@ -1,10 +1,8 @@
-import 'package:clean_architecture/features/lead_mod/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../lead_app.dart';
-import '../../models/enquery_get_models.dart';
-import '../../widgets/button_bar.dart';
+import '../../lead_mod.dart';
 
 class EditEnqueryForMobile extends StatefulWidget {
   const EditEnqueryForMobile({Key? key}) : super(key: key);
@@ -147,8 +145,11 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
                             source: source,
                             status: status,
                           ));
-                      setState(() {});
+
                       if (res != null) {
+                        var ep = context.read<EnqueryProvider>();
+                        ep.findEnqeryData(ed.id!);
+
                         Nav.to(context, LeadApp.viewEnquery, arguments: ed);
                         showMessage(context, 'Existing Lead Data Saved');
                       }

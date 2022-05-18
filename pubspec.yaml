@@ -37,6 +37,7 @@ dependencies:
   shared_preferences: ^2.0.13
   dio: ^4.0.6
   provider: ^6.0.2
+  url_launcher: ^6.1.2
   
 
 dev_dependencies:

@@ -83,11 +83,8 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
                   );
                 },
                 trailing: IconButton(
-                  onPressed: () async {
-                    EnqueryService es = EnqueryService();
-                    await es.delete(ep.enqueries![index].id!.toInt());
-                    ep.setEnquery();
-                    showMessage(context, 'Lead Data Deleteted');
+                  onPressed: () {
+                    confirmDialog(ep.enqueries![index], ep);
                   },
                   icon: const Icon(Icons.delete_forever),
                   tooltip: 'Delete Lead',
@@ -98,5 +95,47 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
     } else {
       return const Center(child: CircularProgressIndicator());
     }
+  }
+
+  Future<void> confirmDialog(EnqueryData ed, EnqueryProvider ep) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are you sure?'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('This is data will be deleted from the Server.'),
+                Text('Rethinking about your acction.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                deleteData(ed.id!, ep);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> deleteData(int id, EnqueryProvider ep) async {
+    EnqueryService es = EnqueryService();
+    await es.delete(id);
+    ep.setEnquery();
+    showMessage(context, 'Lead Data Deleteted');
   }
 }

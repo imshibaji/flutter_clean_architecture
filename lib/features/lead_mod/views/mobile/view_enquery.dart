@@ -1,5 +1,3 @@
-import 'package:clean_architecture/features/lead_mod/providers/providers.dart';
-import 'package:clean_architecture/features/lead_mod/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +6,8 @@ import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../lead_app.dart';
 import '../../models/enquery_get_models.dart';
+import '../../services/services.dart';
+import '../../utils/utils.dart';
 import '../../widgets/button_bar.dart';
 
 class ViewEnqueryForMobile extends StatefulWidget {
@@ -24,14 +24,6 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
   List<Map<String, dynamic>>? addFollowups;
   EnqueryData? ed;
   Lead? lead;
-
-  @override
-  void initState() {
-    super.initState();
-
-    var ep = context.read<EnqueryProvider>();
-    ep.setEnquery();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,10 +172,7 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
                         addFollowups!,
                       );
                       if (res != null) {
-                        // setState(() {
-                        //   var ep = context.read<EnqueryProvider>();
-                        //   ep.getEnqeryData(ed!.id!.toInt());
-                        // });
+                        showMessage(context, 'New Taks is Added');
                         Nav.close(context);
                       }
                     }
@@ -236,7 +225,7 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(4),
             child: Row(
               children: [
                 const Icon(
@@ -246,17 +235,24 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text(
-                  lead.customer_email ?? 'no email',
-                  style: const TextStyle(
-                    fontSize: 18,
+                GestureDetector(
+                  child: Text(
+                    lead.customer_email ?? 'no email',
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
+                  onTap: () {
+                    if (lead.customer_email!.isNotEmpty) {
+                      mailTo(lead.customer_email!);
+                    }
+                  },
                 ),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(4),
             child: Row(
               children: [
                 const Icon(
@@ -266,11 +262,18 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text(
-                  lead.customer_mobile ?? 'no number',
-                  style: const TextStyle(
-                    fontSize: 18,
+                GestureDetector(
+                  child: Text(
+                    lead.customer_mobile ?? 'no number',
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
+                  onTap: () {
+                    if (lead.customer_mobile!.isNotEmpty) {
+                      makePhoneCall(lead.customer_mobile!);
+                    }
+                  },
                 ),
               ],
             ),
