@@ -1,8 +1,8 @@
-import 'package:clean_architecture/hive_helper/register_adapters.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
+import 'hive_helper/register_adapters.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
