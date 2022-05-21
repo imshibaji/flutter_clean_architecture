@@ -1,22 +1,17 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
-import 'package:clean_archetructure/core/helpers/actions_helper.dart';
-import 'package:clean_archetructure/features/main_app/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
-class Contact extends StatefulWidget {
-  final String? title;
-  const Contact({Key? key, this.title}) : super(key: key);
+import '../../../../core/core.dart';
 
-  @override
-  State<Contact> createState() => _ContactState();
-}
+// ignore: must_be_immutable
+class Contact extends StatelessWidget {
+  String? title;
 
-class _ContactState extends State<Contact> {
+  Contact({Key? key, this.title}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title!),
+        title: Text(title!),
         actions: actionsMenu(context),
       ),
       body: SizedBox(
@@ -41,7 +36,7 @@ class _ContactState extends State<Contact> {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomBar(),
+      bottomNavigationBar: BottomBar(),
     );
   }
 }

@@ -16,7 +16,32 @@ class RouteManager {
 }
 
 class Nav {
-  static void to(BuildContext context, String url) {
-    Navigator.pushReplacementNamed(context, url);
+  static void toNamed(
+    BuildContext context,
+    String url, {
+    Object? arguments,
+  }) =>
+      Navigator.pushNamed(
+        context,
+        url,
+        arguments: arguments,
+      );
+
+  static void to(
+    BuildContext context,
+    String url, {
+    Object? arguments,
+    Object? result,
+  }) {
+    Navigator.pushReplacementNamed(
+      context,
+      url,
+      result: result,
+      arguments: arguments,
+    );
+  }
+
+  static void close(BuildContext context, [Object? result]) {
+    Navigator.pop(context, result);
   }
 }

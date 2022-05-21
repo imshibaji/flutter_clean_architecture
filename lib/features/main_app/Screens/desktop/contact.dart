@@ -1,6 +1,6 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/classes/route_manager.dart';
 import '../../widgets/widget.dart';
 
 class Contact extends StatefulWidget {

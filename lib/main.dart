@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'config/app_providers.dart';
-import 'config/app_routes.dart';
-import 'config/app_theme.dart';
+import 'config/config.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,12 +9,12 @@ void main() {
 
   runApp(MultiProvider(
     providers: appProviders,
-    child: const MyApp(),
+    child: const CleanApp(),
   ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class CleanApp extends StatelessWidget {
+  const CleanApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
     // print("My App: " + tm.isDarkMode.toString());
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Lead Book',
       debugShowCheckedModeBanner: false,
       theme: MyTheme().lightTheme,
       darkTheme: MyTheme().darkTheme,

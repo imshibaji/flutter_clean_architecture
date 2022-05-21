@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:clean_archetructure/core/helpers/login_helper.dart';
-import 'package:clean_archetructure/core/widgets/day_night_switch.dart';
-import 'package:clean_archetructure/features/auth_mod/widgets/auth_button.dart';
-import 'package:clean_archetructure/features/auth_mod/widgets/widget_functions.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/core.dart';
+import '../../widgets/auth_button.dart';
+import '../../widgets/widget_functions.dart';
 
 class LoginMobileScreen extends StatefulWidget {
   const LoginMobileScreen({

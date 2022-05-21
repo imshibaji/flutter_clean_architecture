@@ -1,7 +1,6 @@
-import 'package:clean_archetructure/core/classes/controller_manager.dart';
-import 'package:clean_archetructure/core/classes/display_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/core.dart';
 import '../../Screens/desktop/news.dart' as desktop;
 import '../../Screens/mobile/news.dart' as mobile;
 import '../../Screens/tablet/news.dart' as tablet;

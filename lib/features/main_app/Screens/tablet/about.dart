@@ -1,6 +1,6 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/classes/route_manager.dart';
 import '../../widgets/day_night_switch.dart';
 import '../../widgets/menu_buttons.dart';
 

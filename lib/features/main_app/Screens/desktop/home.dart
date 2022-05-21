@@ -1,6 +1,6 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/classes/classes.dart';
 import '../../widgets/widget.dart';
 
 class Home extends StatefulWidget {

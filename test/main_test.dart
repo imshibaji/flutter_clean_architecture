@@ -1,13 +1,14 @@
-import 'package:clean_archetructure/main.dart';
+import 'package:clean_architecture/main.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('main ...', (tester) async {
+  testWidgets('Find Dashboard', (tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const CleanApp());
 
     // Verify that our counter starts at 0.
-    expect(find.text('Home Page'), findsOneWidget);
+    expect(find.widgetWithText(Text, 'Dashboard'), findsOneWidget);
     // expect(find.text('1'), findsNothing);
 
     // // Tap the '+' icon and trigger a frame.

@@ -1,10 +1,9 @@
-import 'package:clean_archetructure/core/classes/controller_manager.dart';
-import 'package:clean_archetructure/core/classes/display_manager.dart';
 import 'package:flutter/material.dart';
 
-import '../../Screens//mobile/contact.dart' as mobile;
-import '../../Screens/tablet/contact.dart' as tablet;
+import '../../../../core/core.dart';
+import '../../Screens/mobile/contact.dart' as mobile;
 import '../../Screens/desktop/contact.dart' as desktop;
+import '../../Screens/tablet/contact.dart' as tablet;
 
 class ContactController extends StatelessController {
   final String _title = 'Contact Page';
