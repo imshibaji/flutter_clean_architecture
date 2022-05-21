@@ -1,3 +1,4 @@
+import 'package:clean_architecture/hive_helper/register_adapters.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +7,8 @@ import 'config/config.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Provider.debugCheckInvalidValueType = null;
+
+  registerAdapters();
 
   runApp(MultiProvider(
     providers: appProviders,
