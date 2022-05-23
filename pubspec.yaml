@@ -38,7 +38,7 @@ dependencies:
   dio: ^4.0.6
   provider: ^6.0.2
   url_launcher: ^6.1.2
-  
+  local_auth: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +53,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   build_runner: ^2.1.7
+  change_app_package_name: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

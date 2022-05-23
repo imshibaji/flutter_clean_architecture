@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 class HttpManager {
   final Dio _dio = Dio();
@@ -12,12 +13,26 @@ class HttpManager {
     _dio.options.headers = headers;
 
     // how to solve flutter CERTIFICATE_VERIFY_FAILED error while performing a POST request?
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      return client;
-    };
+    // (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    //     (HttpClient client) {
+    //   client.badCertificateCallback =
+    //       (X509Certificate cert, String host, int port) => true;
+    //   return client;
+    // };
+    if (kIsWeb) {
+      _dio.options.headers['content-Type'] = '*';
+      _dio.options.headers['Access-Control-Allow-Origin'] = '*';
+      _dio.options.headers['Access-Control-Allow-Methods'] = '*';
+    }
+
+    if (!kIsWeb) {
+      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (HttpClient client) {
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+        return client;
+      };
+    }
   }
 
   Future<Response> get(
