@@ -80,13 +80,14 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
     );
   }
 
-  Expanded balanceCard({
+  SizedBox balanceCard({
     String assetsImageName = 'balance.svg',
     Color color = Colors.amber,
     String title = 'Balance',
     String amount = '1,000.00',
   }) {
-    return Expanded(
+    return SizedBox(
+      height: 100,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(

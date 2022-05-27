@@ -16,7 +16,7 @@ class _SplashControllerState extends State<SplashController> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
-        const Duration(seconds: 9),
+        const Duration(seconds: 8),
         () => Nav.to(context, '/'),
       );
     });
