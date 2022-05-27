@@ -1,10 +1,35 @@
-import 'package:hive/hive.dart';
-import 'package:clean_architecture/features/lead_mod/dbobj/followup.dart';
-import 'package:clean_architecture/features/lead_mod/dbobj/deal.dart';
-import 'package:clean_architecture/features/lead_mod/dbobj/leads.dart';
+import 'dart:io';
 
-void registerAdapters() {
-  Hive.registerAdapter(FollowupAdapter());
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+
+import '../features/lead_mod/dbobj/dbobjs.dart';
+import '../features/lead_mod/services/services.dart';
+// import 'package:path_provider/path_provider.dart';
+
+void registerAdapters() async {
+  await Hive.initFlutter();
+
   Hive.registerAdapter(DealAdapter());
-	Hive.registerAdapter(LeadAdapter());
+  Hive.registerAdapter(FollowupAdapter());
+  Hive.registerAdapter(PaymentAdapter());
+  Hive.registerAdapter(LeadAdapter());
+  Hive.registerAdapter(ProfileAdapter());
+
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+
+  String dbLeads = appDocDir.path + '/' + LeadService.boxName + '.db';
+  await Hive.openBox<Lead>(LeadService.boxName, path: dbLeads);
+
+  String dbDeals = appDocDir.path + '/' + DealService.boxName + '.db';
+  await Hive.openBox<Deal>(DealService.boxName, path: dbDeals);
+
+  String dbFollowups = appDocDir.path + '/' + FollowupService.boxName + '.db';
+  await Hive.openBox<Followup>(FollowupService.boxName, path: dbFollowups);
+
+  String dbPayments = appDocDir.path + '/' + PaymentService.boxName + '.db';
+  await Hive.openBox<Payment>(PaymentService.boxName, path: dbPayments);
+
+  String dbProfile = appDocDir.path + '/' + ProfileService.boxName + '.db';
+  await Hive.openBox<Profile>(ProfileService.boxName, path: dbProfile);
 }

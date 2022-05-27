@@ -1,6 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+TextFormField searchBarTitle() {
+  return TextFormField(
+    decoration: const InputDecoration(
+      prefixIcon: Icon(
+        Icons.search,
+        color: Colors.white,
+      ),
+      prefixStyle: TextStyle(color: Colors.white),
+      labelText: 'Search...',
+      labelStyle: TextStyle(color: Colors.white),
+    ),
+    validator: (val) {
+      if (val!.isEmpty) {
+        return 'Input the name';
+      }
+      return null;
+    },
+    cursorColor: Colors.white,
+    style: const TextStyle(color: Colors.amber),
+  );
+}
+
 Future<void> launchInBrowser(Uri url) async {
   if (!await launchUrl(
     url,

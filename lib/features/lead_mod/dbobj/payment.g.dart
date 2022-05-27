@@ -1,44 +1,47 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'followup.dart';
+part of 'payment.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class FollowupAdapter extends TypeAdapter<Followup> {
+class PaymentAdapter extends TypeAdapter<Payment> {
   @override
-  final int typeId = 0;
+  final int typeId = 3;
 
   @override
-  Followup read(BinaryReader reader) {
+  Payment read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Followup(
-      id: fields[2] as String?,
-      uid: fields[3] as String?,
-      discuss: fields[0] as String?,
-      status: fields[1] as String?,
-      schedule: fields[4] as DateTime?,
+    return Payment(
+      id: fields[0] as String?,
+      uid: fields[4] as String?,
+      details: fields[1] as String?,
+      amount: fields[2] as double?,
+      type: fields[3] as String?,
+      createdAt: fields[5] as DateTime?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Followup obj) {
+  void write(BinaryWriter writer, Payment obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(2)
-      ..write(obj.id)
-      ..writeByte(3)
-      ..write(obj.uid)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.discuss)
-      ..writeByte(1)
-      ..write(obj.status)
+      ..write(obj.id)
       ..writeByte(4)
-      ..write(obj.schedule);
+      ..write(obj.uid)
+      ..writeByte(1)
+      ..write(obj.details)
+      ..writeByte(2)
+      ..write(obj.amount)
+      ..writeByte(3)
+      ..write(obj.type)
+      ..writeByte(5)
+      ..write(obj.createdAt);
   }
 
   @override
@@ -47,7 +50,7 @@ class FollowupAdapter extends TypeAdapter<Followup> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is FollowupAdapter &&
+      other is PaymentAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

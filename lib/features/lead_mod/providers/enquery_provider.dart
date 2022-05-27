@@ -8,17 +8,7 @@ class EnqueryProvider extends ChangeNotifier {
   EnqueryData? _enquery;
   bool isLoaded = false;
 
-  // EnqueryProvider() {
-  //   setEnquery();
-  // }
-
   void setEnquery() {
-    // if (isLoaded == true) {
-    //   isLoaded = false;
-    //   _enqueries = null;
-    //   notifyListeners();
-    // }
-
     Future.microtask(() async {
       EnqueryService es = EnqueryService();
       Enquery? eq = await es.getAll();

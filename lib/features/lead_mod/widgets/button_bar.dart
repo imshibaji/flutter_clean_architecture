@@ -14,14 +14,24 @@ class LeadAppBottomBar extends BottomBar {
             link: LeadApp.home,
           ),
           ButtonData(
-            icon: Icons.task_alt,
+            icon: Icons.people_outlined,
+            label: 'Leads',
+            link: LeadApp.listEnquery,
+          ),
+          ButtonData(
+            icon: Icons.tty_sharp,
             label: 'Followup',
             link: LeadApp.followup,
           ),
           ButtonData(
-            icon: Icons.search_rounded,
-            label: 'Search',
-            link: LeadApp.search,
+            icon: Icons.payments,
+            label: 'Deals',
+            link: LeadApp.listDeal,
+          ),
+          ButtonData(
+            icon: Icons.account_balance_wallet_rounded,
+            label: 'Account',
+            link: LeadApp.transactions,
           ),
         ]);
 }

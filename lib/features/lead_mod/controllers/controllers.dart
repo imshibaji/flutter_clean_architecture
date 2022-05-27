@@ -4,3 +4,6 @@ export 'add_enquery_controller.dart';
 export 'edit_enquery_controller.dart';
 export 'followup_controller.dart';
 export 'view_enquery_controller.dart';
+export 'list_enquery_controller.dart';
+export 'list_deal_controller.dart';
+export 'transactions_controller.dart';

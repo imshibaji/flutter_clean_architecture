@@ -10,6 +10,7 @@ class FollowupForMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const AppIcon(),
         title: const Text('Followup'),
         actions: actionsMenu(context),
       ),

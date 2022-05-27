@@ -11,6 +11,17 @@ List<Widget> actionsMenu(BuildContext context) {
         },
         icon: const Icon(Icons.account_circle_outlined)),
     const DayNightSwitch(),
+  ];
+}
+
+List<Widget> actionsMenuWithDropdowns(BuildContext context) {
+  return [
+    IconButton(
+        onPressed: () {
+          Nav.to(context, '/profile');
+        },
+        icon: const Icon(Icons.account_circle_outlined)),
+    const DayNightSwitch(),
     ActionTopButtons()
   ];
 }

@@ -1,7 +1,8 @@
-import 'package:clean_architecture/features/lead_mod/lead_mod.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
+import '../../dbobj/lead.dart' as ol;
+import '../../lead_mod.dart';
 
 class AddEnqueryForMobile extends StatefulWidget {
   const AddEnqueryForMobile({Key? key}) : super(key: key);
@@ -119,24 +120,7 @@ class _AddEnqueryForMobileState extends State<AddEnqueryForMobile> {
               children: [
                 AppButton(
                   label: 'Save Now',
-                  onPressed: () async {
-                    if (_formState.currentState!.validate()) {
-                      EnqueryService es = EnqueryService();
-                      var res = await es.create(Lead(
-                        purpose: purpose,
-                        customer_name: name,
-                        customer_email: email,
-                        customer_mobile: mobile,
-                        source: source,
-                        status: status,
-                      ));
-                      setState(() {});
-                      if (res != null) {
-                        Nav.to(context, LeadApp.home);
-                        showMessage(context, 'New Lead Data Saved');
-                      }
-                    }
-                  },
+                  onPressed: onSubmit,
                   stretch: true,
                 ),
               ],
@@ -145,5 +129,37 @@ class _AddEnqueryForMobileState extends State<AddEnqueryForMobile> {
         ),
       ),
     );
+  }
+
+  void onSubmit() async {
+    if (_formState.currentState!.validate()) {
+      // Leads Added Online
+      EnqueryService es = EnqueryService();
+      var res = await es.create(Lead(
+        purpose: purpose,
+        customer_name: name,
+        customer_email: email,
+        customer_mobile: mobile,
+        source: source,
+        status: status,
+      ));
+
+      // Leads Added Offline
+      LeadService ls = LeadService();
+      ls.add(ol.Lead(
+        uid: uuid(),
+        name: name,
+        email: email,
+        mobile: mobile,
+        source: source,
+        status: status,
+      ));
+
+      setState(() {});
+      if (res != null) {
+        Nav.to(context, LeadApp.home);
+        showMessage(context, 'New Lead Data Saved');
+      }
+    }
   }
 }
