@@ -14,22 +14,22 @@ class DashboardForMobile extends StatefulWidget {
 class _DashboardForMobileState extends State<DashboardForMobile> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void _openDrawer() {
-    _scaffoldKey.currentState!.openDrawer();
-  }
+  // void _openDrawer() {
+  //   _scaffoldKey.currentState!.openDrawer();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: const LeadAppDrawer(),
+      // drawer: const LeadAppDrawer(),
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: _openDrawer,
-          icon: const Icon(Icons.menu),
-        ),
+        // leading: IconButton(
+        //   onPressed: _openDrawer,
+        //   icon: const Icon(Icons.menu),
+        // ),
         title: const Text('Enqueries / Leads'),
-        actions: actionsMenu(context),
+        actions: actionsMenuWithLogout(context),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

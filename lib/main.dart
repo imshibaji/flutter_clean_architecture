@@ -31,7 +31,7 @@ class CleanApp extends StatelessWidget {
       theme: MyTheme().lightTheme,
       darkTheme: MyTheme().darkTheme,
       themeMode: tm.themeMode,
-      initialRoute: '/',
+      initialRoute: 'splash/',
       routes: Routes().routes,
     );
   }

@@ -3,6 +3,8 @@ import 'package:hive/hive.dart';
 import '../../../hive_helper/fields/lead_fields.dart';
 import '../../../hive_helper/hive_adapters.dart';
 import '../../../hive_helper/hive_types.dart';
+import 'deal.dart';
+import 'followup.dart';
 
 part 'leads.g.dart';
 
@@ -17,7 +19,11 @@ class Lead extends HiveObject {
   @HiveField(LeadFields.mobile)
   String? mobile;
   @HiveField(LeadFields.status)
-  Map<String, dynamic>? status;
+  String? status;
+  @HiveField(LeadFields.followups)
+  List<Followup>? followups;
+  @HiveField(LeadFields.deals)
+  List<Deal>? deals;
 
   Lead({
     this.id,
@@ -25,8 +31,7 @@ class Lead extends HiveObject {
     this.email,
     this.mobile,
     this.status,
+    this.followups,
+    this.deals,
   });
 }
-
-@HiveType(typeId: 2)
-class Status {}

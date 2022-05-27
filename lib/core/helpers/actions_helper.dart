@@ -11,12 +11,23 @@ List<Widget> actionsMenu(BuildContext context) {
         },
         icon: const Icon(Icons.account_circle_outlined)),
     const DayNightSwitch(),
-    // IconButton(
-    //   onPressed: () {
-    //     doLogout(context);
-    //   },
-    //   icon: const Icon(Icons.logout),
-    // ),
     ActionTopButtons()
+  ];
+}
+
+List<Widget> actionsMenuWithLogout(BuildContext context) {
+  return [
+    IconButton(
+        onPressed: () {
+          Nav.to(context, '/profile');
+        },
+        icon: const Icon(Icons.account_circle_outlined)),
+    const DayNightSwitch(),
+    IconButton(
+      onPressed: () {
+        doLogout(context);
+      },
+      icon: const Icon(Icons.logout),
+    ),
   ];
 }

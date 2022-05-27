@@ -8,7 +8,7 @@ part of 'leads.dart';
 
 class LeadAdapter extends TypeAdapter<Lead> {
   @override
-  final int typeId = 0;
+  final int typeId = 2;
 
   @override
   Lead read(BinaryReader reader) {
@@ -21,14 +21,16 @@ class LeadAdapter extends TypeAdapter<Lead> {
       name: fields[1] as String?,
       email: fields[2] as String?,
       mobile: fields[3] as String?,
-      status: (fields[4] as Map?)?.cast<String, dynamic>(),
+      status: fields[4] as String?,
+      followups: (fields[5] as List?)?.cast<Followup>(),
+      deals: (fields[6] as List?)?.cast<Deal>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Lead obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +40,11 @@ class LeadAdapter extends TypeAdapter<Lead> {
       ..writeByte(3)
       ..write(obj.mobile)
       ..writeByte(4)
-      ..write(obj.status);
+      ..write(obj.status)
+      ..writeByte(5)
+      ..write(obj.followups)
+      ..writeByte(6)
+      ..write(obj.deals);
   }
 
   @override

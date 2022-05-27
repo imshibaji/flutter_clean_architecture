@@ -38,13 +38,12 @@ dependencies:
   dio: ^4.0.6
   provider: ^6.0.2
   url_launcher: ^6.1.2
-  auth: ^8.1.0
-  getwidget: ^2.0.5
   flutter_svg: ^1.0.3
   flutter_local_notifications: ^9.5.3+1
   local_auth: ^2.0.2
   hive: ^2.2.1
   hive_flutter: ^1.1.0
+  animated_text_kit: ^4.2.1
 
 dev_dependencies:
   flutter_test:
