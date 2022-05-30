@@ -3,7 +3,10 @@ import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../../../dbobj/dbobjs.dart' as hive;
-import '../../../lead_mod.dart';
+import '../../../lead_app.dart';
+import '../../../providers/providers.dart';
+import '../../../widgets/widgets.dart';
+import '../../../utils/utils.dart';
 
 class ListLeadForMobile extends StatefulWidget {
   const ListLeadForMobile({Key? key}) : super(key: key);
@@ -36,52 +39,73 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
 
   Widget infoList(ServiceProvider sp) {
     if (sp.leads != null) {
-      return ListView.builder(
-          itemCount: sp.leads!.length,
-          itemBuilder: (context, index) {
-            // Data Aquare;
-            hive.Lead lead = sp.leads![index];
+      return Column(
+        children: [
+          searchBar(),
+          Container(
+            color: Colors.teal.withOpacity(0.4),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+            height: 50,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                ChipButton(label: 'New', onPressed: () {}),
+                ChipButton(label: 'Pending', onPressed: () {}),
+                ChipButton(label: 'Interested', onPressed: () {}),
+                ChipButton(label: 'Success', onPressed: () {}),
+                ChipButton(label: 'Rejected', onPressed: () {}),
+                ChipButton(label: 'Expaired', onPressed: () {}),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: sp.leads!.length,
+                itemBuilder: (context, index) {
+                  // Data Aquare;
+                  hive.Lead lead = sp.leads![index];
 
-            String title = lead.name ?? 'No Name';
-            String details = (lead.email ?? 'No Email') +
-                ' | ' +
-                (lead.mobile ?? 'No Number');
+                  String title = lead.name ?? 'No Name';
+                  String details = (lead.purpose ?? 'No Details');
 
-            return Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: ListTile(
-                title: Row(
-                  children: [
-                    Text(title),
-                    const SizedBox(
-                      width: 5,
+                  return Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: ListTile(
+                      title: Row(
+                        children: [
+                          Text(title),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          StatusText(label: lead.status!),
+                        ],
+                      ),
+                      subtitle: Text("> " + details),
+                      shape: Border.all(width: 0.5),
+                      leading: const Icon(
+                        Icons.touch_app_sharp,
+                        size: 36,
+                      ),
+                      onTap: () {
+                        Nav.to(
+                          context,
+                          LeadApp.viewLead,
+                          arguments: sp.leads![index],
+                        );
+                      },
+                      trailing: IconButton(
+                        onPressed: () {
+                          confirmDialog(index, sp);
+                        },
+                        icon: const Icon(Icons.delete_forever),
+                        tooltip: 'Delete Lead',
+                      ),
                     ),
-                    StatusText(label: lead.status!),
-                  ],
-                ),
-                subtitle: Text(details),
-                shape: Border.all(width: 0.5),
-                leading: const Icon(
-                  Icons.touch_app_sharp,
-                  size: 36,
-                ),
-                onTap: () {
-                  Nav.to(
-                    context,
-                    LeadApp.viewLead,
-                    arguments: sp.leads![index],
                   );
-                },
-                trailing: IconButton(
-                  onPressed: () {
-                    confirmDialog(index, sp);
-                  },
-                  icon: const Icon(Icons.delete_forever),
-                  tooltip: 'Delete Lead',
-                ),
-              ),
-            );
-          });
+                }),
+          ),
+        ],
+      );
     } else {
       return const Center(child: CircularProgressIndicator());
     }

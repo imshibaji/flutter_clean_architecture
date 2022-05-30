@@ -23,41 +23,42 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
       body: SizedBox(
         width: double.infinity,
         child: ListView(children: [
+          balanceCard(
+            title: 'Balance:',
+            amount: '8k',
+          ),
           SizedBox(
               height: 200,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ieCard(
-                    color: const Color.fromARGB(255, 3, 236, 154),
-                    assetsImageName: 'profits.svg',
-                  ),
+                      color: const Color.fromARGB(255, 3, 236, 154),
+                      assetsImageName: 'profits.svg',
+                      amount: '10k'),
                   ieCard(
                     title: 'Expenses',
                     color: const Color.fromARGB(255, 254, 147, 147),
-                    amount: '200.00',
+                    amount: '2k',
                   ),
                 ],
               )),
-          balanceCard(
-            title: 'Balance:',
-            amount: '800.00',
-          ),
+
           shortcutButton(
             pins: 200,
           ),
           shortcutButton(
             color: const Color.fromARGB(255, 247, 141, 3),
-            title: 'Followups pending',
+            title: 'Followups / Activities',
             pins: 152,
             onPress: () {},
           ),
-          shortcutButton(
-            color: Colors.grey,
-            title: 'Followups Processing',
-            pins: 24,
-            onPress: () {},
-          ),
+          // shortcutButton(
+          //   color: Colors.grey,
+          //   title: 'Followups Processing',
+          //   pins: 24,
+          //   onPress: () {},
+          // ),
           shortcutButton(
             color: Colors.blueGrey,
             title: 'New Deals / Proposals',
@@ -66,7 +67,7 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
           ),
           shortcutButton(
             color: const Color.fromARGB(255, 31, 151, 95),
-            title: 'Converted Deals',
+            title: 'Converted Leads',
             pins: 12,
             onPress: () {},
           ),

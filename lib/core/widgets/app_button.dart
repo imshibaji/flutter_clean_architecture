@@ -29,7 +29,7 @@ class AppButton extends StatelessWidget {
             onPressed: onPressed,
             child: Text(
               label,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 12),
             ),
             style: ElevatedButton.styleFrom(
               primary: backgroundColor,

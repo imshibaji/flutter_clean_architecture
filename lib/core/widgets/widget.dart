@@ -8,3 +8,4 @@ export 'text_input_field.dart';
 export 'select_option_field.dart';
 export 'badge_view.dart';
 export 'status_text.dart';
+export 'chip_button.dart';

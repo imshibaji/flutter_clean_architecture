@@ -1,9 +1,10 @@
-import 'package:clean_architecture/features/lead_mod/lead_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../dbobj/dbobjs.dart';
+import '../../lead_app.dart';
+import '../../utils/utils.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
@@ -26,9 +27,34 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
       body: Consumer<ServiceProvider>(builder: (context, sp, child) {
         sp.getAllFollowups();
         if (sp.followups != null) {
-          return ListView.builder(
-            itemCount: sp.followups!.length,
-            itemBuilder: (context, index) => listItem(sp.followups![index], sp),
+          return Column(
+            children: [
+              searchBar(),
+              Container(
+                color: Colors.teal.withOpacity(0.4),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+                height: 50,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    ChipButton(label: 'New', onPressed: () {}),
+                    ChipButton(label: 'Pending', onPressed: () {}),
+                    ChipButton(label: 'Interested', onPressed: () {}),
+                    ChipButton(label: 'Success', onPressed: () {}),
+                    ChipButton(label: 'Rejected', onPressed: () {}),
+                    ChipButton(label: 'Expaired', onPressed: () {}),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: sp.followups!.length,
+                  itemBuilder: (context, index) =>
+                      listItem(sp.followups![index], sp),
+                ),
+              ),
+            ],
           );
         } else {
           return const Center(child: CircularProgressIndicator());
@@ -46,7 +72,7 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
 
     var dateTime =
         '${followup.schedule!.day}/${followup.schedule!.month}/${followup.schedule!.year} ${followup.schedule!.hour}:${followup.schedule!.minute}';
-    var detailOfLead = (lead.name! + ' | ' + dateTime);
+    var detailOfLead = (lead.name! + ' | ' + lead.purpose! + ' | ' + dateTime);
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: ListTile(

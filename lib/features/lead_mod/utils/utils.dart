@@ -44,6 +44,27 @@ TextFormField searchBarTitle() {
   );
 }
 
+Container searchBar() {
+  return Container(
+    color: Colors.tealAccent.withOpacity(0.4),
+    child: TextFormField(
+      decoration: const InputDecoration(
+        contentPadding: EdgeInsets.zero,
+        prefixIcon: Icon(
+          Icons.search,
+        ),
+        labelText: 'Search...',
+      ),
+      validator: (val) {
+        if (val!.isEmpty) {
+          return 'Input the name';
+        }
+        return null;
+      },
+    ),
+  );
+}
+
 Future<void> launchInBrowser(Uri url) async {
   if (!await launchUrl(
     url,

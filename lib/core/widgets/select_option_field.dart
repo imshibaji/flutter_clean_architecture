@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../config/config.dart';
 
 // ignore: must_be_immutable
 class SelectOptionField extends StatefulWidget {
@@ -31,12 +34,16 @@ class SelectOptionField extends StatefulWidget {
 class _SelectOptionFieldState extends State<SelectOptionField> {
   @override
   Widget build(BuildContext context) {
+    ThemeProvider tp = context.watch<ThemeProvider>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 3.0),
       child: DropdownButtonFormField<String>(
         validator: (value) => widget.validator!(value),
         onSaved: (value) => widget.onSaved!(value),
-        dropdownColor: const Color.fromARGB(255, 11, 238, 250),
+        dropdownColor: tp.isDarkMode
+            ? const Color.fromARGB(255, 32, 36, 36)
+            : const Color.fromARGB(255, 127, 236, 242),
         decoration: InputDecoration(
           prefixIcon: Icon(widget.prefixIcon),
           labelText: widget.labelTextStr,

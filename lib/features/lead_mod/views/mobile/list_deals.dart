@@ -1,7 +1,8 @@
-import 'package:clean_architecture/features/lead_mod/lead_mod.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
+import '../../utils/utils.dart';
+import '../../widgets/widgets.dart';
 
 class ListDealForMobile extends StatefulWidget {
   const ListDealForMobile({Key? key}) : super(key: key);
@@ -21,9 +22,32 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
         title: const Text('Proposals'),
         actions: actionsMenu(context),
       ),
-      body: ListView(children: [
-        for (var i = 0; i < 10; i++) listItem(),
-      ]),
+      body: Column(
+        children: [
+          searchBar(),
+          Container(
+            color: Colors.teal.withOpacity(0.4),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+            height: 50,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                ChipButton(label: 'New', onPressed: () {}),
+                ChipButton(label: 'Pending', onPressed: () {}),
+                ChipButton(label: 'Processing', onPressed: () {}),
+                ChipButton(label: 'Success', onPressed: () {}),
+                ChipButton(label: 'Rejected', onPressed: () {}),
+                ChipButton(label: 'Expaired', onPressed: () {}),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(children: [
+              for (var i = 0; i < 10; i++) listItem(),
+            ]),
+          ),
+        ],
+      ),
       bottomNavigationBar: LeadAppBottomBar(),
     );
   }

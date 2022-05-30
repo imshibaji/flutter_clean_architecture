@@ -11,15 +11,18 @@ class StatusText extends StatelessWidget {
     return Text(
       label,
       style: TextStyle(
-        color: (label == 'new')
+        color: (label.toLowerCase() == 'new')
             ? Colors.blue
-            : (label == 'pending')
+            : (label.toLowerCase() == 'pending')
                 ? Colors.orange
-                : (label == 'processing')
-                    ? Colors.greenAccent
-                    : (label == 'success')
+                : (label.toLowerCase() == 'processing' ||
+                        label.toLowerCase() == 'interested')
+                    ? const Color.fromARGB(255, 199, 173, 6)
+                    : (label.toLowerCase() == 'success' ||
+                            label.toLowerCase() == 'income')
                         ? Colors.green.shade600
-                        : (label == 'rejected')
+                        : (label.toLowerCase() == 'rejected' ||
+                                label.toLowerCase() == 'expense')
                             ? Colors.red.shade800
                             : Colors.blue.shade800,
         fontSize: size,
