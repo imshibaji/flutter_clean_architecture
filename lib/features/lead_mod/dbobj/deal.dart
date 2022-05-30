@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:hive/hive.dart';
-
-import '../../../hive_helper/fields/deal_fields.dart';
-import '../../../hive_helper/hive_adapters.dart';
-import '../../../hive_helper/hive_types.dart';
+import 'package:clean_architecture/hive_helper/hive_types.dart';
+import 'package:clean_architecture/hive_helper/hive_adapters.dart';
+import 'package:clean_architecture/hive_helper/fields/deal_fields.dart';
 
 part 'deal.g.dart';
 
@@ -21,47 +18,9 @@ class Deal extends HiveObject {
   @HiveField(DealFields.price)
   double? price;
   @HiveField(DealFields.status)
-  String? status; // Done / None
+  String? status;
   @HiveField(DealFields.createdAt)
   DateTime? createdAt;
-
-  Deal({
-    this.id,
-    this.uid,
-    this.name,
-    this.details,
-    this.price,
-    this.status,
-    this.createdAt,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'uid': uid,
-      'name': name,
-      'details': details,
-      'price': price,
-      'status': status,
-      'createdAt': createdAt?.millisecondsSinceEpoch,
-    };
-  }
-
-  factory Deal.fromMap(Map<String, dynamic> map) {
-    return Deal(
-      id: map['id'],
-      uid: map['uid'],
-      name: map['name'],
-      details: map['details'],
-      price: map['price']?.toDouble(),
-      status: map['status'],
-      createdAt: map['createdAt'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['createdAt'])
-          : null,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Deal.fromJson(String source) => Deal.fromMap(json.decode(source));
+  @HiveField(DealFields.leadUid)
+  String? leadUid;
 }

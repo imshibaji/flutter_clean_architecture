@@ -1,6 +1,6 @@
-export 'online_enquery_service.dart';
-export './deal_service.dart';
-export './followup_service.dart';
-export './lead_service.dart';
-export './payment_service.dart';
-export './profile_service.dart';
+export 'enquery_service.dart';
+export 'deal_box.dart';
+export 'followup_box.dart';
+export 'lead_box.dart';
+export 'payment_box.dart';
+export 'profile_box.dart';

@@ -2,11 +2,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../dbobj/payment.dart';
 
-class ProfileService {
-  static const String boxName = 'profile';
+class PaymentService {
+  static const String boxName = 'payments';
   Box<Payment>? box;
 
-  ProfileService() {
+  PaymentService() {
     init();
   }
 
@@ -19,17 +19,19 @@ class ProfileService {
     return payments;
   }
 
-  add(Payment payment) async {
-    bool isSuccess = false;
-    await box!.add(payment).whenComplete(() => isSuccess = true);
-    return isSuccess;
+  Future<int> add(Payment payment) async {
+    return await box!.add(payment);
   }
 
-  get(int index) {
-    return box!.getAt(index);
+  Payment get(int index) {
+    return box!.getAt(index)!;
   }
 
-  update(int index, Payment payment) async {
+  Future<bool> update(Payment payment) async {
+    return await updateByIndex(payment.key, payment);
+  }
+
+  Future<bool> updateByIndex(int index, Payment payment) async {
     bool isSuccess = false;
     await box!
         .putAt(index, payment)
@@ -39,7 +41,7 @@ class ProfileService {
     return isSuccess;
   }
 
-  delete(int index) async {
+  Future<bool> delete(int index) async {
     bool isSuccess = false;
     await box!
         .deleteAt(index)

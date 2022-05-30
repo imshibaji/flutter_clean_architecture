@@ -11,10 +11,10 @@ import '../features/lead_mod/services/services.dart';
 void registerAdapters() async {
   await Hive.initFlutter();
 
-  Hive.registerAdapter(DealAdapter());
-  Hive.registerAdapter(FollowupAdapter());
-  Hive.registerAdapter(PaymentAdapter());
   Hive.registerAdapter(LeadAdapter());
+  Hive.registerAdapter(FollowupAdapter());
+  Hive.registerAdapter(DealAdapter());
+  Hive.registerAdapter(PaymentAdapter());
   Hive.registerAdapter(ProfileAdapter());
 
   SchedulerBinding.instance.addPostFrameCallback((_) async {

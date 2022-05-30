@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/core.dart';
-import '../../lead_mod.dart';
+import '../../../../../core/core.dart';
+import '../../../dbobj/dbobjs.dart';
+import '../../../dbobj/lead.dart';
+import '../../../lead_app.dart';
+import '../../../providers/providers.dart';
+import '../../../widgets/widgets.dart';
 
-class EditEnqueryForMobile extends StatefulWidget {
-  const EditEnqueryForMobile({Key? key}) : super(key: key);
+class AddLeadForMobile extends StatefulWidget {
+  const AddLeadForMobile({Key? key}) : super(key: key);
 
   @override
-  State<EditEnqueryForMobile> createState() => _EditEnqueryForMobileState();
+  State<AddLeadForMobile> createState() => _AddLeadForMobileState();
 }
 
-class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
+class _AddLeadForMobileState extends State<AddLeadForMobile> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   String? purpose, name, email, mobile, source, status;
-  Lead? lead;
 
   @override
   Widget build(BuildContext context) {
-    EnqueryData ed = (ModalRoute.of(context)!.settings.arguments == null)
-        ? EnqueryData()
-        : ModalRoute.of(context)!.settings.arguments! as EnqueryData;
-    setState(() {
-      lead = ed.attributes!;
-    });
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -31,13 +28,13 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
               Nav.to(context, LeadApp.home);
             },
             icon: const Icon(Icons.arrow_back)),
-        title: const Text('Edit Lead'),
+        title: const Text('Add New Lead'),
         actions: actionsMenu(context),
       ),
       bottomNavigationBar: LeadAppBottomBar(),
       body: Form(
         key: _formState,
-        child: Column(
+        child: ListView(
           children: [
             const SizedBox(
               height: 15,
@@ -45,7 +42,6 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
             TextInputField(
               prefixIcon: Icons.edit_note,
               labelTextStr: 'Purpose',
-              initialValue: lead!.purpose ?? '',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   purpose = val;
@@ -58,7 +54,6 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
             TextInputField(
               prefixIcon: Icons.face,
               labelTextStr: 'Customer Name',
-              initialValue: lead!.customer_name ?? '',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   name = val;
@@ -71,7 +66,6 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
             TextInputField(
               prefixIcon: Icons.email,
               labelTextStr: 'Customer Email',
-              initialValue: lead!.customer_email ?? '',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   email = val;
@@ -84,7 +78,6 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
             TextInputField(
               prefixIcon: Icons.phone,
               labelTextStr: 'Customer Phone Number',
-              initialValue: lead!.customer_mobile ?? '',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   mobile = val;
@@ -97,7 +90,6 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
             TextInputField(
               prefixIcon: Icons.source_outlined,
               labelTextStr: 'Source of Contact',
-              initialValue: lead!.source ?? '',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   source = val;
@@ -118,7 +110,7 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
                 'rejected',
                 'expired',
               ],
-              selected: lead!.status ?? 'pending',
+              selected: 'new',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   status = val;
@@ -132,29 +124,7 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
               children: [
                 AppButton(
                   label: 'Save Now',
-                  onPressed: () async {
-                    if (_formState.currentState!.validate()) {
-                      EnqueryService es = EnqueryService();
-                      var res = await es.update(
-                          ed.id!.toInt(),
-                          Lead(
-                            purpose: purpose,
-                            customer_name: name,
-                            customer_email: email,
-                            customer_mobile: mobile,
-                            source: source,
-                            status: status,
-                          ));
-
-                      if (res != null) {
-                        var ep = context.read<EnqueryProvider>();
-                        ep.findEnqeryData(ed.id!);
-
-                        Nav.to(context, LeadApp.viewEnquery, arguments: ed);
-                        showMessage(context, 'Existing Lead Data Saved');
-                      }
-                    }
-                  },
+                  onPressed: onSubmit,
                   stretch: true,
                 ),
               ],
@@ -163,5 +133,26 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
         ),
       ),
     );
+  }
+
+  void onSubmit() async {
+    if (_formState.currentState!.validate()) {
+      // Leads Added Offline
+      Lead lead = Lead();
+      lead.uid = uuid();
+      lead.purpose = purpose;
+      lead.name = name;
+      lead.email = email;
+      lead.mobile = mobile;
+      lead.source = source;
+      lead.status = status;
+
+      ServiceProvider sp = context.read<ServiceProvider>();
+      sp.addLead(lead);
+
+      setState(() {});
+      Nav.to(context, LeadApp.listLeads);
+      showMessage(context, 'New Lead Data Saved');
+    }
   }
 }

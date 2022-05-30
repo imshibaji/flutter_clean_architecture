@@ -9,8 +9,8 @@ import '../lead_mod.dart';
 class DashboardController extends StatelessController {
   const DashboardController({Key? key}) : super(key: key);
 
-  @override
-  bool get auth => true;
+  // @override
+  // bool get auth => true;
 
   @override
   Display view(BuildContext context) {

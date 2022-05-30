@@ -14,10 +14,6 @@ class DashboardForMobile extends StatefulWidget {
 class _DashboardForMobileState extends State<DashboardForMobile> {
   @override
   Widget build(BuildContext context) {
-    LeadService ls = LeadService();
-    var leads = ls.getAll();
-    print(leads);
-
     return Scaffold(
       appBar: AppBar(
         leading: const AppIcon(),

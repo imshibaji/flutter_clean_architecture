@@ -18,5 +18,8 @@ List<SingleChildWidget> appProviders = [
   ),
   ChangeNotifierProvider<EnqueryProvider>(
     create: (context) => EnqueryProvider(),
+  ),
+  ChangeNotifierProvider<ServiceProvider>(
+    create: (context) => ServiceProvider(),
   )
 ];

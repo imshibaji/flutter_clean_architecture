@@ -8,7 +8,7 @@ part of 'lead.dart';
 
 class LeadAdapter extends TypeAdapter<Lead> {
   @override
-  final int typeId = 2;
+  final int typeId = 0;
 
   @override
   Lead read(BinaryReader reader) {
@@ -16,19 +16,18 @@ class LeadAdapter extends TypeAdapter<Lead> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Lead(
-      id: fields[0] as String?,
-      uid: fields[12] as String?,
-      purpose: fields[7] as String?,
-      name: fields[1] as String?,
-      email: fields[2] as String?,
-      mobile: fields[3] as String?,
-      source: fields[10] as String?,
-      status: fields[4] as String?,
-      followups: (fields[5] as List?)?.cast<Followup>(),
-      deals: (fields[6] as List?)?.cast<Deal>(),
-      payments: (fields[11] as List?)?.cast<Payment>(),
-    );
+    return Lead()
+      ..id = fields[0] as String?
+      ..uid = fields[1] as String?
+      ..purpose = fields[2] as String?
+      ..name = fields[3] as String?
+      ..email = fields[4] as String?
+      ..mobile = fields[5] as String?
+      ..source = fields[6] as String?
+      ..status = fields[7] as String?
+      ..followups = (fields[8] as HiveList?)?.castHiveList()
+      ..deals = (fields[9] as HiveList?)?.castHiveList()
+      ..payments = (fields[10] as HiveList?)?.castHiveList();
   }
 
   @override
@@ -37,25 +36,25 @@ class LeadAdapter extends TypeAdapter<Lead> {
       ..writeByte(11)
       ..writeByte(0)
       ..write(obj.id)
-      ..writeByte(12)
-      ..write(obj.uid)
-      ..writeByte(7)
-      ..write(obj.purpose)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.uid)
       ..writeByte(2)
-      ..write(obj.email)
+      ..write(obj.purpose)
       ..writeByte(3)
-      ..write(obj.mobile)
-      ..writeByte(10)
-      ..write(obj.source)
+      ..write(obj.name)
       ..writeByte(4)
-      ..write(obj.status)
+      ..write(obj.email)
       ..writeByte(5)
-      ..write(obj.followups)
+      ..write(obj.mobile)
       ..writeByte(6)
+      ..write(obj.source)
+      ..writeByte(7)
+      ..write(obj.status)
+      ..writeByte(8)
+      ..write(obj.followups)
+      ..writeByte(9)
       ..write(obj.deals)
-      ..writeByte(11)
+      ..writeByte(10)
       ..write(obj.payments);
   }
 

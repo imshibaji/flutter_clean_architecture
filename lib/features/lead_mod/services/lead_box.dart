@@ -15,31 +15,30 @@ class LeadService {
   }
 
   List<Lead> getAll() {
-    List<Lead> leads = box!.values.toList();
+    List<Lead> leads = box!.values.toList().reversed.toList();
     return leads;
   }
 
-  add(Lead lead) async {
+  Future<int> add(Lead lead) async {
+    return await box!.add(lead);
+  }
+
+  Lead get(int index) {
+    return box!.getAt(index)!;
+  }
+
+  Future<bool> update(Lead lead) async {
+    return await updateByIndex(lead.key, lead);
+  }
+
+  Future<bool> updateByIndex(int index, Lead lead) async {
     bool isSuccess = false;
-    await box!.add(lead).whenComplete(() => isSuccess = true);
+    await box!.putAt(index, lead).whenComplete(() => isSuccess = true);
+
     return isSuccess;
   }
 
-  get(int index) {
-    return box!.getAt(index);
-  }
-
-  update(int index, Lead lead) async {
-    bool isSuccess = false;
-    await box!
-        .putAt(index, lead)
-        .onError((error, stackTrace) => error)
-        .whenComplete(() => isSuccess = true);
-
-    return isSuccess;
-  }
-
-  delete(int index) async {
+  Future<bool> delete(int index) async {
     bool isSuccess = false;
     await box!
         .deleteAt(index)

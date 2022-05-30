@@ -19,17 +19,19 @@ class FollowupService {
     return followups;
   }
 
-  add(Followup followup) async {
-    bool isSuccess = false;
-    await box!.add(followup).whenComplete(() => isSuccess = true);
-    return isSuccess;
+  Future<int> add(Followup followup) async {
+    return await box!.add(followup);
   }
 
-  get(int index) {
-    return box!.getAt(index);
+  Followup get(int index) {
+    return box!.getAt(index)!;
   }
 
-  update(int index, Followup followup) async {
+  Future<bool> update(Followup followup) async {
+    return await updateByIndex(followup.key, followup);
+  }
+
+  Future<bool> updateByIndex(int index, Followup followup) async {
     bool isSuccess = false;
     await box!
         .putAt(index, followup)
@@ -39,7 +41,7 @@ class FollowupService {
     return isSuccess;
   }
 
-  delete(int index) async {
+  Future<bool> delete(int index) async {
     bool isSuccess = false;
     await box!
         .deleteAt(index)

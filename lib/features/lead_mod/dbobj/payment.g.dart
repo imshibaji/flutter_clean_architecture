@@ -16,32 +16,34 @@ class PaymentAdapter extends TypeAdapter<Payment> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Payment(
-      id: fields[0] as String?,
-      uid: fields[4] as String?,
-      details: fields[1] as String?,
-      amount: fields[2] as double?,
-      type: fields[3] as String?,
-      createdAt: fields[5] as DateTime?,
-    );
+    return Payment()
+      ..id = fields[0] as String?
+      ..uid = fields[1] as String?
+      ..details = fields[2] as String?
+      ..amount = fields[3] as double?
+      ..type = fields[4] as String?
+      ..createdAt = fields[5] as DateTime?
+      ..leadUid = fields[6] as String?;
   }
 
   @override
   void write(BinaryWriter writer, Payment obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
-      ..writeByte(4)
-      ..write(obj.uid)
       ..writeByte(1)
-      ..write(obj.details)
+      ..write(obj.uid)
       ..writeByte(2)
-      ..write(obj.amount)
+      ..write(obj.details)
       ..writeByte(3)
+      ..write(obj.amount)
+      ..writeByte(4)
       ..write(obj.type)
       ..writeByte(5)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(6)
+      ..write(obj.leadUid);
   }
 
   @override

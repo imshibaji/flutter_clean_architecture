@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../config/app_theme.dart';
-import '../../../../config/config.dart';
-import '../../../../core/core.dart';
-import '../../lead_app.dart';
-import '../../models/enquery_get_models.dart';
-import '../../services/services.dart';
-import '../../utils/utils.dart';
-import '../../widgets/button_bar.dart';
+import '../../../../../config/app_theme.dart';
+import '../../../../../config/config.dart';
+import '../../../../../core/core.dart';
+import '../../../lead_app.dart';
+import '../../../models/enquery_get_models.dart';
+import '../../../services/services.dart';
+import '../../../utils/utils.dart';
+import '../../../widgets/button_bar.dart';
 
 class ViewEnqueryForMobile extends StatefulWidget {
   const ViewEnqueryForMobile({Key? key}) : super(key: key);

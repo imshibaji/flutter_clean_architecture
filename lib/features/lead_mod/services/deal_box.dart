@@ -19,17 +19,19 @@ class DealService {
     return deals;
   }
 
-  add(Deal deal) async {
-    bool isSuccess = false;
-    await box!.add(deal).whenComplete(() => isSuccess = true);
-    return isSuccess;
+  Future<int> add(Deal deal) async {
+    return await box!.add(deal);
   }
 
-  get(int index) {
-    return box!.getAt(index);
+  Deal get(int index) {
+    return box!.getAt(index)!;
   }
 
-  update(int index, Deal deal) async {
+  Future<bool> update(Deal deal) async {
+    return await updateByIndex(deal.key, deal);
+  }
+
+  Future<bool> updateByIndex(int index, Deal deal) async {
     bool isSuccess = false;
     await box!
         .putAt(index, deal)
@@ -39,7 +41,7 @@ class DealService {
     return isSuccess;
   }
 
-  delete(int index) async {
+  Future<bool> delete(int index) async {
     bool isSuccess = false;
     await box!
         .deleteAt(index)

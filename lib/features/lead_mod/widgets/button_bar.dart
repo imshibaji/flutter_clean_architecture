@@ -16,7 +16,7 @@ class LeadAppBottomBar extends BottomBar {
           ButtonData(
             icon: Icons.people_outlined,
             label: 'Leads',
-            link: LeadApp.listEnquery,
+            link: LeadApp.listLeads,
           ),
           ButtonData(
             icon: Icons.tty_sharp,

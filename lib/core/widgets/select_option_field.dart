@@ -32,7 +32,7 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(3.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 3.0),
       child: DropdownButtonFormField<String>(
         validator: (value) => widget.validator!(value),
         onSaved: (value) => widget.onSaved!(value),
@@ -40,6 +40,7 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
         decoration: InputDecoration(
           prefixIcon: Icon(widget.prefixIcon),
           labelText: widget.labelTextStr,
+          contentPadding: EdgeInsets.zero,
           labelStyle: const TextStyle(fontSize: 20),
           hintText: widget.hintTextStr,
           border: const OutlineInputBorder(

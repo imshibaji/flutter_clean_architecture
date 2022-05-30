@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/core.dart';
-import '../../lead_mod.dart';
+import '../../../../../core/core.dart';
+import '../../../dbobj/dbobjs.dart' as hive;
+import '../../../lead_mod.dart';
 
-class ListEnqueryForMobile extends StatefulWidget {
-  const ListEnqueryForMobile({Key? key}) : super(key: key);
+class ListLeadForMobile extends StatefulWidget {
+  const ListLeadForMobile({Key? key}) : super(key: key);
 
   @override
-  State<ListEnqueryForMobile> createState() => _ListEnqueryForMobileState();
+  State<ListLeadForMobile> createState() => _ListLeadForMobileState();
 }
 
-class _ListEnqueryForMobileState extends State<ListEnqueryForMobile> {
+class _ListLeadForMobileState extends State<ListLeadForMobile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,29 +23,29 @@ class _ListEnqueryForMobileState extends State<ListEnqueryForMobile> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Nav.to(context, LeadApp.addEnquery);
+          Nav.to(context, LeadApp.addLead);
         },
         child: const Icon(Icons.add_circle_outline_outlined),
       ),
-      body: Consumer<EnqueryProvider>(
-        builder: (context, ep, child) => infoList(ep),
+      body: Consumer<ServiceProvider>(
+        builder: (context, sp, child) => infoList(sp),
       ),
       bottomNavigationBar: LeadAppBottomBar(),
     );
   }
 
-  Widget infoList(EnqueryProvider ep) {
-    if (ep.enqueries != null) {
+  Widget infoList(ServiceProvider sp) {
+    if (sp.leads != null) {
       return ListView.builder(
-          itemCount: ep.enqueries!.length,
+          itemCount: sp.leads!.length,
           itemBuilder: (context, index) {
             // Data Aquare;
-            Lead lead = ep.enqueries![index].attributes!;
+            hive.Lead lead = sp.leads![index];
 
-            String title = lead.customer_name ?? 'No Name';
-            String details = (lead.customer_email ?? 'No Email') +
+            String title = lead.name ?? 'No Name';
+            String details = (lead.email ?? 'No Email') +
                 ' | ' +
-                (lead.customer_mobile ?? 'No Number');
+                (lead.mobile ?? 'No Number');
 
             return Padding(
               padding: const EdgeInsets.all(3.0),
@@ -67,13 +68,13 @@ class _ListEnqueryForMobileState extends State<ListEnqueryForMobile> {
                 onTap: () {
                   Nav.to(
                     context,
-                    LeadApp.viewEnquery,
-                    arguments: ep.enqueries![index],
+                    LeadApp.viewLead,
+                    arguments: sp.leads![index],
                   );
                 },
                 trailing: IconButton(
                   onPressed: () {
-                    confirmDialog(ep.enqueries![index], ep);
+                    confirmDialog(index, sp);
                   },
                   icon: const Icon(Icons.delete_forever),
                   tooltip: 'Delete Lead',
@@ -86,7 +87,7 @@ class _ListEnqueryForMobileState extends State<ListEnqueryForMobile> {
     }
   }
 
-  Future<void> confirmDialog(EnqueryData ed, EnqueryProvider ep) async {
+  Future<void> confirmDialog(int index, ServiceProvider sp) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -96,8 +97,8 @@ class _ListEnqueryForMobileState extends State<ListEnqueryForMobile> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('This is data will be deleted from the Server.'),
-                Text('Rethinking about your acction.'),
+                Text('This is data will be deleted Permanently.'),
+                Text('Re-Thinking about your action.'),
               ],
             ),
           ),
@@ -111,7 +112,7 @@ class _ListEnqueryForMobileState extends State<ListEnqueryForMobile> {
             TextButton(
               child: const Text('Yes'),
               onPressed: () {
-                deleteData(ed.id!, ep);
+                deleteData(index, sp);
                 Navigator.of(context).pop();
               },
             ),
@@ -121,10 +122,11 @@ class _ListEnqueryForMobileState extends State<ListEnqueryForMobile> {
     );
   }
 
-  Future<void> deleteData(int id, EnqueryProvider ep) async {
-    EnqueryService es = EnqueryService();
-    await es.delete(id);
-    ep.setEnquery();
+  Future<void> deleteData(int id, ServiceProvider sp) async {
+    // EnqueryService es = EnqueryService();
+    // await es.delete(id);
+    // ep.setEnquery();
+    sp.deleteLead(id);
     showMessage(context, 'Lead Data Deleteted');
   }
 }

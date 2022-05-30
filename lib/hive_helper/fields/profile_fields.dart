@@ -7,6 +7,5 @@ class ProfileFields {
 	static const int website = 5;
 	static const int apiServerLink = 6;
 	static const int authKey = 7;
-	static const int toMap = 8;
-	static const int imageLink = 9;
+	static const int imageLink = 8;
 }

@@ -1,8 +1,8 @@
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../../../core/core.dart';
-import '../views/views.dart';
+import '../../../../core/core.dart';
+import '../../views/views.dart';
 
 class AddEnqueryController extends StatelessController {
   const AddEnqueryController({Key? key}) : super(key: key);
@@ -10,6 +10,8 @@ class AddEnqueryController extends StatelessController {
   @override
   Display view(BuildContext context) {
     return Display(
-        title: 'Add New Enquery', mobile: const AddEnqueryForMobile());
+      title: 'Add New Enquery',
+      mobile: const AddEnqueryForMobile(),
+    );
   }
 }
