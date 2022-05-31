@@ -28,7 +28,10 @@ class DealService {
   }
 
   Future<bool> update(Deal deal) async {
-    return await updateByIndex(deal.key, deal);
+    int index = getAll().indexWhere(
+      (element) => element.uid == deal.uid,
+    );
+    return await updateByIndex(index, deal);
   }
 
   Future<bool> updateByIndex(int index, Deal deal) async {

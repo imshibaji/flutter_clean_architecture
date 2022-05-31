@@ -28,7 +28,10 @@ class LeadService {
   }
 
   Future<bool> update(Lead lead) async {
-    return await updateByIndex(lead.key, lead);
+    int index = getAll().indexWhere(
+      (element) => element.uid == lead.uid,
+    );
+    return await updateByIndex(index, lead);
   }
 
   Future<bool> updateByIndex(int index, Lead lead) async {

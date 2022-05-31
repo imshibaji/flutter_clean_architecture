@@ -25,7 +25,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Nav.to(context, LeadApp.home);
+              Nav.to(context, LeadApp.listLeads);
             },
             icon: const Icon(Icons.arrow_back)),
         title: const Text('Add New Lead'),
@@ -103,14 +103,14 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
               prefixIcon: Icons.water_drop_outlined,
               labelTextStr: 'Status',
               options: const [
-                'new',
-                'pending',
-                'processing',
-                'success',
-                'rejected',
-                'expired',
+                'New',
+                'Pending',
+                'Interested',
+                'Success',
+                'Rejected',
+                'Expired',
               ],
-              selected: 'new',
+              selected: 'New',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   status = val;

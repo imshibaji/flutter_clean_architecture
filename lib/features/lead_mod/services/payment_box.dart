@@ -28,7 +28,10 @@ class PaymentService {
   }
 
   Future<bool> update(Payment payment) async {
-    return await updateByIndex(payment.key, payment);
+    int index = getAll().indexWhere(
+      (element) => element.uid == payment.uid,
+    );
+    return await updateByIndex(index, payment);
   }
 
   Future<bool> updateByIndex(int index, Payment payment) async {

@@ -31,7 +31,7 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Nav.to(context, LeadApp.home);
+              Nav.to(context, LeadApp.viewLead, arguments: lead);
             },
             icon: const Icon(Icons.arrow_back)),
         title: const Text('Edit Lead'),
@@ -114,14 +114,13 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               prefixIcon: Icons.water_drop_outlined,
               labelTextStr: 'Status',
               options: const [
-                'new',
-                'pending',
-                'processing',
-                'success',
-                'rejected',
-                'expired',
+                'Pending',
+                'Interested',
+                'Success',
+                'Rejected',
+                'Expired',
               ],
-              selected: lead!.status ?? 'pending',
+              selected: lead!.status ?? 'Pending',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   status = val;
@@ -150,7 +149,7 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
     if (_formState.currentState!.validate()) {
       // Leads Update Offline
       Lead ilead = Lead();
-      ilead.uid = lead!.uid;
+      ilead = lead!;
       ilead.purpose = purpose;
       ilead.name = name;
       ilead.email = email;

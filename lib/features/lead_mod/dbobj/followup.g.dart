@@ -22,13 +22,14 @@ class FollowupAdapter extends TypeAdapter<Followup> {
       ..discuss = fields[2] as String?
       ..status = fields[3] as String?
       ..schedule = fields[4] as DateTime?
-      ..leadUid = fields[5] as String?;
+      ..leadUid = fields[5] as String?
+      ..isDone = fields[6] as bool?;
   }
 
   @override
   void write(BinaryWriter writer, Followup obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -40,7 +41,9 @@ class FollowupAdapter extends TypeAdapter<Followup> {
       ..writeByte(4)
       ..write(obj.schedule)
       ..writeByte(5)
-      ..write(obj.leadUid);
+      ..write(obj.leadUid)
+      ..writeByte(6)
+      ..write(obj.isDone);
   }
 
   @override

@@ -1,4 +1,6 @@
+import 'package:clean_architecture/config/config.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class StatusText extends StatelessWidget {
@@ -8,6 +10,7 @@ class StatusText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var tp = context.watch<ThemeProvider>();
     return Text(
       label,
       style: TextStyle(
@@ -19,12 +22,15 @@ class StatusText extends StatelessWidget {
                         label.toLowerCase() == 'interested')
                     ? const Color.fromARGB(255, 199, 173, 6)
                     : (label.toLowerCase() == 'success' ||
-                            label.toLowerCase() == 'income')
+                            label.toLowerCase() == 'income' ||
+                            label.toLowerCase() == 'paid')
                         ? Colors.green.shade600
                         : (label.toLowerCase() == 'rejected' ||
                                 label.toLowerCase() == 'expense')
                             ? Colors.red.shade800
-                            : Colors.blue.shade800,
+                            : tp.isDarkMode
+                                ? Colors.blueGrey.shade50
+                                : Colors.blueGrey.shade900,
         fontSize: size,
       ),
     );

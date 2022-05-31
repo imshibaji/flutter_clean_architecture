@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
+import '../../dbobj/dbobjs.dart';
+import '../../lead_app.dart';
+import '../../providers/providers.dart';
 import '../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
@@ -16,74 +20,96 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
 
   @override
   Widget build(BuildContext context) {
+    final sp = context.read<ServiceProvider>();
+    sp.getAllDeals();
     return Scaffold(
       appBar: AppBar(
         leading: const AppIcon(),
         title: const Text('Proposals'),
         actions: actionsMenu(context),
       ),
-      body: Column(
-        children: [
-          searchBar(),
-          Container(
-            color: Colors.teal.withOpacity(0.4),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
-            height: 50,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                ChipButton(label: 'New', onPressed: () {}),
-                ChipButton(label: 'Pending', onPressed: () {}),
-                ChipButton(label: 'Processing', onPressed: () {}),
-                ChipButton(label: 'Success', onPressed: () {}),
-                ChipButton(label: 'Rejected', onPressed: () {}),
-                ChipButton(label: 'Expaired', onPressed: () {}),
-              ],
+      body: Consumer<ServiceProvider>(
+        builder: (context, sp, child) => Column(
+          children: [
+            searchBar(),
+            Container(
+              color: Colors.teal.withOpacity(0.4),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+              height: 50,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  ChipButton(label: 'New', onPressed: () {}),
+                  ChipButton(label: 'Pending', onPressed: () {}),
+                  ChipButton(label: 'Processing', onPressed: () {}),
+                  ChipButton(label: 'Success', onPressed: () {}),
+                  ChipButton(label: 'Rejected', onPressed: () {}),
+                  ChipButton(label: 'Expaired', onPressed: () {}),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView(children: [
-              for (var i = 0; i < 10; i++) listItem(),
-            ]),
-          ),
-        ],
+            Expanded(
+              child: allDeals(sp.deals ?? [], sp),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: LeadAppBottomBar(),
     );
   }
 
-  Padding listItem() {
-    return Padding(
-      padding: const EdgeInsets.all(3.0),
-      child: ListTile(
-        title: Row(
-          children: [
-            const Text('Deal Title'),
-            const SizedBox(
-              width: 5,
+  ListView allDeals(List<Deal> deals, ServiceProvider sp) {
+    return ListView.builder(
+      itemCount: deals.length,
+      itemBuilder: (context, index) {
+        Lead lead = sp.leads!.firstWhere(
+          (element) => element.uid == deals[index].leadUid,
+        );
+
+        var dateTime =
+            '${deals[index].createdAt!.day}/${deals[index].createdAt!.month}/${deals[index].createdAt!.year} ${deals[index].createdAt!.hour}:${deals[index].createdAt!.minute}';
+
+        return Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: ListTile(
+            shape: Border.all(),
+            onTap: () {
+              Nav.to(context, LeadApp.viewLead, arguments: lead);
+            },
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(deals[index].name!),
+                Text(deals[index].price!.toString()),
+              ],
             ),
-            StatusText(label: 'new'),
-          ],
-        ),
-        subtitle: const Text('Deal Details'),
-        shape: Border.all(width: 0.5),
-        leading: const Icon(
-          Icons.touch_app_sharp,
-          size: 36,
-        ),
-        onTap: () {},
-        trailing: IconButton(
-          onPressed: () {
-            setState(() {
-              check = !check;
-            });
-          },
-          icon: Icon(
-            check ? Icons.check_box_outline_blank : Icons.check_box_outlined,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  deals[index].details!,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                const SizedBox(
+                  height: 3,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(lead.name! + ' | ' + dateTime),
+                    StatusText(label: deals[index].status!),
+                  ],
+                )
+              ],
+            ),
+            leading: const Icon(
+              Icons.note_alt_outlined,
+              size: 30,
+            ),
           ),
-          tooltip: 'Delete Lead',
-        ),
-      ),
+        );
+      },
     );
   }
 }

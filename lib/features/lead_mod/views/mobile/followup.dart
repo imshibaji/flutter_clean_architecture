@@ -25,47 +25,43 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
         actions: actionsMenu(context),
       ),
       body: Consumer<ServiceProvider>(builder: (context, sp, child) {
-        sp.getAllFollowups();
-        if (sp.followups != null) {
-          return Column(
-            children: [
-              searchBar(),
-              Container(
-                color: Colors.teal.withOpacity(0.4),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
-                height: 50,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    ChipButton(label: 'New', onPressed: () {}),
-                    ChipButton(label: 'Pending', onPressed: () {}),
-                    ChipButton(label: 'Interested', onPressed: () {}),
-                    ChipButton(label: 'Success', onPressed: () {}),
-                    ChipButton(label: 'Rejected', onPressed: () {}),
-                    ChipButton(label: 'Expaired', onPressed: () {}),
-                  ],
-                ),
+        return Column(
+          children: [
+            searchBar(),
+            Container(
+              color: Colors.teal.withOpacity(0.4),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+              height: 50,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  ChipButton(label: 'Pending', onPressed: () {}),
+                  ChipButton(label: 'Interested', onPressed: () {}),
+                  ChipButton(label: 'Success', onPressed: () {}),
+                  ChipButton(label: 'Rejected', onPressed: () {}),
+                  ChipButton(label: 'Expaired', onPressed: () {}),
+                ],
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: sp.followups!.length,
-                  itemBuilder: (context, index) =>
-                      listItem(sp.followups![index], sp),
-                ),
-              ),
-            ],
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
+            ),
+            Expanded(
+              child: sp.followups != null
+                  ? ListView.builder(
+                      itemCount: sp.followups!.length,
+                      itemBuilder: (context, index) =>
+                          listItem(sp.followups![index], sp),
+                    )
+                  : const Center(
+                      child: Text('No Followup Data Found'),
+                    ),
+            ),
+          ],
+        );
       }),
       bottomNavigationBar: LeadAppBottomBar(),
     );
   }
 
   Padding listItem(Followup followup, ServiceProvider sp) {
-    sp.getAllLeads();
     Lead lead = sp.leads!.firstWhere(
       (element) => element.uid == followup.leadUid,
     );

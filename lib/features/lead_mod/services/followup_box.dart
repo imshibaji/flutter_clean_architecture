@@ -28,7 +28,10 @@ class FollowupService {
   }
 
   Future<bool> update(Followup followup) async {
-    return await updateByIndex(followup.key, followup);
+    int index = getAll().indexWhere(
+      (element) => element.uid == followup.uid,
+    );
+    return await updateByIndex(index, followup);
   }
 
   Future<bool> updateByIndex(int index, Followup followup) async {

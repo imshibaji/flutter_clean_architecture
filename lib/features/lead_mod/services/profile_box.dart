@@ -28,7 +28,10 @@ class ProfileService {
   }
 
   Future<bool> update(Profile profile) async {
-    return await updateByIndex(profile.key, profile);
+    int index = getAll().indexWhere(
+      (element) => element.uid == profile.uid,
+    );
+    return await updateByIndex(index, profile);
   }
 
   Future<bool> updateByIndex(int index, Profile profile) async {

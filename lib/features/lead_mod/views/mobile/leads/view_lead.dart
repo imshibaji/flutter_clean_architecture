@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
@@ -19,13 +20,18 @@ class ViewLeadForMobile extends StatefulWidget {
 }
 
 class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
-  final GlobalKey<FormState> _formState = GlobalKey<FormState>();
+  final GlobalKey<FormState> _followupFormState = GlobalKey<FormState>();
+  final GlobalKey<FormState> _dealFormState = GlobalKey<FormState>();
   String? discussion, status;
-  List<Followup>? followups = [];
+  List<Followup>? followups;
+  List<Deal>? deals;
   Lead? lead;
   bool isForm = false;
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
+  PageController pageController = PageController(initialPage: 0);
+  double formHeight = 430;
+  Deal ideal = Deal();
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +43,8 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
     setState(() {
       lead = sp.leads!.firstWhere((element) => element.uid == dlead.uid);
       followups = lead!.followups ?? [];
+      deals = lead!.deals ?? [];
     });
-
-    // print(lead!.followups);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,71 +57,178 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
         actions: actionsMenu(context),
       ),
       bottomNavigationBar: LeadAppBottomBar(),
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              leadInformation(context, lead!),
-              Positioned(
-                right: 0,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Nav.to(context, LeadApp.editLead, arguments: lead);
-                  },
-                  child: const Icon(
-                    Icons.touch_app_sharp,
+      body: SizedBox(
+        height: double.infinity,
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                leadInformation(context, lead!),
+                Positioned(
+                  right: 0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Nav.to(context, LeadApp.editLead, arguments: lead);
+                    },
+                    child: const Icon(
+                      Icons.touch_app_sharp,
+                    ),
                   ),
                 ),
+              ],
+            ),
+            pageTab(),
+            Expanded(
+              child: PageView(
+                scrollDirection: Axis.horizontal,
+                controller: pageController,
+                children: [
+                  followupTasks(lead!.followups ?? []),
+                  allDeals(lead!.deals ?? []),
+                ],
               ),
-            ],
-          ),
-          followupTasks(lead!.followups ?? []),
-        ],
+            )
+          ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => followupForm(),
-          );
-        },
-        child: const Icon(Icons.add_task_sharp),
+      floatingActionButton: floatingButton(context),
+    );
+  }
+
+  SpeedDial floatingButton(BuildContext context) {
+    return SpeedDial(icon: Icons.add_circle_outline, children: [
+      SpeedDialChild(
+          label: 'Add Followup',
+          child: const Icon(Icons.task_alt),
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) => followupForm(),
+            );
+          }),
+      SpeedDialChild(
+          label: 'Add Deal',
+          child: const Icon(Icons.note_add),
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              enableDrag: true,
+              builder: (context) => dealForm(),
+            );
+          }),
+    ]);
+  }
+
+  Container pageTab() {
+    return Container(
+      color: Colors.teal.withOpacity(0.4),
+      padding: const EdgeInsets.all(10),
+      height: 50,
+      child: Row(
+        children: [
+          Expanded(
+            child: ChipButton(
+                label: 'Activities',
+                onPressed: () {
+                  pageController.previousPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+                }),
+          ),
+          Expanded(
+            child: ChipButton(
+                label: 'Deals',
+                onPressed: () {
+                  pageController.nextPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+                }),
+          ),
+        ],
       ),
     );
   }
 
-  Expanded followupTasks(List<Followup> followups) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: followups.length,
-        itemBuilder: (context, index) {
-          var dateTime =
-              '${followups[index].schedule!.day}/${followups[index].schedule!.month}/${followups[index].schedule!.year} ${followups[index].schedule!.hour}:${followups[index].schedule!.minute}';
+  ListView followupTasks(List<Followup> followups) {
+    return ListView.builder(
+      itemCount: followups.length,
+      itemBuilder: (context, index) {
+        var dateTime =
+            '${followups[index].schedule!.day}/${followups[index].schedule!.month}/${followups[index].schedule!.year} ${followups[index].schedule!.hour}:${followups[index].schedule!.minute}';
 
-          return Padding(
-            padding: const EdgeInsets.all(3.0),
-            child: ListTile(
-              shape: Border.all(),
-              title: Text(followups[index].status ?? 'none'),
-              subtitle: Text(
-                followups[index].discuss! + ' | ' + dateTime,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              leading: const Icon(
-                Icons.task_alt,
-                size: 30,
-              ),
+        return Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: ListTile(
+            shape: Border.all(),
+            title: Text(followups[index].status ?? 'none'),
+            subtitle: Text(
+              followups[index].discuss! + ' | ' + dateTime,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
             ),
-          );
-        },
-      ),
+            leading: const Icon(
+              Icons.task_alt,
+              size: 30,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  ListView allDeals(List<Deal> deals) {
+    return ListView.builder(
+      itemCount: deals.length,
+      itemBuilder: (context, index) {
+        var dateTime =
+            '${deals[index].createdAt!.day}/${deals[index].createdAt!.month}/${deals[index].createdAt!.year} ${deals[index].createdAt!.hour}:${deals[index].createdAt!.minute}';
+
+        return Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: ListTile(
+            shape: Border.all(),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(deals[index].name!),
+                Text(deals[index].price!.toString()),
+              ],
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  deals[index].details!,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                const SizedBox(
+                  height: 3,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(dateTime),
+                    StatusText(label: deals[index].status!),
+                  ],
+                )
+              ],
+            ),
+            leading: const Icon(
+              Icons.note_alt_outlined,
+              size: 30,
+            ),
+          ),
+        );
+      },
     );
   }
 
   Form followupForm() {
     return Form(
-      key: _formState,
+      key: _followupFormState,
       child: SizedBox(
         height: isForm ? 370 : 300,
         width: double.infinity,
@@ -158,13 +270,13 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
               prefixIcon: Icons.water_drop_outlined,
               labelTextStr: 'Status',
               options: const [
-                'pending',
-                'processing',
-                'success',
-                'rejected',
-                'expired',
+                'Pending',
+                'Interested',
+                'Success',
+                'Rejected',
+                'Expired',
               ],
-              selected: 'pending',
+              selected: 'Pending',
               validator: (val) {
                 if (val!.isNotEmpty) {
                   status = val;
@@ -177,30 +289,13 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      final datePicked = await selectDate(context);
-                      if (datePicked.toString() != selectedDate.toString()) {
-                        setState(() {
-                          selectedDate = datePicked;
-                        });
-                      }
-                    },
-                    child: Text(
-                        '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}'),
+                  child: DateInputField(
+                    onDateChange: (date) => selectedDate = date,
                   ),
                 ),
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      final timePicked = await selectTime(context);
-                      if (timePicked.toString() != selectedDate.toString()) {
-                        setState(() {
-                          selectedTime = timePicked;
-                        });
-                      }
-                    },
-                    child: Text('${selectedTime.hour}:${selectedTime.minute}'),
+                  child: TimeInputField(
+                    onTimeChange: (time) => selectedTime = time,
                   ),
                 ),
               ],
@@ -209,7 +304,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
               children: [
                 AppButton(
                   label: 'Save Now',
-                  onPressed: onSubmit,
+                  onPressed: onFollowupSubmit,
                   stretch: true,
                 ),
               ],
@@ -220,8 +315,8 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
     );
   }
 
-  void onSubmit() async {
-    if (_formState.currentState!.validate()) {
+  void onFollowupSubmit() async {
+    if (_followupFormState.currentState!.validate()) {
       setState(() {});
       // Leads Assign
       Lead ilead = lead!;
@@ -241,6 +336,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
         selectedTime.hour,
         selectedTime.minute,
       );
+      ifollowup.isDone = false;
 
       // Box Initial
       FollowupService fs = FollowupService();
@@ -265,6 +361,173 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
     }
   }
 
+  Form dealForm() {
+    return Form(
+      key: _dealFormState,
+      child: SizedBox(
+        height: formHeight,
+        width: double.infinity,
+        child: ListView(
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            TextInputField(
+              prefixIcon: Icons.edit_note,
+              labelTextStr: 'Deal Name',
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  ideal.name = val;
+                  return null;
+                }
+                return 'Input Discussion Details';
+              },
+            ),
+            TextInputField(
+              prefixIcon: Icons.edit_note,
+              labelTextStr: 'Deal Deatils',
+              maxLines: 3,
+              textInputAction: TextInputAction.done,
+              contentPadding: const EdgeInsets.all(9),
+              onTap: () {
+                setState(() {
+                  formHeight = 450;
+                });
+              },
+              onSaved: (val) {
+                setState(() {
+                  formHeight = formHeight;
+                });
+              },
+              onFieldSubmitted: (val) {
+                setState(() {
+                  formHeight = formHeight;
+                });
+              },
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  ideal.details = val;
+                  return null;
+                }
+                return 'Input Deal Details';
+              },
+            ),
+            TextInputField(
+              prefixIcon: Icons.edit_note,
+              labelTextStr: 'Deal Amount',
+              textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.number,
+              contentPadding: const EdgeInsets.all(9),
+              onTap: () {
+                setState(() {
+                  formHeight = 650;
+                });
+              },
+              onSaved: (val) {
+                setState(() {
+                  formHeight = formHeight;
+                });
+              },
+              onFieldSubmitted: (val) {
+                setState(() {
+                  formHeight = formHeight;
+                });
+              },
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  ideal.price = double.parse(val);
+                  return null;
+                }
+                return 'Input Deal Amount';
+              },
+            ),
+            SelectOptionField(
+              prefixIcon: Icons.water_drop_outlined,
+              labelTextStr: 'Status',
+              options: const [
+                'Pending',
+                'Paid',
+              ],
+              selected: 'Pending',
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  ideal.status = val;
+                  return null;
+                }
+                return 'Input Discussion Status';
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                  child: DateInputField(
+                    onDateChange: (date) => selectedDate = date,
+                  ),
+                ),
+                Expanded(
+                  child: TimeInputField(
+                    onTimeChange: (time) => selectedTime = time,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                AppButton(
+                  label: 'Save Now',
+                  onPressed: onDealSubmit,
+                  stretch: true,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void onDealSubmit() {
+    if (_dealFormState.currentState!.validate()) {
+      setState(() {});
+
+      // Init
+      Lead ilead = lead!;
+      Deal ndeal = ideal;
+      DateTime createAt = DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
+      ndeal.createdAt = createAt;
+      ndeal.leadUid = lead!.uid;
+      ndeal.uid = uuid();
+
+      // Add Data in Box
+      DealService ds = DealService();
+      ds.add(ndeal);
+
+      if (ilead.deals == null) {
+        ilead.deals = HiveList(ds.box!);
+        ilead.deals!.add(ndeal);
+      } else {
+        ilead.deals!.add(ndeal);
+      }
+
+      // Service Provider Initilized
+      ServiceProvider sp = ServiceProvider();
+      sp.updateLead(ilead);
+
+      sp.getFollowupByLead(lead!.uid!);
+
+      showMessage(context, 'New Deal is Added');
+
+      Nav.close(context);
+    }
+  }
+
   Container leadInformation(BuildContext context, Lead lead) {
     var tp = Provider.of<ThemeProvider>(context);
     return Container(
@@ -273,7 +536,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
           : Colors.black26,
       width: double.infinity,
       padding: const EdgeInsets.all(8.0),
-      height: 200,
+      height: 180,
       child: ListView(
         children: [
           Padding(

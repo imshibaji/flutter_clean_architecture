@@ -14,8 +14,13 @@ class TextInputField extends StatelessWidget {
   void Function(String? value)? onSaved, onChanged, onFieldSubmitted;
   void Function()? onEditingComplete, onTap;
   Widget? suffixIcon;
-  bool autocorrect, readOnly;
+  bool autocorrect, readOnly, autofocus;
   Iterable<String>? autofillHints;
+  int? maxLength, minLines, maxLines;
+  EdgeInsetsGeometry? contentPadding;
+  TextDirection? textDirection;
+  TextAlign textAlign;
+  TextAlignVertical? textAlignVertical;
 
   TextInputField({
     Key? key,
@@ -37,6 +42,14 @@ class TextInputField extends StatelessWidget {
     this.onFieldSubmitted,
     this.autofillHints,
     this.readOnly = false,
+    this.maxLength,
+    this.minLines,
+    this.maxLines = 1,
+    this.autofocus = false,
+    this.contentPadding = EdgeInsets.zero,
+    this.textDirection,
+    this.textAlign = TextAlign.start,
+    this.textAlignVertical,
   }) : super(key: key);
 
   @override
@@ -58,6 +71,14 @@ class TextInputField extends StatelessWidget {
         onFieldSubmitted: onFieldSubmitted,
         autofillHints: autofillHints,
         readOnly: readOnly,
+        maxLength: maxLength,
+        minLines: minLines,
+        maxLines: maxLines,
+        key: key,
+        autofocus: autofocus,
+        textDirection: textDirection,
+        textAlign: textAlign,
+        textAlignVertical: textAlignVertical,
         toolbarOptions: const ToolbarOptions(
           copy: true,
           cut: true,
@@ -70,7 +91,7 @@ class TextInputField extends StatelessWidget {
           labelText: labelTextStr,
           labelStyle: const TextStyle(fontSize: 20),
           hintText: hintTextStr,
-          contentPadding: EdgeInsets.zero,
+          contentPadding: contentPadding,
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(9),

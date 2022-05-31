@@ -89,4 +89,28 @@ class ServiceProvider extends ChangeNotifier {
     getFollowupByLead(fs!.get(index).leadUid!);
     // getAllFollowups();
   }
+
+  getAllDeals() {
+    Future.microtask(() {
+      ds = DealService();
+      deals = ds!.getAll();
+      notifyListeners();
+    });
+  }
+
+  getAllPayments() {
+    Future.microtask(() {
+      ps = PaymentService();
+      payments = ps!.getAll();
+      notifyListeners();
+    });
+  }
+
+  getProfile() {
+    Future.microtask(() {
+      pros = ProfileService();
+      profile = pros!.get(0);
+      notifyListeners();
+    });
+  }
 }
