@@ -68,23 +68,24 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
 
     var dateTime =
         '${followup.schedule!.day}/${followup.schedule!.month}/${followup.schedule!.year} ${followup.schedule!.hour}:${followup.schedule!.minute}';
-    var detailOfLead = (lead.name! + ' | ' + lead.purpose! + ' | ' + dateTime);
+
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: ListTile(
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(followup.discuss ?? 'Deal Title'),
-            const SizedBox(
-              width: 5,
-            ),
             StatusText(label: followup.status ?? 'new'),
           ],
         ),
-        subtitle: Text(detailOfLead),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [Text(lead.purpose!), Text(lead.name! + ' | ' + dateTime)],
+        ),
         shape: Border.all(width: 0.5),
         leading: const Icon(
-          Icons.touch_app_sharp,
+          Icons.task_alt_sharp,
           size: 36,
         ),
         onTap: () {
@@ -92,14 +93,62 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
         },
         trailing: IconButton(
           onPressed: () {
-            confirmDialog(followup, sp);
+            showModalBottomSheet(
+              context: context,
+              builder: (_) => bottomMenus(followup, sp),
+            );
           },
-          icon: const Icon(
-            Icons.delete_forever,
-          ),
-          tooltip: 'Delete Lead',
+          icon: const Icon(Icons.more_rounded),
         ),
       ),
+    );
+  }
+
+  SizedBox bottomMenus(Followup followup, ServiceProvider sp) {
+    return SizedBox(
+      height: 50,
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        ElevatedButton.icon(
+          icon: const Icon(
+            Icons.done,
+            color: Colors.green,
+          ),
+          label: const Text(
+            'Done Task',
+            style: TextStyle(color: Colors.green),
+          ),
+          onPressed: () {
+            Nav.close(context);
+          },
+        ),
+        ElevatedButton.icon(
+          icon: const Icon(
+            Icons.close,
+            color: Colors.orange,
+          ),
+          label: const Text(
+            'Not Done',
+            style: TextStyle(color: Colors.orange),
+          ),
+          onPressed: () {
+            Nav.close(context);
+          },
+        ),
+        ElevatedButton.icon(
+          icon: const Icon(
+            Icons.delete_outline_outlined,
+            color: Colors.red,
+          ),
+          label: const Text(
+            'Done Task',
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () {
+            Nav.close(context);
+            confirmDialog(followup, sp);
+          },
+        ),
+      ]),
     );
   }
 

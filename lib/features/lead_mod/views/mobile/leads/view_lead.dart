@@ -112,7 +112,6 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
           onTap: () {
             showModalBottomSheet(
               context: context,
-              enableDrag: true,
               builder: (context) => dealForm(),
             );
           }),

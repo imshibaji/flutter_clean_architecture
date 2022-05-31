@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../dbobj/dbobjs.dart' as hive;
+import '../../../dbobj/dbobjs.dart';
 import '../../../lead_app.dart';
 import '../../../providers/providers.dart';
 import '../../../widgets/widgets.dart';
@@ -63,7 +63,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
                 itemCount: sp.leads!.length,
                 itemBuilder: (context, index) {
                   // Data Aquare;
-                  hive.Lead lead = sp.leads![index];
+                  Lead lead = sp.leads![index];
 
                   String title = lead.name ?? 'No Name';
                   String details = (lead.purpose ?? 'No Details');
@@ -83,7 +83,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
                       subtitle: Text("> " + details),
                       shape: Border.all(width: 0.5),
                       leading: const Icon(
-                        Icons.touch_app_sharp,
+                        Icons.person,
                         size: 36,
                       ),
                       onTap: () {
@@ -95,10 +95,12 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
                       },
                       trailing: IconButton(
                         onPressed: () {
-                          confirmDialog(index, sp);
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) => bottomMenus(lead, sp),
+                          );
                         },
-                        icon: const Icon(Icons.delete_forever),
-                        tooltip: 'Delete Lead',
+                        icon: const Icon(Icons.more_rounded),
                       ),
                     ),
                   );
@@ -111,7 +113,46 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
     }
   }
 
-  Future<void> confirmDialog(int index, ServiceProvider sp) async {
+  SizedBox bottomMenus(Lead lead, ServiceProvider sp) {
+    return SizedBox(
+      height: 50,
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Expanded(
+          child: ElevatedButton.icon(
+            icon: const Icon(
+              Icons.edit,
+              color: Colors.orange,
+            ),
+            label: const Text(
+              'Edit Lead',
+              style: TextStyle(color: Colors.orange),
+            ),
+            onPressed: () {
+              Nav.to(context, LeadApp.editLead, arguments: lead);
+            },
+          ),
+        ),
+        Expanded(
+          child: ElevatedButton.icon(
+            icon: const Icon(
+              Icons.delete_outline_rounded,
+              color: Colors.red,
+            ),
+            label: const Text(
+              'Delete Lead',
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: () {
+              Nav.close(context);
+              confirmDialog(lead, sp);
+            },
+          ),
+        ),
+      ]),
+    );
+  }
+
+  Future<void> confirmDialog(Lead lead, ServiceProvider sp) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -136,7 +177,9 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
             TextButton(
               child: const Text('Yes'),
               onPressed: () {
-                deleteData(index, sp);
+                // deleteData(index, sp);
+                lead.delete();
+                sp.getAllDeals();
                 Navigator.of(context).pop();
               },
             ),

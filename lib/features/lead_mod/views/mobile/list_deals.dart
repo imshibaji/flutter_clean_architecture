@@ -103,13 +103,72 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                 )
               ],
             ),
-            leading: const Icon(
-              Icons.note_alt_outlined,
-              size: 30,
+            // leading: const Icon(
+            //   Icons.note_alt_outlined,
+            //   size: 30,
+            // ),
+            trailing: IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (_) => bottomMenus(deals[index], sp),
+                );
+              },
+              icon: const Icon(
+                Icons.blur_circular_sharp,
+                size: 40,
+              ),
             ),
           ),
         );
       },
+    );
+  }
+
+  SizedBox bottomMenus(Deal deal, ServiceProvider sp) {
+    return SizedBox(
+      height: 50,
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        ElevatedButton.icon(
+          icon: const Icon(
+            Icons.share,
+            color: Colors.green,
+          ),
+          label: const Text(
+            'Share',
+            style: TextStyle(color: Colors.green),
+          ),
+          onPressed: () {
+            Nav.close(context);
+          },
+        ),
+        ElevatedButton.icon(
+          icon: const Icon(
+            Icons.email,
+            color: Colors.orange,
+          ),
+          label: const Text(
+            'Email',
+            style: TextStyle(color: Colors.orange),
+          ),
+          onPressed: () {
+            Nav.close(context);
+          },
+        ),
+        ElevatedButton.icon(
+          icon: const Icon(
+            Icons.whatsapp,
+            color: Colors.red,
+          ),
+          label: const Text(
+            'Whatsapp',
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () {
+            Nav.close(context);
+          },
+        ),
+      ]),
     );
   }
 }
