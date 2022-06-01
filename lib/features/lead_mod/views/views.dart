@@ -1,9 +1,14 @@
 export './mobile/dashboard.dart';
 export 'mobile/search.dart';
 
-export './mobile/followup.dart';
+export 'mobile/followups/followup.dart';
+export '../utils/followups_utilities.dart';
 
-export './mobile/list_deals.dart';
+// Deal Views
+export 'mobile/deals/list_deals.dart';
+export '../utils/deal_utilities.dart';
+export 'mobile/deals/print_deal.dart';
+
 export './mobile/transactions.dart';
 
 // Enqueries Views

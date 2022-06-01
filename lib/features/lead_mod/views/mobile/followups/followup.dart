@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/core.dart';
-import '../../dbobj/dbobjs.dart';
-import '../../lead_app.dart';
-import '../../utils/utils.dart';
-import '../../providers/providers.dart';
-import '../../widgets/widgets.dart';
+import '../../../../../core/core.dart';
+import '../../../dbobj/dbobjs.dart';
+import '../../../lead_app.dart';
+import '../../../providers/providers.dart';
+import '../../../utils/utils.dart';
+import '../../../widgets/widgets.dart';
 
 class FollowupForMobile extends StatefulWidget {
   const FollowupForMobile({Key? key}) : super(key: key);
@@ -84,107 +84,35 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
           children: [Text(lead.purpose!), Text(lead.name! + ' | ' + dateTime)],
         ),
         shape: Border.all(width: 0.5),
-        leading: const Icon(
-          Icons.task_alt_sharp,
-          size: 36,
+        leading: InkWell(
+          child: (followup.isDone == true)
+              ? const Icon(
+                  Icons.task_alt_sharp,
+                  size: 36,
+                  color: Colors.green,
+                )
+              : const Icon(
+                  Icons.not_interested_sharp,
+                  size: 36,
+                  color: Colors.orange,
+                ),
+          onTap: () {
+            Nav.to(context, LeadApp.viewLead, arguments: lead);
+          },
         ),
-        onTap: () {
+        onLongPress: () {
           Nav.to(context, LeadApp.viewLead, arguments: lead);
+        },
+        onTap: () {
+          showFollowupBottomMenu(context, lead, followup, sp);
         },
         trailing: IconButton(
           onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (_) => bottomMenus(followup, sp),
-            );
+            showFollowupBottomMenu(context, lead, followup, sp);
           },
           icon: const Icon(Icons.more_rounded),
         ),
       ),
-    );
-  }
-
-  SizedBox bottomMenus(Followup followup, ServiceProvider sp) {
-    return SizedBox(
-      height: 50,
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        ElevatedButton.icon(
-          icon: const Icon(
-            Icons.done,
-            color: Colors.green,
-          ),
-          label: const Text(
-            'Done Task',
-            style: TextStyle(color: Colors.green),
-          ),
-          onPressed: () {
-            Nav.close(context);
-          },
-        ),
-        ElevatedButton.icon(
-          icon: const Icon(
-            Icons.close,
-            color: Colors.orange,
-          ),
-          label: const Text(
-            'Not Done',
-            style: TextStyle(color: Colors.orange),
-          ),
-          onPressed: () {
-            Nav.close(context);
-          },
-        ),
-        ElevatedButton.icon(
-          icon: const Icon(
-            Icons.delete_outline_outlined,
-            color: Colors.red,
-          ),
-          label: const Text(
-            'Done Task',
-            style: TextStyle(color: Colors.red),
-          ),
-          onPressed: () {
-            Nav.close(context);
-            confirmDialog(followup, sp);
-          },
-        ),
-      ]),
-    );
-  }
-
-  Future<void> confirmDialog(Followup followup, ServiceProvider sp) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Are you sure?'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('This is data will be deleted Permanently.'),
-                Text('Re-Thinking about your action.'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('No'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('Yes'),
-              onPressed: () {
-                followup.delete();
-                sp.getAllFollowups();
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

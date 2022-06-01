@@ -4,10 +4,12 @@ import '../core.dart';
 
 // ignore: must_be_immutable
 class DateInputField extends StatefulWidget {
+  DateTime? initialDate;
   void Function(DateTime date) onDateChange;
   DateInputField({
     Key? key,
     required this.onDateChange,
+    this.initialDate,
   }) : super(key: key);
 
   @override
@@ -21,8 +23,16 @@ class _DateInputFieldState extends State<DateInputField> {
   @override
   void initState() {
     super.initState();
-    dateController = TextEditingController(
-        text: '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}');
+
+    if (widget.initialDate != null) {
+      dateController = TextEditingController(
+          text:
+              '${widget.initialDate!.day}/${widget.initialDate!.month}/${widget.initialDate!.year}');
+    } else {
+      dateController = TextEditingController(
+          text:
+              '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}');
+    }
   }
 
   @override

@@ -14,7 +14,7 @@ class LeadAppBottomBar extends BottomBar {
             link: LeadApp.home,
           ),
           ButtonData(
-            icon: Icons.people_outlined,
+            icon: Icons.groups_outlined,
             label: 'Leads',
             link: LeadApp.listLeads,
           ),

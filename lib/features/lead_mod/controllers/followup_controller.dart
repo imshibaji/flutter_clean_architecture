@@ -1,9 +1,9 @@
-import 'package:clean_architecture/features/lead_mod/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../views/mobile/followup.dart';
+import '../providers/providers.dart';
+import '../views/mobile/followups/followup.dart';
 
 class FollowupController extends StatelessController {
   const FollowupController({Key? key}) : super(key: key);

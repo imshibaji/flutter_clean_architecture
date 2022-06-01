@@ -167,10 +167,20 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
-            leading: const Icon(
-              Icons.task_alt,
-              size: 30,
-            ),
+            leading: (followups[index].isDone == true)
+                ? const Icon(
+                    Icons.task_alt_sharp,
+                    size: 36,
+                    color: Colors.green,
+                  )
+                : const Icon(
+                    Icons.not_interested_sharp,
+                    size: 36,
+                    color: Colors.orange,
+                  ),
+            onTap: () {
+              Nav.to(context, LeadApp.followup);
+            },
           ),
         );
       },
@@ -188,6 +198,9 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
           padding: const EdgeInsets.all(3.0),
           child: ListTile(
             shape: Border.all(),
+            onTap: () {
+              viewDeal(context, deals[index]);
+            },
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

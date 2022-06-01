@@ -3,7 +3,9 @@ export 'search_controller.dart';
 
 export 'followup_controller.dart';
 
-export 'list_deal_controller.dart';
+export 'deals/list_deal_controller.dart';
+export 'deals/print_deal_controller.dart';
+
 export 'transactions_controller.dart';
 
 export 'enquery/view_enquery_controller.dart';

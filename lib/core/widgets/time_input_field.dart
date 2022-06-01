@@ -4,10 +4,12 @@ import '../core.dart';
 
 // ignore: must_be_immutable
 class TimeInputField extends StatefulWidget {
+  DateTime? initialTime;
   void Function(TimeOfDay time) onTimeChange;
   TimeInputField({
     Key? key,
     required this.onTimeChange,
+    this.initialTime,
   }) : super(key: key);
 
   @override
@@ -21,8 +23,14 @@ class _TimeInputFieldState extends State<TimeInputField> {
   @override
   void initState() {
     super.initState();
-    timeController = TextEditingController(
-        text: '${selectedTime.hour}:${selectedTime.minute}');
+
+    if (widget.initialTime != null) {
+      timeController = TextEditingController(
+          text: '${widget.initialTime!.hour}:${widget.initialTime!.minute}');
+    } else {
+      timeController = TextEditingController(
+          text: '${selectedTime.hour}:${selectedTime.minute}');
+    }
   }
 
   @override

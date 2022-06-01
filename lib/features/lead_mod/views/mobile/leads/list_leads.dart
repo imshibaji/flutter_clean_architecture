@@ -177,10 +177,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
             TextButton(
               child: const Text('Yes'),
               onPressed: () {
-                // deleteData(index, sp);
-                lead.delete();
-                sp.getAllDeals();
-                Navigator.of(context).pop();
+                deleteData(lead, sp);
               },
             ),
           ],
@@ -189,11 +186,12 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
     );
   }
 
-  Future<void> deleteData(int id, ServiceProvider sp) async {
-    // EnqueryService es = EnqueryService();
-    // await es.delete(id);
-    // ep.setEnquery();
-    sp.deleteLead(id);
+  Future<void> deleteData(Lead lead, ServiceProvider sp) async {
+    lead.deals!.deleteAllFromHive();
+    lead.followups!.deleteAllFromHive();
+    lead.delete();
+    sp.getAllLeads();
+    Navigator.of(context).pop();
     showMessage(context, 'Lead Data Deleteted');
   }
 }

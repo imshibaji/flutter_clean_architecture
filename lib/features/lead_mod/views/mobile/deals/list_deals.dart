@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/core.dart';
-import '../../dbobj/dbobjs.dart';
-import '../../lead_app.dart';
-import '../../providers/providers.dart';
-import '../../utils/utils.dart';
-import '../../widgets/widgets.dart';
+import '../../../../../core/core.dart';
+import '../../../dbobj/dbobjs.dart';
+import '../../../lead_app.dart';
+import '../../../providers/providers.dart';
+import '../../../utils/utils.dart';
+import '../../../widgets/widgets.dart';
 
 class ListDealForMobile extends StatefulWidget {
   const ListDealForMobile({Key? key}) : super(key: key);
@@ -36,15 +36,11 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
               color: Colors.teal.withOpacity(0.4),
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
               height: 50,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+              child: Row(
                 children: [
-                  ChipButton(label: 'New', onPressed: () {}),
-                  ChipButton(label: 'Pending', onPressed: () {}),
-                  ChipButton(label: 'Processing', onPressed: () {}),
-                  ChipButton(label: 'Success', onPressed: () {}),
-                  ChipButton(label: 'Rejected', onPressed: () {}),
-                  ChipButton(label: 'Expaired', onPressed: () {}),
+                  Expanded(
+                      child: ChipButton(label: 'Pending', onPressed: () {})),
+                  Expanded(child: ChipButton(label: 'Paid', onPressed: () {})),
                 ],
               ),
             ),
@@ -73,9 +69,18 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
           padding: const EdgeInsets.all(3.0),
           child: ListTile(
             shape: Border.all(),
-            onTap: () {
+            onLongPress: () {
               Nav.to(context, LeadApp.viewLead, arguments: lead);
             },
+            leading: InkWell(
+              child: const Icon(
+                Icons.note_alt_outlined,
+                size: 40,
+              ),
+              onTap: () {
+                Nav.to(context, LeadApp.viewLead, arguments: lead);
+              },
+            ),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -103,72 +108,21 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                 )
               ],
             ),
-            // leading: const Icon(
-            //   Icons.note_alt_outlined,
-            //   size: 30,
-            // ),
-            trailing: IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (_) => bottomMenus(deals[index], sp),
-                );
+            onTap: () {
+              showDealBottomMenu(context, deals[index], sp);
+            },
+            trailing: InkWell(
+              onTap: () {
+                showDealBottomMenu(context, deals[index], sp);
               },
-              icon: const Icon(
-                Icons.blur_circular_sharp,
+              child: const Icon(
+                Icons.read_more_sharp,
                 size: 40,
               ),
             ),
           ),
         );
       },
-    );
-  }
-
-  SizedBox bottomMenus(Deal deal, ServiceProvider sp) {
-    return SizedBox(
-      height: 50,
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        ElevatedButton.icon(
-          icon: const Icon(
-            Icons.share,
-            color: Colors.green,
-          ),
-          label: const Text(
-            'Share',
-            style: TextStyle(color: Colors.green),
-          ),
-          onPressed: () {
-            Nav.close(context);
-          },
-        ),
-        ElevatedButton.icon(
-          icon: const Icon(
-            Icons.email,
-            color: Colors.orange,
-          ),
-          label: const Text(
-            'Email',
-            style: TextStyle(color: Colors.orange),
-          ),
-          onPressed: () {
-            Nav.close(context);
-          },
-        ),
-        ElevatedButton.icon(
-          icon: const Icon(
-            Icons.whatsapp,
-            color: Colors.red,
-          ),
-          label: const Text(
-            'Whatsapp',
-            style: TextStyle(color: Colors.red),
-          ),
-          onPressed: () {
-            Nav.close(context);
-          },
-        ),
-      ]),
     );
   }
 }

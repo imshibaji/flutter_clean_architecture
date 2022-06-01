@@ -1,5 +1,4 @@
 import '../../core/classes/route_manager.dart';
-import '../features.dart';
 import 'controllers/controllers.dart';
 
 class LeadApp extends RouteManager {

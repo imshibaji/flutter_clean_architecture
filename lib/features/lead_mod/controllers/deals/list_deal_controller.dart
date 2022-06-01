@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/core.dart';
-import '../providers/providers.dart';
-import '../views/views.dart';
+import '../../../../core/core.dart';
+import '../../providers/providers.dart';
+import '../../views/views.dart';
 
 class ListDealController extends StatelessController {
   const ListDealController({Key? key}) : super(key: key);
