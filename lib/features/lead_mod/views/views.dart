@@ -9,7 +9,7 @@ export 'mobile/deals/list_deals.dart';
 export '../utils/deal_utilities.dart';
 export 'mobile/deals/print_deal.dart';
 
-export './mobile/transactions.dart';
+export 'mobile/transactions/transactions.dart';
 
 // Enqueries Views
 export 'mobile/enquery/view_enquery.dart';

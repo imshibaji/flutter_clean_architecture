@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/core.dart';
-import '../../lead_mod.dart';
+import '../../../../../core/core.dart';
+import '../../../lead_mod.dart';
 
 class TransactionsForMobile extends StatefulWidget {
   const TransactionsForMobile({Key? key}) : super(key: key);
