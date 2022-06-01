@@ -1,30 +1,29 @@
 import 'package:hive/hive.dart';
-import 'package:clean_architecture/hive_helper/hive_types.dart';
-import 'package:clean_architecture/hive_helper/hive_adapters.dart';
-import 'package:clean_architecture/hive_helper/fields/profile_fields.dart';
 
+import '../../../hive_helper/fields/profile_fields.dart';
+import '../../../hive_helper/hive_adapters.dart';
+import '../../../hive_helper/hive_types.dart';
 
 part 'profile.g.dart';
 
-
 @HiveType(typeId: HiveTypes.profile, adapterName: HiveAdapters.profile)
-class Profile extends HiveObject{
-	@HiveField(ProfileFields.id)
+class Profile extends HiveObject {
+  @HiveField(ProfileFields.id)
   String? id;
-	@HiveField(ProfileFields.uid)
+  @HiveField(ProfileFields.uid)
   String? uid;
-	@HiveField(ProfileFields.name)
+  @HiveField(ProfileFields.name)
   String? name;
-	@HiveField(ProfileFields.email)
+  @HiveField(ProfileFields.email)
   String? email;
-	@HiveField(ProfileFields.mobile)
+  @HiveField(ProfileFields.mobile)
   String? mobile;
-	@HiveField(ProfileFields.website)
+  @HiveField(ProfileFields.website)
   String? website;
-	@HiveField(ProfileFields.apiServerLink)
+  @HiveField(ProfileFields.apiServerLink)
   String? apiServerLink;
-	@HiveField(ProfileFields.authKey)
+  @HiveField(ProfileFields.authKey)
   String? authKey;
-	@HiveField(ProfileFields.imageLink)
+  @HiveField(ProfileFields.imageLink)
   String? imageLink;
 }

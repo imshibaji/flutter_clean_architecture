@@ -6,7 +6,6 @@ import 'package:path_provider/path_provider.dart';
 
 import '../features/lead_mod/dbobj/dbobjs.dart';
 import '../features/lead_mod/services/services.dart';
-// import 'package:path_provider/path_provider.dart';
 
 void registerAdapters() async {
   await Hive.initFlutter();
@@ -16,6 +15,7 @@ void registerAdapters() async {
   Hive.registerAdapter(DealAdapter());
   Hive.registerAdapter(PaymentAdapter());
   Hive.registerAdapter(ProfileAdapter());
+  Hive.registerAdapter(BusinessAdapter());
 
   SchedulerBinding.instance.addPostFrameCallback((_) async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -34,6 +34,9 @@ void registerAdapters() async {
 
     String dbProfile = appDocDir.path + '/' + ProfileService.boxName + '.db';
     await Hive.openBox<Profile>(ProfileService.boxName, path: dbProfile);
+
+    String dbBusiness = appDocDir.path + '/' + BusinessService.boxName + '.db';
+    await Hive.openBox<Business>(BusinessService.boxName, path: dbBusiness);
 
     // await Hive.openBox<Lead>(LeadService.boxName);
     // await Hive.openBox<Deal>(DealService.boxName);

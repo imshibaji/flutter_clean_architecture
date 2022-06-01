@@ -101,7 +101,7 @@ class ServiceProvider extends ChangeNotifier {
   getAllPayments() {
     Future.microtask(() {
       ps = PaymentService();
-      payments = ps!.getAll();
+      payments = ps!.getAll().reversed.toList();
       notifyListeners();
     });
   }

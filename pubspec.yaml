@@ -49,6 +49,7 @@ dependencies:
   pdf: ^3.8.1
   flutter_contacts: ^1.1.4
   flutter_speed_dial: ^6.0.0
+  share_plus: ^4.0.5
 
 dev_dependencies:
   flutter_test:

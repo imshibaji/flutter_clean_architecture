@@ -1,7 +1,8 @@
 import 'package:hive/hive.dart';
-import 'package:clean_architecture/hive_helper/hive_types.dart';
-import 'package:clean_architecture/hive_helper/hive_adapters.dart';
-import 'package:clean_architecture/hive_helper/fields/payment_fields.dart';
+
+import '../../../hive_helper/fields/payment_fields.dart';
+import '../../../hive_helper/hive_adapters.dart';
+import '../../../hive_helper/hive_types.dart';
 
 part 'payment.g.dart';
 

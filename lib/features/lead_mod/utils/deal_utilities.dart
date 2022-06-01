@@ -121,14 +121,9 @@ void viewDeal(BuildContext context, Deal deal) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Text(
-                    deal.name ?? 'Deal Title',
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  StatusText(label: deal.status ?? 'Pending'),
-                ],
+              Text(
+                deal.name ?? 'Deal Title',
+                style: const TextStyle(fontSize: 20),
               ),
               Text(deal.details ?? 'Deal Details'),
               const Divider(),
@@ -136,6 +131,15 @@ void viewDeal(BuildContext context, Deal deal) {
                 'Price: ' + deal.price.toString(),
                 style: const TextStyle(fontSize: 18),
               ),
+              Row(
+                children: [
+                  const Text(
+                    'Status: ',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  StatusText(label: deal.status ?? 'Pending'),
+                ],
+              )
             ],
           ),
         ),
@@ -152,8 +156,21 @@ void viewDeal(BuildContext context, Deal deal) {
             },
           ),
           IconButton(
-            tooltip: 'Print',
-            icon: const Icon(Icons.print),
+            tooltip: 'Send',
+            icon: const Icon(
+              Icons.send_outlined,
+              color: Colors.green,
+            ),
+            onPressed: () {
+              Nav.close(context);
+            },
+          ),
+          IconButton(
+            tooltip: 'Email',
+            icon: const Icon(
+              Icons.email,
+              color: Colors.orange,
+            ),
             onPressed: () {
               Nav.close(context);
             },

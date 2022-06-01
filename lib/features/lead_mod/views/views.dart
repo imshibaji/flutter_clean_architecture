@@ -10,6 +10,7 @@ export '../utils/deal_utilities.dart';
 export 'mobile/deals/print_deal.dart';
 
 export 'mobile/transactions/transactions.dart';
+export 'mobile/transactions/transaction_utilities.dart';
 
 // Enqueries Views
 export 'mobile/enquery/view_enquery.dart';

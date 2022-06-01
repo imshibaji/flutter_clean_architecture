@@ -1,4 +1,6 @@
+import 'package:clean_architecture/features/lead_mod/dbobj/payment.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../../../lead_mod.dart';
@@ -21,51 +23,79 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
         title: const Text('Transactions'),
         actions: actionsMenu(context),
       ),
-      body: Column(children: [
-        searchBar(),
-        Container(
-          color: Colors.teal.withOpacity(0.4),
-          padding: const EdgeInsets.all(10),
-          height: 50,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(child: ChipButton(label: 'Income', onPressed: () {})),
-              Expanded(child: ChipButton(label: 'Expense', onPressed: () {})),
-            ],
-          ),
-        ),
-        Expanded(
-          child: ListView(children: [
-            for (var i = 0; i < 10; i++) listItem(),
-          ]),
-        ),
-      ]),
+      body: Consumer<ServiceProvider>(
+        builder: (context, sp, child) {
+          return Column(children: [
+            searchBar(),
+            Container(
+              color: Colors.teal.withOpacity(0.4),
+              padding: const EdgeInsets.all(10),
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                      child: ChipButton(label: 'Income', onPressed: () {})),
+                  Expanded(
+                      child: ChipButton(label: 'Expense', onPressed: () {})),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: sp.payments!.length,
+                itemBuilder: (context, index) => listItem(
+                  context,
+                  sp.payments![index],
+                ),
+              ),
+            ),
+          ]);
+        },
+      ),
       bottomNavigationBar: LeadAppBottomBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showTransactionAdd(context);
+        },
+        child: const Icon(Icons.add_chart_sharp),
+      ),
     );
   }
 
-  Padding listItem() {
+  Padding listItem(BuildContext context, Payment payment) {
+    var pct = payment.createdAt!;
+    var dateTime =
+        '${pct.day}/${pct.month}/${pct.year} ${pct.hour}:${pct.minute}';
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: ListTile(
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Cash Received'),
-            const SizedBox(
-              width: 5,
+            StatusText(
+              label: payment.type ?? 'Income',
+              size: 10,
             ),
-            StatusText(label: 'Income'),
           ],
         ),
-        subtitle: const Text('Training Advanced Payments Received from Arnab'),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(payment.details ?? 'No Details'),
+            Text(
+              'At: ' + dateTime,
+              style: const TextStyle(fontSize: 9),
+            ),
+          ],
+        ),
         shape: Border.all(width: 0.5),
         leading: const Icon(
           Icons.monetization_on_outlined,
           size: 36,
         ),
+        trailing: Text(payment.amount.toString()),
         onTap: () {},
-        trailing: const Text('20000'),
       ),
     );
   }
