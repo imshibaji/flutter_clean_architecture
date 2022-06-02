@@ -16,6 +16,8 @@ class ListLeadForMobile extends StatefulWidget {
 }
 
 class _ListLeadForMobileState extends State<ListLeadForMobile> {
+  String status = 'All';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,80 +39,88 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
     );
   }
 
+  void setStatus(String stat) {
+    setState(() {
+      status = stat;
+    });
+  }
+
   Widget infoList(ServiceProvider sp) {
-    if (sp.leads != null) {
-      return Column(
-        children: [
-          searchBar(),
-          Container(
-            color: Colors.teal.withOpacity(0.4),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
-            height: 50,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                ChipButton(label: 'New', onPressed: () {}),
-                ChipButton(label: 'Pending', onPressed: () {}),
-                ChipButton(label: 'Interested', onPressed: () {}),
-                ChipButton(label: 'Success', onPressed: () {}),
-                ChipButton(label: 'Rejected', onPressed: () {}),
-                ChipButton(label: 'Expaired', onPressed: () {}),
-              ],
-            ),
+    var leads = getFilterDatas(sp.leads!, status);
+    return Column(
+      children: [
+        // searchBar(),
+        Container(
+          color: Colors.teal.withOpacity(0.4),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              ChipButton(
+                label: 'All',
+                onPressed: () => setStatus('All'),
+              ),
+              for (String status in leadStatuses)
+                ChipButton(
+                  label: status,
+                  onPressed: () => setStatus(status),
+                ),
+            ],
           ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: sp.leads!.length,
-                itemBuilder: (context, index) {
-                  // Data Aquare;
-                  Lead lead = sp.leads![index];
+        ),
+        Expanded(
+          child: leads.isNotEmpty
+              ? ListView.builder(
+                  itemCount: leads.length,
+                  itemBuilder: (context, index) {
+                    // Data Aquare;
+                    Lead lead = leads[index];
 
-                  String title = lead.name ?? 'No Name';
-                  String details = (lead.purpose ?? 'No Details');
+                    String title = lead.name ?? 'No Name';
+                    String details = (lead.purpose ?? 'No Details');
 
-                  return Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: ListTile(
-                      title: Row(
-                        children: [
-                          Text(title),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          StatusText(label: lead.status!),
-                        ],
-                      ),
-                      subtitle: Text("> " + details),
-                      shape: Border.all(width: 0.5),
-                      leading: const Icon(
-                        Icons.person,
-                        size: 36,
-                      ),
-                      onTap: () {
-                        Nav.to(
-                          context,
-                          LeadApp.viewLead,
-                          arguments: sp.leads![index],
-                        );
-                      },
-                      trailing: IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (_) => bottomMenus(lead, sp),
+                    return Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: ListTile(
+                        title: Row(
+                          children: [
+                            Text(title),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            StatusText(label: lead.status!),
+                          ],
+                        ),
+                        subtitle: Text("> " + details),
+                        shape: Border.all(width: 0.5),
+                        leading: const Icon(
+                          Icons.person,
+                          size: 36,
+                        ),
+                        onTap: () {
+                          Nav.to(
+                            context,
+                            LeadApp.viewLead,
+                            arguments: sp.leads![index],
                           );
                         },
-                        icon: const Icon(Icons.more_rounded),
+                        trailing: IconButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (_) => bottomMenus(lead, sp),
+                            );
+                          },
+                          icon: const Icon(Icons.more_rounded),
+                        ),
                       ),
-                    ),
-                  );
-                }),
-          ),
-        ],
-      );
-    } else {
-      return const Center(child: CircularProgressIndicator());
-    }
+                    );
+                  })
+              : const Center(child: Text('No Leads Listed..')),
+        ),
+      ],
+    );
   }
 
   SizedBox bottomMenus(Lead lead, ServiceProvider sp) {

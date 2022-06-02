@@ -5,6 +5,7 @@ import '../../../../../core/core.dart';
 import '../../../dbobj/dbobjs.dart';
 import '../../../lead_app.dart';
 import '../../../providers/service_provider.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
 
 class EditLeadForMobile extends StatefulWidget {
@@ -113,13 +114,7 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
             SelectOptionField(
               prefixIcon: Icons.water_drop_outlined,
               labelTextStr: 'Status',
-              options: const [
-                'Pending',
-                'Interested',
-                'Success',
-                'Rejected',
-                'Expired',
-              ],
+              options: leadStatuses,
               selected: lead!.status ?? 'Pending',
               validator: (val) {
                 if (val!.isNotEmpty) {

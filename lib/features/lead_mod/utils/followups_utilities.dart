@@ -6,6 +6,14 @@ import '../../../core/utils/utils.dart';
 import '../dbobj/dbobjs.dart';
 import '../providers/providers.dart';
 
+const followupStatuses = [
+  'Pending',
+  'Interested',
+  'Success',
+  'Rejected',
+  'Expaired',
+];
+
 void showFollowupBottomMenu(
     BuildContext context, Lead lead, Followup followup, ServiceProvider sp) {
   showModalBottomSheet(

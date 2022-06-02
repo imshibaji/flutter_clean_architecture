@@ -1,5 +1,63 @@
+import 'package:clean_architecture/features/lead_mod/dbobj/dbobjs.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../providers/providers.dart';
+
+const leadStatuses = [
+  'New',
+  'Pending',
+  'Interested',
+  'Success',
+  'Rejected',
+  'Expaired',
+];
+
+List getFilterDatas(List list, [String status = 'All']) {
+  if ((status != 'All')) {
+    return list
+        .where(
+            (element) => element?.status.toLowerCase() == status.toLowerCase())
+        .toList();
+  } else {
+    return list;
+  }
+}
+
+extension StringParse on double {
+  String toK() {
+    if (this > 1000) {
+      return (toInt() / 1000).toString() + 'K';
+    }
+    return toString();
+  }
+}
+
+double getBalance(List<Payment> payments) {
+  double balance = getTotalIncome(payments) - getTotalExpense(payments);
+  return balance;
+}
+
+double getTotalIncome(List<Payment> payments) {
+  var incomes = payments
+      .where((element) => element.type!.toLowerCase() == 'income')
+      .toList()
+      .map((e) => e.amount);
+
+  var totalIncome = incomes.fold<double>(0.0, (a, b) => a + b!);
+
+  return totalIncome;
+}
+
+double getTotalExpense(List<Payment> payments) {
+  var expenses = payments
+      .where((element) => element.type!.toLowerCase() == 'expense')
+      .toList()
+      .map((e) => e.amount);
+
+  var totalExpenses = expenses.fold<double>(0.0, (a, b) => a + b!);
+  return totalExpenses;
+}
 
 TextFormField searchBarTitle() {
   return TextFormField(

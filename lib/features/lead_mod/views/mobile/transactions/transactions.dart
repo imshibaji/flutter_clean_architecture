@@ -1,8 +1,8 @@
-import 'package:clean_architecture/features/lead_mod/dbobj/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
+import '../../../dbobj/payment.dart';
 import '../../../lead_mod.dart';
 
 class TransactionsForMobile extends StatefulWidget {
@@ -14,6 +14,7 @@ class TransactionsForMobile extends StatefulWidget {
 
 class _TransactionsForMobileState extends State<TransactionsForMobile> {
   bool check = false;
+  String status = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
       body: Consumer<ServiceProvider>(
         builder: (context, sp, child) {
           return Column(children: [
-            searchBar(),
+            quickTotalView(sp),
             Container(
               color: Colors.teal.withOpacity(0.4),
               padding: const EdgeInsets.all(10),
@@ -35,25 +36,22 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
-                      child: ChipButton(label: 'Income', onPressed: () {})),
-                  Expanded(
-                      child: ChipButton(label: 'Expense', onPressed: () {})),
+                    child: ChipButton(
+                      label: 'All',
+                      onPressed: () => setStatus('All'),
+                    ),
+                  ),
+                  for (String status in transactonsStatuses)
+                    Expanded(
+                      child: ChipButton(
+                        label: status,
+                        onPressed: () => setStatus(status),
+                      ),
+                    ),
                 ],
               ),
             ),
-            Expanded(
-              child: sp.payments!.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: sp.payments!.length,
-                      itemBuilder: (context, index) => listItem(
-                        context,
-                        sp.payments![index],
-                      ),
-                    )
-                  : const Center(
-                      child: Text('No Transection Listed.'),
-                    ),
-            ),
+            transectionsList(sp.payments!),
           ]);
         },
       ),
@@ -65,6 +63,29 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
         child: const Icon(Icons.add_chart_sharp),
       ),
     );
+  }
+
+  Expanded transectionsList(List<Payment> payments) {
+    List trans = getTransactionFilter(payments, status);
+    return Expanded(
+      child: trans.isNotEmpty
+          ? ListView.builder(
+              itemCount: trans.length,
+              itemBuilder: (context, index) => listItem(
+                context,
+                trans[index],
+              ),
+            )
+          : const Center(
+              child: Text('No Transection Listed.'),
+            ),
+    );
+  }
+
+  void setStatus(String stat) {
+    setState(() {
+      status = stat;
+    });
   }
 
   Padding listItem(BuildContext context, Payment payment) {

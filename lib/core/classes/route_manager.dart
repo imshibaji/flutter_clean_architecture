@@ -44,4 +44,8 @@ class Nav {
   static void close(BuildContext context, [Object? result]) {
     Navigator.pop(context, result);
   }
+
+  static Object? routeData(BuildContext context) {
+    return ModalRoute.of(context)!.settings.arguments;
+  }
 }

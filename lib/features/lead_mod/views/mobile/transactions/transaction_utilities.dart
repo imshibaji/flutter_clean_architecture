@@ -1,10 +1,108 @@
-import 'package:clean_architecture/features/lead_mod/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../../../dbobj/dbobjs.dart';
+import '../../../providers/providers.dart';
 import '../../../services/services.dart';
+import '../../../utils/utils.dart';
+
+const transactonsStatuses = [
+  'Income',
+  'Expense',
+];
+
+List getTransactionFilter(List list, [String status = 'All']) {
+  if ((status != 'All')) {
+    return list
+        .where((element) => element?.type.toLowerCase() == status.toLowerCase())
+        .toList();
+  } else {
+    return list;
+  }
+}
+
+Container quickTotalView(ServiceProvider sp) {
+  return Container(
+    padding: const EdgeInsets.all(10),
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [
+            Text(
+              '   Income',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.green,
+              ),
+            ),
+            Text(
+              '   ',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w900),
+            ),
+            Text(
+              'Expense',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+              ),
+            ),
+            Text(
+              '  ',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
+            Text(
+              'Balance',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.orange,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              getTotalIncome(sp.payments!).toString(),
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.green,
+              ),
+            ),
+            const Text(
+              ' - ',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+            ),
+            Text(
+              getTotalExpense(sp.payments!).toString(),
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.red,
+              ),
+            ),
+            const Text(
+              ' = ',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            Text(
+              getBalance(sp.payments!).toString(),
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.orange,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
 
 void showTransactionAdd(BuildContext context) {
   DateTime selectedDate = DateTime.now();
@@ -50,7 +148,7 @@ void showTransactionAdd(BuildContext context) {
               ),
               SelectOptionField(
                 prefixIcon: Icons.edit,
-                options: const ['Income', 'Expense'],
+                options: transactonsStatuses,
                 selected: 'Income',
                 validator: (val) {
                   if (val!.isNotEmpty) {

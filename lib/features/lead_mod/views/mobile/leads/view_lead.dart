@@ -84,7 +84,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
                 controller: pageController,
                 children: [
                   followupTasks(lead!.followups ?? []),
-                  allDeals(lead!.deals ?? []),
+                  allDeals(lead!.deals ?? [], sp),
                 ],
               ),
             )
@@ -187,7 +187,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
     );
   }
 
-  ListView allDeals(List<Deal> deals) {
+  ListView allDeals(List<Deal> deals, ServiceProvider sp) {
     return ListView.builder(
       itemCount: deals.length,
       itemBuilder: (context, index) {
@@ -199,7 +199,8 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
           child: ListTile(
             shape: Border.all(),
             onTap: () {
-              viewDeal(context, deals[index]);
+              // viewDeal(context, deals[index]); // Not Used in beta
+              Nav.to(context, LeadApp.listDeal, arguments: deals[index].uid!);
             },
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

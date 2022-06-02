@@ -16,6 +16,8 @@ class FollowupForMobile extends StatefulWidget {
 }
 
 class _FollowupForMobileState extends State<FollowupForMobile> {
+  String status = 'All';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +27,10 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
         actions: actionsMenu(context),
       ),
       body: Consumer<ServiceProvider>(builder: (context, sp, child) {
+        var followups = getFilterDatas(sp.followups!, status);
         return Column(
           children: [
-            searchBar(),
+            // searchBar(),
             Container(
               color: Colors.teal.withOpacity(0.4),
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
@@ -35,20 +38,24 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  ChipButton(label: 'Pending', onPressed: () {}),
-                  ChipButton(label: 'Interested', onPressed: () {}),
-                  ChipButton(label: 'Success', onPressed: () {}),
-                  ChipButton(label: 'Rejected', onPressed: () {}),
-                  ChipButton(label: 'Expaired', onPressed: () {}),
+                  ChipButton(
+                    label: 'All',
+                    onPressed: () => setStatus('All'),
+                  ),
+                  for (String status in followupStatuses)
+                    ChipButton(
+                      label: status,
+                      onPressed: () => setStatus(status),
+                    ),
                 ],
               ),
             ),
             Expanded(
-              child: sp.followups != null
+              child: followups.isNotEmpty
                   ? ListView.builder(
-                      itemCount: sp.followups!.length,
+                      itemCount: followups.length,
                       itemBuilder: (context, index) =>
-                          listItem(sp.followups![index], sp),
+                          listItem(followups[index], sp),
                     )
                   : const Center(
                       child: Text('No Followup Data Found'),
@@ -59,6 +66,12 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
       }),
       bottomNavigationBar: LeadAppBottomBar(),
     );
+  }
+
+  void setStatus(String stat) {
+    setState(() {
+      status = stat;
+    });
   }
 
   Padding listItem(Followup followup, ServiceProvider sp) {

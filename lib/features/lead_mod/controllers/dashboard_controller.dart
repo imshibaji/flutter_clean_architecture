@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../config/app_theme.dart';
 import '../../../core/classes/controller_manager.dart';
 import '../../../core/classes/display_manager.dart';
 import '../lead_mod.dart';
@@ -14,16 +13,15 @@ class DashboardController extends StatelessController {
 
   @override
   Display view(BuildContext context) {
-    var ep = context.read<EnqueryProvider>();
-    ep.setEnquery();
+    // var ep = context.read<EnqueryProvider>();
+    // ep.setEnquery();
 
     // Navigation Bug Fixes
-    var tm = context.read<ThemeProvider>();
-    tm.setNavIndex(0);
+    // var tm = context.read<ThemeProvider>();
+    // tm.setNavIndex(0);
 
     var sp = context.read<ServiceProvider>();
-    sp.getAllLeads();
-    sp.getAllFollowups();
+    sp.init();
 
     return Display(title: 'Dashboard', mobile: const DashboardForMobile());
   }

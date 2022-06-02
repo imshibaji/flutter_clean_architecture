@@ -5,6 +5,11 @@ import '../../../core/core.dart';
 import '../dbobj/dbobjs.dart';
 import '../providers/providers.dart';
 
+const dealStatuses = [
+  'Pending',
+  'Paid',
+];
+
 void showDealBottomMenu(BuildContext context, Deal deal, ServiceProvider sp) {
   showModalBottomSheet(
     context: context,
@@ -18,18 +23,18 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp) {
     color: Colors.black54,
     height: 50,
     child: ListView(scrollDirection: Axis.horizontal, children: [
-      ElevatedButton.icon(
-        icon: const Icon(
-          Icons.visibility,
-        ),
-        label: const Text(
-          'View',
-        ),
-        onPressed: () {
-          Nav.close(context);
-          viewDeal(context, deal);
-        },
-      ),
+      // ElevatedButton.icon(
+      //   icon: const Icon(
+      //     Icons.visibility,
+      //   ),
+      //   label: const Text(
+      //     'View',
+      //   ),
+      //   onPressed: () {
+      //     Nav.close(context);
+      //     viewDeal(context, deal);
+      //   },
+      // ),
       ElevatedButton.icon(
         icon: const Icon(
           Icons.edit_note_outlined,
@@ -96,6 +101,7 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp) {
   );
 }
 
+// Not used in beta
 void viewDeal(BuildContext context, Deal deal) {
   showDialog(
     context: context,
@@ -145,36 +151,36 @@ void viewDeal(BuildContext context, Deal deal) {
         ),
         actionsAlignment: MainAxisAlignment.end,
         actions: [
-          IconButton(
-            tooltip: 'Share',
-            icon: const Icon(
-              Icons.share,
-              color: Colors.blue,
-            ),
-            onPressed: () {
-              Nav.close(context);
-            },
-          ),
-          IconButton(
-            tooltip: 'Send',
-            icon: const Icon(
-              Icons.send_outlined,
-              color: Colors.green,
-            ),
-            onPressed: () {
-              Nav.close(context);
-            },
-          ),
-          IconButton(
-            tooltip: 'Email',
-            icon: const Icon(
-              Icons.email,
-              color: Colors.orange,
-            ),
-            onPressed: () {
-              Nav.close(context);
-            },
-          ),
+          // IconButton(
+          //   tooltip: 'Share',
+          //   icon: const Icon(
+          //     Icons.share,
+          //     color: Colors.blue,
+          //   ),
+          //   onPressed: () {
+          //     Nav.close(context);
+          //   },
+          // ),
+          // IconButton(
+          //   tooltip: 'Send',
+          //   icon: const Icon(
+          //     Icons.send_outlined,
+          //     color: Colors.green,
+          //   ),
+          //   onPressed: () {
+          //     Nav.close(context);
+          //   },
+          // ),
+          // IconButton(
+          //   tooltip: 'Email',
+          //   icon: const Icon(
+          //     Icons.email,
+          //     color: Colors.orange,
+          //   ),
+          //   onPressed: () {
+          //     Nav.close(context);
+          //   },
+          // ),
           TextButton.icon(
             icon: const Icon(Icons.close_sharp),
             label: const Text('Close'),

@@ -17,11 +17,14 @@ class ListDealForMobile extends StatefulWidget {
 
 class _ListDealForMobileState extends State<ListDealForMobile> {
   bool check = false;
+  String status = 'All';
 
   @override
   Widget build(BuildContext context) {
-    final sp = context.read<ServiceProvider>();
-    sp.getAllDeals();
+    var routeData = Nav.routeData(context);
+
+    print(routeData);
+
     return Scaffold(
       appBar: AppBar(
         leading: const AppIcon(),
@@ -29,100 +32,128 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
         actions: actionsMenu(context),
       ),
       body: Consumer<ServiceProvider>(
-        builder: (context, sp, child) => Column(
-          children: [
-            searchBar(),
-            Container(
-              color: Colors.teal.withOpacity(0.4),
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
-              height: 50,
-              child: Row(
-                children: [
-                  Expanded(
-                      child: ChipButton(label: 'Pending', onPressed: () {})),
-                  Expanded(child: ChipButton(label: 'Paid', onPressed: () {})),
-                ],
-              ),
-            ),
-            Expanded(
-              child: allDeals(sp.deals ?? [], sp),
-            ),
-          ],
-        ),
+        builder: (context, sp, child) => listItems(sp),
       ),
       bottomNavigationBar: LeadAppBottomBar(),
     );
   }
 
-  ListView allDeals(List<Deal> deals, ServiceProvider sp) {
-    return ListView.builder(
-      itemCount: deals.length,
-      itemBuilder: (context, index) {
-        Lead lead = sp.leads!.firstWhere(
-          (element) => element.uid == deals[index].leadUid,
-        );
-
-        var dateTime =
-            '${deals[index].createdAt!.day}/${deals[index].createdAt!.month}/${deals[index].createdAt!.year} ${deals[index].createdAt!.hour}:${deals[index].createdAt!.minute}';
-
-        return Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: ListTile(
-            shape: Border.all(),
-            onLongPress: () {
-              Nav.to(context, LeadApp.viewLead, arguments: lead);
-            },
-            leading: InkWell(
-              child: const Icon(
-                Icons.note_alt_outlined,
-                size: 40,
+  Column listItems(ServiceProvider sp) {
+    return Column(
+      children: [
+        // searchBar(),
+        Container(
+          color: Colors.teal.withOpacity(0.4),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+          height: 50,
+          child: Row(
+            children: [
+              Expanded(
+                child:
+                    ChipButton(label: 'All', onPressed: () => setStatus('All')),
               ),
-              onTap: () {
-                Nav.to(context, LeadApp.viewLead, arguments: lead);
-              },
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(deals[index].name!),
-                Text(deals[index].price!.toString()),
-              ],
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  deals[index].details!,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+              for (String status in dealStatuses)
+                Expanded(
+                  child: ChipButton(
+                    label: status,
+                    onPressed: () => setStatus(status),
+                  ),
                 ),
-                const SizedBox(
-                  height: 3,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(lead.name! + ' | ' + dateTime),
-                    StatusText(label: deals[index].status!),
-                  ],
-                )
-              ],
-            ),
-            onTap: () {
-              showDealBottomMenu(context, deals[index], sp);
-            },
-            trailing: InkWell(
-              onTap: () {
-                showDealBottomMenu(context, deals[index], sp);
-              },
-              child: const Icon(
-                Icons.read_more_sharp,
-                size: 40,
-              ),
-            ),
+            ],
           ),
-        );
-      },
+        ),
+        Expanded(
+          child: allDeals(sp.deals!, sp),
+        ),
+      ],
     );
+  }
+
+  void setStatus(String stat) {
+    setState(() {
+      status = stat;
+    });
+  }
+
+  Widget allDeals(List<Deal> deals, ServiceProvider sp) {
+    List<Deal> allDeals = getFilterDatas(deals, status) as List<Deal>;
+
+    return allDeals.isNotEmpty
+        ? ListView.builder(
+            itemCount: allDeals.length,
+            itemBuilder: (context, index) {
+              Deal deal = allDeals[index];
+              Lead lead = sp.leads!.firstWhere(
+                (element) => element.uid == deal.leadUid,
+              );
+
+              var dateTime = '${deal.createdAt!.day}/'
+                  '${deal.createdAt!.month}/'
+                  '${deal.createdAt!.year} '
+                  '${deal.createdAt!.hour}:'
+                  '${deal.createdAt!.minute}';
+
+              return Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: ListTile(
+                  shape: Border.all(),
+                  onLongPress: () {
+                    Nav.to(context, LeadApp.viewLead, arguments: lead);
+                  },
+                  leading: InkWell(
+                    child: const Icon(
+                      Icons.note_alt_outlined,
+                      size: 40,
+                    ),
+                    onTap: () {
+                      Nav.to(context, LeadApp.viewLead, arguments: lead);
+                    },
+                  ),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(deal.name!),
+                      Text(deal.price!.toString()),
+                    ],
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        deal.details!,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(lead.name! + ' | ' + dateTime),
+                          StatusText(label: deal.status!),
+                        ],
+                      )
+                    ],
+                  ),
+                  onTap: () {
+                    showDealBottomMenu(context, deal, sp);
+                  },
+                  trailing: InkWell(
+                    onTap: () {
+                      showDealBottomMenu(context, deal, sp);
+                    },
+                    child: const Icon(
+                      Icons.read_more_sharp,
+                      size: 40,
+                    ),
+                  ),
+                ),
+              );
+            },
+          )
+        : const Center(
+            child: Text('No Proposuls listed.'),
+          );
   }
 }

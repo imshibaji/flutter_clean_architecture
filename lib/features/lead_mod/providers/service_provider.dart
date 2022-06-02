@@ -10,12 +10,27 @@ class ServiceProvider extends ChangeNotifier {
   PaymentService? ps;
   ProfileService? pros;
   EnqueryService? es;
+  BusinessService? bs;
 
   List<Lead>? leads;
   List<Followup>? followups;
   List<Deal>? deals;
   List<Payment>? payments;
   Profile? profile;
+  Business? business;
+
+  ServiceProvider() {
+    init();
+  }
+
+  init() {
+    getAllLeads();
+    getAllFollowups();
+    getAllDeals();
+    getAllPayments();
+    getProfile();
+    getBusiness();
+  }
 
   getAllLeads() {
     Future.microtask(() {
@@ -109,7 +124,15 @@ class ServiceProvider extends ChangeNotifier {
   getProfile() {
     Future.microtask(() {
       pros = ProfileService();
-      profile = pros!.get(0);
+      if (pros!.getAll().isNotEmpty) profile = pros!.get(0);
+      notifyListeners();
+    });
+  }
+
+  getBusiness() {
+    Future.microtask(() {
+      bs = BusinessService();
+      if (bs!.getAll().isNotEmpty) business = bs!.get(0);
       notifyListeners();
     });
   }

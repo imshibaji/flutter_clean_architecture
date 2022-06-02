@@ -5,11 +5,12 @@ import '../core.dart';
 
 List<Widget> actionsMenu(BuildContext context) {
   return [
-    IconButton(
-        onPressed: () {
-          Nav.to(context, '/profile');
-        },
-        icon: const Icon(Icons.account_circle_outlined)),
+    // IconButton(
+    //   onPressed: () {
+    //     Nav.to(context, '/profile');
+    //   },
+    //   icon: const Icon(Icons.account_circle_outlined),
+    // ),
     const DayNightSwitch(),
   ];
 }
