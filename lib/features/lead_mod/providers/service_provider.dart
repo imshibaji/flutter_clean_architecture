@@ -93,7 +93,7 @@ class ServiceProvider extends ChangeNotifier {
   getAllDeals() {
     Future.microtask(() {
       ds = DealService();
-      deals = ds!.getAll();
+      deals = ds!.getAll().reversed.toList();
       notifyListeners();
     });
   }

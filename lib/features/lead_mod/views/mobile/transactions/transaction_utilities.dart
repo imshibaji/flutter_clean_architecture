@@ -119,3 +119,22 @@ void showTransactionAdd(BuildContext context) {
     ),
   );
 }
+
+void addTransection(Lead lead, Deal deal, [bool doTran = false]) async {
+  if (doTran == true) {
+    Payment payment = Payment();
+    payment.uid = uuid();
+    payment.createdAt = DateTime.now();
+
+    if (deal.status == 'Paid') {
+      payment.details = deal.name! + ' paid by ' + lead.name!;
+      payment.type = 'Income';
+    } else {
+      payment.details = deal.name! + ' unpaid by ' + lead.name!;
+      payment.type = 'Expense';
+    }
+
+    PaymentService ps = PaymentService();
+    await ps.add(payment);
+  }
+}

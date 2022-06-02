@@ -21,6 +21,10 @@ class DashboardController extends StatelessController {
     var tm = context.read<ThemeProvider>();
     tm.setNavIndex(0);
 
+    var sp = context.read<ServiceProvider>();
+    sp.getAllLeads();
+    sp.getAllFollowups();
+
     return Display(title: 'Dashboard', mobile: const DashboardForMobile());
   }
 }

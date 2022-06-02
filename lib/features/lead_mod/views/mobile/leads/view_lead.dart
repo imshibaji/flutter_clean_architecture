@@ -362,8 +362,9 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
       }
 
       // Service Provider Initilized
-      ServiceProvider sp = ServiceProvider();
-      sp.updateLead(ilead);
+      final sp = context.read<ServiceProvider>();
+      // sp.updateLead(ilead);
+      ilead.save();
 
       sp.getFollowupByLead(lead!.uid!);
 
@@ -529,8 +530,9 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
       }
 
       // Service Provider Initilized
-      ServiceProvider sp = ServiceProvider();
-      sp.updateLead(ilead);
+      final sp = context.read<ServiceProvider>();
+      // sp.updateLead(ilead);
+      ilead.save();
 
       sp.getFollowupByLead(lead!.uid!);
 

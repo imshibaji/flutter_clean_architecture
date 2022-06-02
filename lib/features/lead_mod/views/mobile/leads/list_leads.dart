@@ -187,10 +187,10 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
   }
 
   Future<void> deleteData(Lead lead, ServiceProvider sp) async {
-    lead.deals!.deleteAllFromHive();
-    lead.followups!.deleteAllFromHive();
-    lead.delete();
-    sp.getAllLeads();
+    if (lead.deals != null) await lead.deals!.deleteAllFromHive();
+    if (lead.followups != null) await lead.followups!.deleteAllFromHive();
+    await lead.delete();
+    await sp.getAllLeads();
     Navigator.of(context).pop();
     showMessage(context, 'Lead Data Deleteted');
   }

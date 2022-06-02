@@ -42,13 +42,17 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: sp.payments!.length,
-                itemBuilder: (context, index) => listItem(
-                  context,
-                  sp.payments![index],
-                ),
-              ),
+              child: sp.payments!.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: sp.payments!.length,
+                      itemBuilder: (context, index) => listItem(
+                        context,
+                        sp.payments![index],
+                      ),
+                    )
+                  : const Center(
+                      child: Text('No Transection Listed.'),
+                    ),
             ),
           ]);
         },
