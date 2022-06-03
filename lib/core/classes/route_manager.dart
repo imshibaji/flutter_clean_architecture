@@ -33,6 +33,19 @@ class Nav {
     Object? arguments,
     Object? result,
   }) {
+    Navigator.pushNamed(
+      context,
+      url,
+      arguments: arguments,
+    );
+  }
+
+  static void toReplace(
+    BuildContext context,
+    String url, {
+    Object? arguments,
+    Object? result,
+  }) {
     Navigator.pushReplacementNamed(
       context,
       url,

@@ -67,6 +67,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
             TextInputField(
               prefixIcon: Icons.email,
               labelTextStr: 'Customer Email',
+              keyboardType: TextInputType.emailAddress,
               validator: (val) {
                 if (val!.isNotEmpty) {
                   email = val;
@@ -79,6 +80,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
             TextInputField(
               prefixIcon: Icons.phone,
               labelTextStr: 'Customer Phone Number',
+              keyboardType: TextInputType.phone,
               validator: (val) {
                 if (val!.isNotEmpty) {
                   mobile = val;
@@ -88,31 +90,41 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
                 return 'Input Customer Mobile Number';
               },
             ),
-            TextInputField(
-              prefixIcon: Icons.source_outlined,
-              labelTextStr: 'Source of Contact',
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  source = val;
-                  setState(() {});
-                  return null;
-                }
-                return 'Input Source of Contact';
-              },
-            ),
-            SelectOptionField(
-              prefixIcon: Icons.water_drop_outlined,
-              labelTextStr: 'Status',
-              options: leadStatuses,
-              selected: 'New',
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  status = val;
-                  setState(() {});
-                  return null;
-                }
-                return 'Input Status';
-              },
+            Row(
+              children: [
+                Expanded(
+                  child: SelectOptionField(
+                    prefixIcon: Icons.source_outlined,
+                    labelTextStr: 'Source of Contact',
+                    options: leadSources,
+                    selected: 'Others',
+                    validator: (val) {
+                      if (val!.isNotEmpty) {
+                        source = val;
+                        setState(() {});
+                        return null;
+                      }
+                      return 'Input Source of Contact';
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: SelectOptionField(
+                    prefixIcon: Icons.water_drop_outlined,
+                    labelTextStr: 'Status',
+                    options: leadStatuses,
+                    selected: 'New',
+                    validator: (val) {
+                      if (val!.isNotEmpty) {
+                        status = val;
+                        setState(() {});
+                        return null;
+                      }
+                      return 'Input Status';
+                    },
+                  ),
+                ),
+              ],
             ),
             Row(
               children: [

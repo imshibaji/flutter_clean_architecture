@@ -32,6 +32,8 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
   PageController pageController = PageController(initialPage: 0);
   double formHeight = 430;
   Deal ideal = Deal();
+  int pageOffset = 0;
+  bool isDone = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
 
     ServiceProvider sp = context.read<ServiceProvider>();
     setState(() {
-      lead = sp.leads!.firstWhere((element) => element.uid == dlead.uid);
+      lead = dlead;
       followups = lead!.followups ?? [];
       deals = lead!.deals ?? [];
     });
@@ -78,20 +80,80 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
               ],
             ),
             pageTab(),
-            Expanded(
-              child: PageView(
-                scrollDirection: Axis.horizontal,
-                controller: pageController,
-                children: [
-                  followupTasks(lead!.followups ?? []),
-                  allDeals(lead!.deals ?? [], sp),
-                ],
-              ),
-            )
+            tabViews(sp)
           ],
         ),
       ),
       floatingActionButton: floatingButton(context),
+    );
+  }
+
+  Container pageTab() {
+    return Container(
+      color: Colors.teal.withOpacity(0.4),
+      padding: const EdgeInsets.all(10),
+      height: 50,
+      child: Row(
+        children: [
+          Expanded(
+            child: ElevatedButton(
+                child: Text(
+                  'Activities',
+                  style: TextStyle(
+                    color: pageOffset == 0 ? Colors.green : null,
+                  ),
+                ),
+                onPressed: () {
+                  pageController.previousPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+                  setState(() {
+                    pageOffset = 0;
+                  });
+                }),
+          ),
+          Expanded(
+            child: ElevatedButton(
+                child: Text(
+                  'Deals',
+                  style: TextStyle(
+                    color: pageOffset == 1 ? Colors.green : null,
+                  ),
+                ),
+                onPressed: () {
+                  pageController.nextPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+                  setState(() {
+                    pageOffset = 1;
+                  });
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Expanded tabViews(ServiceProvider sp) {
+    return Expanded(
+      child: PageView(
+        scrollDirection: Axis.horizontal,
+        controller: pageController,
+        children: [
+          (lead!.followups != null && lead!.followups!.isNotEmpty)
+              ? followupTasks(lead!.followups ?? [])
+              : const Center(
+                  child: Text('No Followup / Task listed.'),
+                ),
+          (lead!.deals != null && lead!.deals!.isNotEmpty)
+              ? allDeals(lead!.deals ?? [], sp)
+              : const Center(
+                  child: Text('No Deal / Proposal listed.'),
+                ),
+        ],
+      ),
     );
   }
 
@@ -116,38 +178,6 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
             );
           }),
     ]);
-  }
-
-  Container pageTab() {
-    return Container(
-      color: Colors.teal.withOpacity(0.4),
-      padding: const EdgeInsets.all(10),
-      height: 50,
-      child: Row(
-        children: [
-          Expanded(
-            child: ChipButton(
-                label: 'Activities',
-                onPressed: () {
-                  pageController.previousPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.ease,
-                  );
-                }),
-          ),
-          Expanded(
-            child: ChipButton(
-                label: 'Deals',
-                onPressed: () {
-                  pageController.nextPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.ease,
-                  );
-                }),
-          ),
-        ],
-      ),
-    );
   }
 
   ListView followupTasks(List<Followup> followups) {
@@ -178,9 +208,6 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
                     size: 36,
                     color: Colors.orange,
                   ),
-            onTap: () {
-              Nav.to(context, LeadApp.followup);
-            },
           ),
         );
       },
@@ -198,10 +225,6 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
           padding: const EdgeInsets.all(3.0),
           child: ListTile(
             shape: Border.all(),
-            onTap: () {
-              // viewDeal(context, deals[index]); // Not Used in beta
-              Nav.to(context, LeadApp.listDeal, arguments: deals[index].uid!);
-            },
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -279,24 +302,48 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
             const SizedBox(
               height: 15,
             ),
-            SelectOptionField(
-              prefixIcon: Icons.water_drop_outlined,
-              labelTextStr: 'Status',
-              options: const [
-                'Pending',
-                'Interested',
-                'Success',
-                'Rejected',
-                'Expired',
+            Row(
+              children: [
+                Expanded(
+                  child: SelectOptionField(
+                    prefixIcon: Icons.water_drop_outlined,
+                    labelTextStr: 'Lead Status',
+                    options: const [
+                      'Pending',
+                      'Interested',
+                      'Success',
+                      'Rejected',
+                      'Expired',
+                    ],
+                    selected: 'Pending',
+                    validator: (val) {
+                      if (val!.isNotEmpty) {
+                        status = val;
+                        return null;
+                      }
+                      return 'Input Discussion Status';
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: SelectOptionField(
+                    prefixIcon: Icons.water_drop_outlined,
+                    labelTextStr: 'Task Status',
+                    options: const [
+                      'Done',
+                      'Not Done',
+                    ],
+                    selected: 'Not Done',
+                    validator: (val) {
+                      if (val!.isNotEmpty) {
+                        isDone = (val == 'Done');
+                        return null;
+                      }
+                      return 'Input Discussion Status';
+                    },
+                  ),
+                ),
               ],
-              selected: 'Pending',
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  status = val;
-                  return null;
-                }
-                return 'Input Discussion Status';
-              },
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -349,7 +396,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
         selectedTime.hour,
         selectedTime.minute,
       );
-      ifollowup.isDone = false;
+      ifollowup.isDone = isDone;
 
       // Box Initial
       FollowupService fs = FollowupService();

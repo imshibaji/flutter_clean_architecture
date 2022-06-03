@@ -14,6 +14,10 @@ const followupStatuses = [
   'Expaired',
 ];
 
+List<Followup> getFollowupFilter(List<Followup> list, [bool status = false]) {
+  return list.where((element) => element.isDone == status).toList();
+}
+
 void showFollowupBottomMenu(
     BuildContext context, Lead lead, Followup followup, ServiceProvider sp) {
   showModalBottomSheet(

@@ -16,7 +16,7 @@ class FollowupForMobile extends StatefulWidget {
 }
 
 class _FollowupForMobileState extends State<FollowupForMobile> {
-  String status = 'All';
+  bool status = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
         actions: actionsMenu(context),
       ),
       body: Consumer<ServiceProvider>(builder: (context, sp, child) {
-        var followups = getFilterDatas(sp.followups!, status);
+        var followups = getFollowupFilter(sp.followups!, status);
         return Column(
           children: [
             // searchBar(),
@@ -35,18 +35,21 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
               color: Colors.teal.withOpacity(0.4),
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
               height: 50,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ChipButton(
-                    label: 'All',
-                    onPressed: () => setStatus('All'),
-                  ),
-                  for (String status in followupStatuses)
-                    ChipButton(
-                      label: status,
-                      onPressed: () => setStatus(status),
+                  Expanded(
+                    child: ChipButton(
+                      label: 'Pending',
+                      onPressed: () => setStatus(false),
                     ),
+                  ),
+                  Expanded(
+                    child: ChipButton(
+                      label: 'Done',
+                      onPressed: () => setStatus(true),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -68,7 +71,7 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
     );
   }
 
-  void setStatus(String stat) {
+  void setStatus(bool stat) {
     setState(() {
       status = stat;
     });

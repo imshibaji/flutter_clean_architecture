@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
@@ -10,10 +11,13 @@ void main() {
 
   registerAdapters();
 
-  runApp(MultiProvider(
-    providers: appProviders,
-    child: const CleanApp(),
-  ));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MultiProvider(
+      providers: appProviders,
+      child: const CleanApp(),
+    ));
+  });
 }
 
 class CleanApp extends StatelessWidget {

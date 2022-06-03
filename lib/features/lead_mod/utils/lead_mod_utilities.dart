@@ -12,6 +12,14 @@ const leadStatuses = [
   'Expaired',
 ];
 
+const leadSources = [
+  'Official Website',
+  'Social Media',
+  'Contact List',
+  'Phone Call',
+  'Others'
+];
+
 List getFilterDatas(List list, [String status = 'All']) {
   if ((status != 'All')) {
     return list

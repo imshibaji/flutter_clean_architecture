@@ -24,7 +24,8 @@ class StatusText extends StatelessWidget {
                     ? const Color.fromARGB(255, 199, 173, 6)
                     : (label.toLowerCase() == 'success' ||
                             label.toLowerCase() == 'income' ||
-                            label.toLowerCase() == 'paid')
+                            label.toLowerCase() == 'paid' ||
+                            label.toLowerCase() == 'done')
                         ? Colors.green.shade600
                         : (label.toLowerCase() == 'rejected' ||
                                 label.toLowerCase() == 'expense')
