@@ -1,7 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:clean_architecture/core/classes/classes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
+import '../../../core/classes/classes.dart';
 
 class SplashController extends StatefulWidget {
   const SplashController({Key? key}) : super(key: key);

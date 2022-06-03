@@ -1,8 +1,7 @@
-import 'package:clean_architecture/features/lead_mod/dbobj/dbobjs.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../providers/providers.dart';
+import '../dbobj/dbobjs.dart';
 
 const leadStatuses = [
   'New',

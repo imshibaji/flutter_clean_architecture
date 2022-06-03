@@ -27,7 +27,7 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
             child: ListView(children: [
               balanceCard(
                 title: 'Balance:',
-                amount: getBalance(sp.payments!).toK(),
+                amount: getBalance(sp.payments ?? []).toK(),
               ),
               SizedBox(
                   height: 200,
@@ -37,12 +37,12 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
                       ieCard(
                         color: const Color.fromARGB(255, 3, 236, 154),
                         assetsImageName: 'profits.svg',
-                        amount: getTotalIncome(sp.payments!).toK(),
+                        amount: getTotalIncome(sp.payments ?? []).toK(),
                       ),
                       ieCard(
                         title: 'Expenses',
                         color: const Color.fromARGB(255, 254, 147, 147),
-                        amount: getTotalExpense(sp.payments!).toK(),
+                        amount: getTotalExpense(sp.payments ?? []).toK(),
                       ),
                     ],
                   )),

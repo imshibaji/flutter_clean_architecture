@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.clean_archetructure">
+    package="com.shibajidebnath.leadbook.free">
    <application
-        android:label="clean_archetructure"
+        android:label="LeadsBook"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

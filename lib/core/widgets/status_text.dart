@@ -1,6 +1,7 @@
-import 'package:clean_architecture/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../config/config.dart';
 
 // ignore: must_be_immutable
 class StatusText extends StatelessWidget {

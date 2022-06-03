@@ -1,4 +1,3 @@
-import 'package:clean_architecture/architect.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/config.dart';

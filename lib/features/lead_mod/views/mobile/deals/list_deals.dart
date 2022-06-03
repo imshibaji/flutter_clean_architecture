@@ -21,10 +21,6 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
 
   @override
   Widget build(BuildContext context) {
-    var routeData = Nav.routeData(context);
-
-    print(routeData);
-
     return Scaffold(
       appBar: AppBar(
         leading: const AppIcon(),
