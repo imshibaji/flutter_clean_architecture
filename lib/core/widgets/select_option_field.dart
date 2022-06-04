@@ -8,30 +8,30 @@ class SelectOptionField extends StatefulWidget {
   List<String>? options;
   String? selected;
   IconData? prefixIcon;
-  String? labelTextStr, hintTextStr;
+  String? labelTextStr, hintTextStr, errorTextStr;
   Widget? suffixIcon;
   Function(String?)? validator, onSaved;
 
   SelectOptionField({
     Key? key,
-    this.options,
+    this.options = const [],
     this.selected,
     this.prefixIcon,
     this.labelTextStr,
     this.hintTextStr,
+    this.errorTextStr,
     this.suffixIcon,
     this.validator,
     this.onSaved,
-  }) : super(key: key) {
-    options = options ?? ['One', 'Two', 'Three', 'Four'];
-    selected = selected ?? 'One';
-  }
+  }) : super(key: key);
 
   @override
   State<SelectOptionField> createState() => _SelectOptionFieldState();
 }
 
 class _SelectOptionFieldState extends State<SelectOptionField> {
+  String? errorTxt;
+
   @override
   Widget build(BuildContext context) {
     ThemeProvider tp = context.watch<ThemeProvider>();
@@ -39,7 +39,7 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 3.0),
       child: DropdownButtonFormField<String>(
-        validator: (value) => widget.validator!(value),
+        validator: (value) => widget.errorTextStr = widget.validator!(value),
         onSaved: (value) => widget.onSaved!(value),
         dropdownColor: tp.isDarkMode
             ? const Color.fromARGB(255, 32, 36, 36)
@@ -50,6 +50,7 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
           contentPadding: EdgeInsets.zero,
           labelStyle: const TextStyle(fontSize: 20),
           hintText: widget.hintTextStr,
+          errorText: widget.errorTextStr,
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(9),
@@ -69,6 +70,8 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
         onChanged: (value) {
           widget.selected = value!;
         },
+        hint: const Text('Choose'),
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }

@@ -118,7 +118,7 @@ void showTransactionAdd(BuildContext context) {
         title: const Text('Add Transection'),
         scrollable: true,
         content: SizedBox(
-          height: 310,
+          height: 330,
           child: Column(
             children: [
               TextInputField(
@@ -149,13 +149,13 @@ void showTransactionAdd(BuildContext context) {
               SelectOptionField(
                 prefixIcon: Icons.edit,
                 options: transactonsStatuses,
-                selected: 'Income',
+                selected: null,
                 validator: (val) {
                   if (val!.isNotEmpty) {
                     payment.type = val;
                     return null;
                   }
-                  return 'Please Input Details';
+                  return 'Select Transection Type';
                 },
               ),
               Row(
