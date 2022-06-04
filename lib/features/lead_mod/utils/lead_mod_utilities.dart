@@ -9,7 +9,7 @@ const leadStatuses = [
   'Interested',
   'Success',
   'Rejected',
-  'Expaired',
+  'Expired',
 ];
 
 const leadSources = [

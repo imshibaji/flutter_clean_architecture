@@ -113,7 +113,7 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               validator: (val) {
                 if (val!.isNotEmpty) {
                   setState(() {
-                    ilead.mobile = val;
+                    ilead.altMobile = val;
                   });
                   return null;
                 }
@@ -128,7 +128,7 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               validator: (val) {
                 if (val!.isNotEmpty) {
                   setState(() {
-                    ilead.mobile = val;
+                    ilead.address = val;
                   });
                   return null;
                 }

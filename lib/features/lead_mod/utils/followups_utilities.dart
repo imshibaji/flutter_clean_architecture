@@ -11,7 +11,7 @@ const followupStatuses = [
   'Interested',
   'Success',
   'Rejected',
-  'Expaired',
+  'Expired',
 ];
 
 List<Followup> getFollowupFilter(List<Followup> list, [bool status = false]) {
