@@ -22,4 +22,9 @@ class Payment extends HiveObject {
   DateTime? createdAt;
   @HiveField(PaymentFields.leadUid)
   String? leadUid;
+
+  @override
+  String toString() {
+    return 'Payment(id: $id, uid: $uid, details: $details, amount: $amount, type: $type, createdAt: $createdAt, leadUid: $leadUid)';
+  }
 }

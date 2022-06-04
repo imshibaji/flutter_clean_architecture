@@ -17,17 +17,19 @@ class EditLeadForMobile extends StatefulWidget {
 
 class _EditLeadForMobileState extends State<EditLeadForMobile> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
-  String? purpose, name, email, mobile, source, status;
+  // String? purpose, name, email, mobile, source, status;
   Lead? lead;
+  Lead ilead = Lead();
 
   @override
   Widget build(BuildContext context) {
     lead = (ModalRoute.of(context)!.settings.arguments == null)
         ? Lead()
         : ModalRoute.of(context)!.settings.arguments! as Lead;
-    // setState(() {
-    //   lead = ed.attributes!;
-    // });
+
+    setState(() {
+      ilead = lead!;
+    });
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -52,21 +54,23 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               initialValue: lead!.purpose ?? '',
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  purpose = val;
-                  setState(() {});
+                  setState(() {
+                    ilead.purpose = val;
+                  });
                   return null;
                 }
-                return 'Input Purpose';
+                return null;
               },
             ),
             TextInputField(
               prefixIcon: Icons.face,
-              labelTextStr: 'Customer Name',
+              labelTextStr: 'Name',
               initialValue: lead!.name ?? '',
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  name = val;
-                  setState(() {});
+                  setState(() {
+                    ilead.name = val;
+                  });
                   return null;
                 }
                 return 'Input Customer Name';
@@ -74,30 +78,61 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
             ),
             TextInputField(
               prefixIcon: Icons.email,
-              labelTextStr: 'Customer Email',
+              labelTextStr: 'Email',
               initialValue: lead!.email ?? '',
               keyboardType: TextInputType.emailAddress,
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  email = val;
-                  setState(() {});
+                  setState(() {
+                    ilead.email = val;
+                  });
                   return null;
                 }
-                return 'Input Customer Email';
+                return null;
               },
             ),
             TextInputField(
               prefixIcon: Icons.phone,
-              labelTextStr: 'Customer Phone Number',
+              labelTextStr: 'Phone Number',
               initialValue: lead!.mobile ?? '',
               keyboardType: TextInputType.number,
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  mobile = val;
+                  ilead.mobile = val;
                   setState(() {});
                   return null;
                 }
                 return 'Input Customer Mobile Number';
+              },
+            ),
+            TextInputField(
+              prefixIcon: Icons.phone,
+              labelTextStr: 'Alternate Phone Number',
+              initialValue: lead!.altMobile ?? '',
+              keyboardType: TextInputType.number,
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  setState(() {
+                    ilead.mobile = val;
+                  });
+                  return null;
+                }
+                return null;
+              },
+            ),
+            TextInputField(
+              prefixIcon: Icons.maps_home_work_outlined,
+              labelTextStr: 'Address',
+              initialValue: lead!.address ?? '',
+              keyboardType: TextInputType.streetAddress,
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  setState(() {
+                    ilead.mobile = val;
+                  });
+                  return null;
+                }
+                return null;
               },
             ),
             Row(
@@ -105,12 +140,12 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
                 Expanded(
                   child: SelectOptionField(
                     prefixIcon: Icons.source_outlined,
-                    labelTextStr: 'Source of Contact',
+                    labelTextStr: 'Source',
                     options: leadSources,
                     selected: lead!.source ?? 'Others',
                     validator: (val) {
                       if (val!.isNotEmpty) {
-                        source = val;
+                        ilead.source = val;
                         setState(() {});
                         return null;
                       }
@@ -126,7 +161,7 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
                     selected: lead!.status ?? 'Pending',
                     validator: (val) {
                       if (val!.isNotEmpty) {
-                        status = val;
+                        ilead.status = val;
                         setState(() {});
                         return null;
                       }
@@ -154,17 +189,11 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
   onSubmit() async {
     if (_formState.currentState!.validate()) {
       // Leads Update Offline
-      Lead ilead = Lead();
-      ilead = lead!;
-      ilead.purpose = purpose;
-      ilead.name = name;
-      ilead.email = email;
-      ilead.mobile = mobile;
-      ilead.source = source;
-      ilead.status = status;
+      await ilead.save();
 
       ServiceProvider sp = context.read<ServiceProvider>();
-      await sp.updateLead(ilead);
+      // await sp.updateLead(ilead);
+      sp.getAllLeads();
 
       setState(() {});
 

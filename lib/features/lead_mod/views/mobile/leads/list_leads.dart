@@ -46,7 +46,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
   }
 
   Widget infoList(ServiceProvider sp) {
-    var leads = getFilterDatas(sp.leads!, status);
+    var leads = getFilterDatas(sp.leads!.reversed.toList(), status);
     return Column(
       children: [
         // searchBar(),
@@ -102,7 +102,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
                           Nav.to(
                             context,
                             LeadApp.viewLead,
-                            arguments: sp.leads![index],
+                            arguments: lead,
                           );
                         },
                         trailing: IconButton(

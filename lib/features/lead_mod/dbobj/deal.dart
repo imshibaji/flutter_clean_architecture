@@ -24,4 +24,9 @@ class Deal extends HiveObject {
   DateTime? createdAt;
   @HiveField(DealFields.leadUid)
   String? leadUid;
+
+  @override
+  String toString() {
+    return 'Deal(id: $id, uid: $uid, name: $name, details: $details, price: $price, status: $status, createdAt: $createdAt, leadUid: $leadUid)';
+  }
 }

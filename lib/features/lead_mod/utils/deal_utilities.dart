@@ -10,31 +10,21 @@ const dealStatuses = [
   'Paid',
 ];
 
-void showDealBottomMenu(BuildContext context, Deal deal, ServiceProvider sp) {
+void showDealBottomMenu(BuildContext context, Deal deal, ServiceProvider sp,
+    {Function(Deal)? onDeal}) {
   showModalBottomSheet(
     context: context,
-    builder: (_) => bottomDealMenus(context, deal, sp),
+    builder: (_) => bottomDealMenus(context, deal, sp, onDeal: onDeal),
   );
 }
 
-Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp) {
+Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp,
+    {Function(Deal)? onDeal}) {
   return Container(
     padding: const EdgeInsets.all(8),
     color: Colors.black54,
     height: 50,
     child: ListView(scrollDirection: Axis.horizontal, children: [
-      // ElevatedButton.icon(
-      //   icon: const Icon(
-      //     Icons.visibility,
-      //   ),
-      //   label: const Text(
-      //     'View',
-      //   ),
-      //   onPressed: () {
-      //     Nav.close(context);
-      //     viewDeal(context, deal);
-      //   },
-      // ),
       ElevatedButton.icon(
         icon: const Icon(
           Icons.edit_note_outlined,
@@ -46,7 +36,7 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp) {
         ),
         onPressed: () {
           Nav.close(context);
-          editDeal(context, deal);
+          editDeal(context, deal, onDeal: onDeal);
         },
       ),
       ElevatedButton.icon(
@@ -60,6 +50,7 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp) {
         ),
         onPressed: () {
           doneDeal(deal, sp);
+          onDeal!(deal);
           Nav.close(context);
         },
       ),
@@ -74,6 +65,7 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp) {
         ),
         onPressed: () {
           notDoneDeal(deal, sp);
+          onDeal!(deal);
           Nav.close(context);
         },
       ),
@@ -93,6 +85,7 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp) {
             onAction: () {
               deal.delete();
               sp.getAllDeals();
+              onDeal!(deal);
             },
           );
         },
@@ -194,7 +187,7 @@ void viewDeal(BuildContext context, Deal deal) {
   );
 }
 
-void editDeal(BuildContext context, Deal deal) {
+editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
   GlobalKey<FormState> _form = GlobalKey<FormState>();
   DateTime selectedDate = deal.createdAt!;
 
@@ -203,7 +196,7 @@ void editDeal(BuildContext context, Deal deal) {
     minute: selectedDate.minute,
   );
   Deal ideal = deal;
-  showDialog(
+  return showDialog(
     context: context,
     builder: (ctx) {
       return Form(
@@ -316,6 +309,7 @@ void editDeal(BuildContext context, Deal deal) {
                   ideal.save();
                   final sp = context.read<ServiceProvider>();
                   sp.getAllDeals();
+
                   Nav.close(context);
                 }
               },

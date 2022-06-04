@@ -15,7 +15,7 @@ class LeadService {
   }
 
   List<Lead> getAll() {
-    List<Lead> leads = box!.values.toList().reversed.toList();
+    List<Lead> leads = box!.values.toList();
     return leads;
   }
 

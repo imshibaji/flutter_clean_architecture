@@ -73,7 +73,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
                       Nav.to(context, LeadApp.editLead, arguments: lead);
                     },
                     child: const Icon(
-                      Icons.touch_app_sharp,
+                      Icons.edit,
                     ),
                   ),
                 ),
@@ -184,20 +184,26 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
     return ListView.builder(
       itemCount: followups.length,
       itemBuilder: (context, index) {
+        Followup followup = followups[index];
         var dateTime =
-            '${followups[index].schedule!.day}/${followups[index].schedule!.month}/${followups[index].schedule!.year} ${followups[index].schedule!.hour}:${followups[index].schedule!.minute}';
+            '${followup.schedule!.day}/${followup.schedule!.month}/${followup.schedule!.year} ${followup.schedule!.hour}:${followup.schedule!.minute}';
 
         return Padding(
           padding: const EdgeInsets.all(3.0),
           child: ListTile(
             shape: Border.all(),
-            title: Text(followups[index].status ?? 'none'),
-            subtitle: Text(
-              followups[index].discuss! + ' | ' + dateTime,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
+            title: Text(followup.discuss ?? 'none'),
+            subtitle: Row(
+              children: [
+                StatusText(label: followup.isDone == true ? 'Done' : 'Pending'),
+                Text(
+                  ' | ' + dateTime,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ],
             ),
-            leading: (followups[index].isDone == true)
+            leading: (followup.isDone == true)
                 ? const Icon(
                     Icons.task_alt_sharp,
                     size: 36,
@@ -208,6 +214,20 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
                     size: 36,
                     color: Colors.orange,
                   ),
+            onTap: () {
+              var sp = context.read<ServiceProvider>();
+              showFollowupBottomMenu(
+                context,
+                lead!,
+                followup,
+                sp,
+                onFollowup: (follow) {
+                  setState(() {
+                    followup = follow;
+                  });
+                },
+              );
+            },
           ),
         );
       },
@@ -218,8 +238,9 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
     return ListView.builder(
       itemCount: deals.length,
       itemBuilder: (context, index) {
+        Deal deal = deals[index];
         var dateTime =
-            '${deals[index].createdAt!.day}/${deals[index].createdAt!.month}/${deals[index].createdAt!.year} ${deals[index].createdAt!.hour}:${deals[index].createdAt!.minute}';
+            '${deal.createdAt!.day}/${deal.createdAt!.month}/${deal.createdAt!.year} ${deal.createdAt!.hour}:${deal.createdAt!.minute}';
 
         return Padding(
           padding: const EdgeInsets.all(3.0),
@@ -228,15 +249,15 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(deals[index].name!),
-                Text(deals[index].price!.toString()),
+                Text(deal.name!),
+                Text(deal.price!.toString()),
               ],
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  deals[index].details!,
+                  deal.details!,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
@@ -247,15 +268,30 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(dateTime),
-                    StatusText(label: deals[index].status!),
+                    StatusText(label: deal.status!),
                   ],
                 )
               ],
             ),
-            leading: const Icon(
+            leading: Icon(
               Icons.note_alt_outlined,
               size: 30,
+              color: (deal.status!.toLowerCase() == 'paid')
+                  ? Colors.green
+                  : Colors.orange,
             ),
+            onTap: () {
+              showDealBottomMenu(
+                context,
+                deal,
+                sp,
+                onDeal: (de) {
+                  setState(() {
+                    deal = de;
+                  });
+                },
+              );
+            },
           ),
         );
       },

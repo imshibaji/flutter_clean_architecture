@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../lead_mod.dart';
 
@@ -91,7 +92,76 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
           );
         },
       ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        autofocus: true,
+        tooltip: 'Add Lead',
+        // mini: true,
+        child: const Icon(Icons.person_add_alt),
+        onPressed: () {
+          Nav.to(context, LeadApp.addLead);
+        },
+      ),
       bottomNavigationBar: LeadAppBottomBar(),
+    );
+  }
+
+  // Not Used
+  BottomAppBar bottomAppBar(BuildContext context) {
+    return BottomAppBar(
+      shape: const CircularNotchedRectangle(),
+      color: AppColors.teal,
+      child: SizedBox(
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: IconButton(
+                onPressed: () {
+                  Nav.toReplace(context, LeadApp.home);
+                },
+                icon: const Icon(
+                  Icons.dashboard,
+                ),
+              ),
+            ),
+            Expanded(
+              child: IconButton(
+                onPressed: () {
+                  Nav.toReplace(context, LeadApp.listLeads);
+                },
+                icon: Column(
+                  children: const [
+                    Icon(Icons.groups_outlined),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 40,
+            ),
+            Expanded(
+              child: IconButton(
+                onPressed: () {
+                  Nav.toReplace(context, LeadApp.listDeal);
+                },
+                icon: const Icon(Icons.payments),
+              ),
+            ),
+            Expanded(
+              child: IconButton(
+                onPressed: () {
+                  Nav.toReplace(context, LeadApp.transactions);
+                },
+                icon: const Icon(Icons.account_balance_wallet_rounded),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

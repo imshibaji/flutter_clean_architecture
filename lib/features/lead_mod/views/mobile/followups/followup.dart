@@ -92,12 +92,22 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(followup.discuss ?? 'Deal Title'),
-            StatusText(label: followup.status ?? 'new'),
           ],
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Text(lead.purpose!), Text(lead.name! + ' | ' + dateTime)],
+          children: [
+            Row(
+              children: [
+                Text(lead.purpose!),
+                const SizedBox(
+                  width: 6,
+                ),
+                StatusText(label: followup.status ?? 'new')
+              ],
+            ),
+            Text(lead.name! + ' | ' + dateTime)
+          ],
         ),
         shape: Border.all(width: 0.5),
         leading: InkWell(
@@ -117,10 +127,10 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
           },
         ),
         onLongPress: () {
-          Nav.to(context, LeadApp.viewLead, arguments: lead);
+          showFollowupBottomMenu(context, lead, followup, sp);
         },
         onTap: () {
-          showFollowupBottomMenu(context, lead, followup, sp);
+          Nav.to(context, LeadApp.viewLead, arguments: lead);
         },
         trailing: IconButton(
           onPressed: () {

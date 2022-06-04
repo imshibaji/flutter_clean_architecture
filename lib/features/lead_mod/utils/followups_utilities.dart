@@ -19,15 +19,18 @@ List<Followup> getFollowupFilter(List<Followup> list, [bool status = false]) {
 }
 
 void showFollowupBottomMenu(
-    BuildContext context, Lead lead, Followup followup, ServiceProvider sp) {
+    BuildContext context, Lead lead, Followup followup, ServiceProvider sp,
+    {Function(Followup)? onFollowup}) {
   showModalBottomSheet(
     context: context,
-    builder: (_) => bottomFollowupMenus(context, lead, followup, sp),
+    builder: (_) => bottomFollowupMenus(context, lead, followup, sp,
+        onFollowup: onFollowup),
   );
 }
 
 SizedBox bottomFollowupMenus(
-    BuildContext context, Lead lead, Followup followup, ServiceProvider sp) {
+    BuildContext context, Lead lead, Followup followup, ServiceProvider sp,
+    {Function(Followup)? onFollowup}) {
   return SizedBox(
     height: 50,
     child: ListView(scrollDirection: Axis.horizontal, children: [
@@ -75,6 +78,8 @@ SizedBox bottomFollowupMenus(
 
           sp.getAllFollowups();
 
+          onFollowup!(followup);
+
           Nav.close(context);
         },
       ),
@@ -92,6 +97,7 @@ SizedBox bottomFollowupMenus(
           followup.save();
 
           sp.getAllFollowups();
+          onFollowup!(followup);
 
           Nav.close(context);
         },
@@ -112,6 +118,7 @@ SizedBox bottomFollowupMenus(
             onAction: () {
               followup.delete();
               sp.getAllFollowups();
+              onFollowup!(followup);
             },
           );
         },

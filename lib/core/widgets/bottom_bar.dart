@@ -39,16 +39,8 @@ class BottomBar extends StatelessWidget {
         onTap: (val) {
           tm.setNavIndex(val);
           index = val;
-          navigator(context);
+          navigator(context, buttonData[index].link!);
         },
-        // items: [
-        //   if (len > 1)
-        //     for (ButtonData bd in buttonDatas)
-        //       bottomNavigationBarItem(
-        //         icon: Icon(bd.icon),
-        //         label: bd.label,
-        //       ),
-        // ],
         items: buttonData
             .map(
               (e) => bottomNavigationBarItem(
@@ -63,7 +55,7 @@ class BottomBar extends StatelessWidget {
     }
   }
 
-  void navigator(BuildContext context) {
-    Nav.to(context, buttonData[index].link!);
+  void navigator(BuildContext context, String url) {
+    Nav.toReplace(context, url);
   }
 }

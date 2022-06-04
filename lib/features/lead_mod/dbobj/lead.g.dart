@@ -23,6 +23,8 @@ class LeadAdapter extends TypeAdapter<Lead> {
       ..name = fields[3] as String?
       ..email = fields[4] as String?
       ..mobile = fields[5] as String?
+      ..altMobile = fields[11] as String?
+      ..address = fields[12] as String?
       ..source = fields[6] as String?
       ..status = fields[7] as String?
       ..followups = (fields[8] as HiveList?)?.castHiveList()
@@ -33,7 +35,7 @@ class LeadAdapter extends TypeAdapter<Lead> {
   @override
   void write(BinaryWriter writer, Lead obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -46,6 +48,10 @@ class LeadAdapter extends TypeAdapter<Lead> {
       ..write(obj.email)
       ..writeByte(5)
       ..write(obj.mobile)
+      ..writeByte(11)
+      ..write(obj.altMobile)
+      ..writeByte(12)
+      ..write(obj.address)
       ..writeByte(6)
       ..write(obj.source)
       ..writeByte(7)

@@ -26,4 +26,9 @@ class Profile extends HiveObject {
   String? authKey;
   @HiveField(ProfileFields.imageLink)
   String? imageLink;
+
+  @override
+  String toString() {
+    return 'Profile(id: $id, uid: $uid, name: $name, email: $email, mobile: $mobile, website: $website, apiServerLink: $apiServerLink, authKey: $authKey, imageLink: $imageLink)';
+  }
 }

@@ -26,4 +26,9 @@ class Business extends HiveObject {
   String? website;
   @HiveField(BusinessFields.phone)
   String? phone;
+
+  @override
+  String toString() {
+    return 'Business(id: $id, uid: $uid, name: $name, address: $address, city: $city, country: $country, email: $email, website: $website, phone: $phone)';
+  }
 }

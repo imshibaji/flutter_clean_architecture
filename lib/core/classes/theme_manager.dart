@@ -43,7 +43,10 @@ class AppTheme {
             elevation: 10,
             showSelectedLabels: true,
           ),
-          bottomAppBarTheme: const BottomAppBarTheme(color: AppColors.teal),
+          bottomAppBarTheme: const BottomAppBarTheme(
+            color: AppColors.teal,
+            shape: CircularNotchedRectangle(),
+          ),
           useMaterial3: true,
         );
 

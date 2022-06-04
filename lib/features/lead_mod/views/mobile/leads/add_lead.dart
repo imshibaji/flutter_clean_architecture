@@ -18,7 +18,8 @@ class AddLeadForMobile extends StatefulWidget {
 
 class _AddLeadForMobileState extends State<AddLeadForMobile> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
-  String? purpose, name, email, mobile, source, status;
+  // String? purpose, name, email, mobile, source, status;
+  Lead lead = Lead();
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +46,11 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
               labelTextStr: 'Purpose',
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  purpose = val;
+                  lead.purpose = val;
                   setState(() {});
                   return null;
                 }
-                return 'Input Purpose';
+                return null;
               },
             ),
             TextInputField(
@@ -57,7 +58,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
               labelTextStr: 'Customer Name',
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  name = val;
+                  lead.name = val;
                   setState(() {});
                   return null;
                 }
@@ -66,28 +67,54 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
             ),
             TextInputField(
               prefixIcon: Icons.email,
-              labelTextStr: 'Customer Email',
+              labelTextStr: 'Email',
               keyboardType: TextInputType.emailAddress,
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  email = val;
+                  lead.email = val;
                   setState(() {});
                   return null;
                 }
-                return 'Input Customer Email';
+                return null;
               },
             ),
             TextInputField(
               prefixIcon: Icons.phone,
-              labelTextStr: 'Customer Phone Number',
+              labelTextStr: 'Phone Number',
               keyboardType: TextInputType.phone,
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  mobile = val;
+                  lead.mobile = val;
                   setState(() {});
                   return null;
                 }
                 return 'Input Customer Mobile Number';
+              },
+            ),
+            TextInputField(
+              prefixIcon: Icons.phone,
+              labelTextStr: 'Alternate Phone Number',
+              keyboardType: TextInputType.phone,
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  lead.altMobile = val;
+                  setState(() {});
+                  return null;
+                }
+                return null;
+              },
+            ),
+            TextInputField(
+              prefixIcon: Icons.maps_home_work_outlined,
+              labelTextStr: 'Address',
+              keyboardType: TextInputType.streetAddress,
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  lead.address = val;
+                  setState(() {});
+                  return null;
+                }
+                return null;
               },
             ),
             Row(
@@ -95,12 +122,12 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
                 Expanded(
                   child: SelectOptionField(
                     prefixIcon: Icons.source_outlined,
-                    labelTextStr: 'Source of Contact',
+                    labelTextStr: 'Source',
                     options: leadSources,
                     selected: 'Others',
                     validator: (val) {
                       if (val!.isNotEmpty) {
-                        source = val;
+                        lead.source = val;
                         setState(() {});
                         return null;
                       }
@@ -116,7 +143,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
                     selected: 'New',
                     validator: (val) {
                       if (val!.isNotEmpty) {
-                        status = val;
+                        lead.status = val;
                         setState(() {});
                         return null;
                       }
@@ -144,15 +171,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
   void onSubmit() async {
     if (_formState.currentState!.validate()) {
       // Leads Added Offline
-      Lead lead = Lead();
       lead.uid = uuid();
-      lead.purpose = purpose;
-      lead.name = name;
-      lead.email = email;
-      lead.mobile = mobile;
-      lead.source = source;
-      lead.status = status;
-
       ServiceProvider sp = context.read<ServiceProvider>();
       sp.addLead(lead);
 

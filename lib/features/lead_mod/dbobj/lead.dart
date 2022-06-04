@@ -21,6 +21,10 @@ class Lead extends HiveObject {
   String? email;
   @HiveField(LeadFields.mobile)
   String? mobile;
+  @HiveField(LeadFields.altMobile)
+  String? altMobile;
+  @HiveField(LeadFields.address)
+  String? address;
   @HiveField(LeadFields.source)
   String? source;
   @HiveField(LeadFields.status)
@@ -31,4 +35,9 @@ class Lead extends HiveObject {
   HiveList<Deal>? deals;
   @HiveField(LeadFields.payments)
   HiveList<Payment>? payments;
+
+  @override
+  String toString() {
+    return 'Lead(id: $id, uid: $uid, purpose: $purpose, name: $name, email: $email, mobile: $mobile, altMobile: $altMobile, address: $address, source: $source, status: $status, followups: $followups, deals: $deals, payments: $payments)';
+  }
 }

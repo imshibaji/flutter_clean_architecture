@@ -22,4 +22,9 @@ class Followup extends HiveObject {
   String? leadUid;
   @HiveField(FollowupFields.isDone)
   bool? isDone = false;
+
+  @override
+  String toString() {
+    return 'Followup(id: $id, uid: $uid, discuss: $discuss, status: $status, schedule: $schedule, leadUid: $leadUid, isDone: $isDone)';
+  }
 }

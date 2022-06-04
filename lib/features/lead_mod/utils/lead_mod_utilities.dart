@@ -17,6 +17,7 @@ const leadSources = [
   'Social Media',
   'Contact List',
   'Phone Call',
+  'Friends',
   'Others'
 ];
 
@@ -33,10 +34,29 @@ List getFilterDatas(List list, [String status = 'All']) {
 
 extension StringParse on double {
   String toK() {
+    if (this > 1000000000) {
+      return (toInt() / 1000000000).toStringAsFixed(2) + 'B';
+    }
+    if (this > 1000000) {
+      return (toInt() / 1000000).toStringAsFixed(2) + 'M';
+    }
     if (this > 1000) {
-      return (toInt() / 1000).toString() + 'K';
+      return (toInt() / 1000).toStringAsFixed(2) + 'K';
     }
     return toString();
+  }
+
+  String toM() {
+    if (this > 1000000000) {
+      return (toInt() / 1000000000).toStringAsFixed(4) + 'B';
+    }
+    if (this > 1000000) {
+      return (toInt() / 1000000).toStringAsFixed(4) + 'M';
+    }
+    // if (this > 1000) {
+    //   return (toInt() / 1000).toStringAsFixed(2) + 'K';
+    // }
+    return toStringAsFixed(2);
   }
 }
 

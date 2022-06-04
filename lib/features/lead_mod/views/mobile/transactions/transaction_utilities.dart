@@ -67,7 +67,7 @@ Container quickTotalView(ServiceProvider sp) {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              getTotalIncome(sp.payments!).toString(),
+              getTotalIncome(sp.payments!).toM(),
               style: const TextStyle(
                 fontSize: 18,
                 color: Colors.green,
@@ -78,7 +78,7 @@ Container quickTotalView(ServiceProvider sp) {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
             ),
             Text(
-              getTotalExpense(sp.payments!).toString(),
+              getTotalExpense(sp.payments!).toM(),
               style: const TextStyle(
                 fontSize: 18,
                 color: Colors.red,
@@ -91,7 +91,7 @@ Container quickTotalView(ServiceProvider sp) {
               ),
             ),
             Text(
-              getBalance(sp.payments!).toString(),
+              getBalance(sp.payments!).toM(),
               style: const TextStyle(
                 fontSize: 18,
                 color: Colors.orange,

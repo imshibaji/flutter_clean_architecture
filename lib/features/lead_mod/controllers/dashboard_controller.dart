@@ -23,6 +23,6 @@ class DashboardController extends StatelessController {
     var sp = context.read<ServiceProvider>();
     sp.init();
 
-    return Display(title: 'Dashboard', mobile: const DashboardForMobile());
+    return Display(title: 'LeadsBook', mobile: const DashboardForMobile());
   }
 }
