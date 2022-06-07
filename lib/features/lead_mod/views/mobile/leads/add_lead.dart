@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 
 import '../../../../../core/core.dart';
 import '../../../dbobj/dbobjs.dart';
@@ -16,10 +19,62 @@ class AddLeadForMobile extends StatefulWidget {
   State<AddLeadForMobile> createState() => _AddLeadForMobileState();
 }
 
-class _AddLeadForMobileState extends State<AddLeadForMobile> {
+class _AddLeadForMobileState extends State<AddLeadForMobile>
+    with AfterLayoutMixin {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
-  // String? purpose, name, email, mobile, source, status;
+  TextEditingController? name, email, mobile, address;
   Lead lead = Lead();
+  Contact? _contact;
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    final contact = Nav.routeData(context) as Contact?;
+    if (contact != null) {
+      setState(() {
+        _contact = contact;
+      });
+      // printPrettyJson(contact!);
+      _fetchContact();
+    }
+  }
+
+  Future _fetchContact() async {
+    // First fetch all contact details
+    await _fetchContactWith(highRes: false);
+
+    // Then fetch contact with high resolution photo
+    await _fetchContactWith(highRes: true);
+  }
+
+  Future _fetchContactWith({required bool highRes}) async {
+    final contact = await FlutterContacts.getContact(
+      _contact!.id,
+      withThumbnail: !highRes,
+      withPhoto: highRes,
+      withGroups: true,
+      withAccounts: true,
+    );
+    setState(() {
+      _contact = contact;
+      name = TextEditingController(text: _contact!.displayName);
+      email = TextEditingController(text: _contact!.emails.first.address);
+      mobile = TextEditingController(text: _contact!.phones.first.number);
+      if (_contact!.addresses.isNotEmpty) {
+        var adds = _contact!.addresses.first.address +
+            ', ' +
+            _contact!.addresses.first.street +
+            ', ' +
+            _contact!.addresses.first.city +
+            ', ' +
+            _contact!.addresses.first.state +
+            ', ' +
+            _contact!.addresses.first.country +
+            ', ' +
+            _contact!.addresses.first.postalCode;
+        address = TextEditingController(text: adds);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +110,17 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
             ),
             TextInputField(
               prefixIcon: Icons.face,
-              labelTextStr: 'Customer Name',
+              labelTextStr: 'Name',
+              suffixIcon: InkWell(
+                onTap: () {
+                  Nav.to(context, LeadApp.contactList);
+                },
+                child: const Icon(
+                  Icons.contact_page,
+                  semanticLabel: 'Add Contact From ContactList',
+                ),
+              ),
+              controller: name,
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.name = val;
@@ -69,6 +134,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
               prefixIcon: Icons.email,
               labelTextStr: 'Email',
               keyboardType: TextInputType.emailAddress,
+              controller: email,
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.email = val;
@@ -82,6 +148,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
               prefixIcon: Icons.phone,
               labelTextStr: 'Phone Number',
               keyboardType: TextInputType.phone,
+              controller: mobile,
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.mobile = val;
@@ -108,6 +175,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile> {
               prefixIcon: Icons.maps_home_work_outlined,
               labelTextStr: 'Address',
               keyboardType: TextInputType.streetAddress,
+              controller: address,
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.address = val;

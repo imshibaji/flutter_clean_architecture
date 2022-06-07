@@ -31,7 +31,6 @@ class Nav {
     BuildContext context,
     String url, {
     Object? arguments,
-    Object? result,
   }) {
     Navigator.pushNamed(
       context,

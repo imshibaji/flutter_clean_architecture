@@ -1,3 +1,6 @@
+import 'package:clean_architecture/features/lead_mod/controllers/contacts/contact_list_controller.dart';
+import 'package:clean_architecture/features/lead_mod/controllers/contacts/contact_page_controller.dart';
+
 import '../../core/classes/route_manager.dart';
 import 'controllers/controllers.dart';
 
@@ -17,7 +20,11 @@ class LeadApp extends RouteManager {
 
   static const String followup = name + '/followup';
   static const String listDeal = name + '/list_deal';
+  static const String printDeal = name + '/print_deal';
   static const String transactions = name + '/transactions';
+
+  static const String contactList = name + '/contact_list';
+  static const String contactPage = name + '/contact_page';
 
   LeadApp() {
     addRoute(LeadApp.home, (context) => const DashboardController());
@@ -38,6 +45,11 @@ class LeadApp extends RouteManager {
     /// ----------------------------------
     addRoute(LeadApp.followup, (context) => const FollowupController());
     addRoute(LeadApp.listDeal, (context) => const ListDealController());
+    addRoute(printDeal, (context) => const PrintDealController());
     addRoute(LeadApp.transactions, (context) => const TransactionsController());
+
+    // -----------------------------------
+    addRoute(contactList, (context) => const ContactListController());
+    addRoute(contactPage, (context) => const ContactPageController());
   }
 }

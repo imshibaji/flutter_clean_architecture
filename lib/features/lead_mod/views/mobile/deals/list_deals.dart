@@ -137,10 +137,10 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                   },
                   trailing: InkWell(
                     onTap: () {
-                      showDealBottomMenu(context, deal, sp);
+                      Nav.to(context, LeadApp.printDeal);
                     },
                     child: const Icon(
-                      Icons.read_more_sharp,
+                      Icons.print_outlined,
                       size: 40,
                     ),
                   ),
