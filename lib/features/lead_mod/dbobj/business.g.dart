@@ -22,16 +22,19 @@ class BusinessAdapter extends TypeAdapter<Business> {
       ..name = fields[2] as String?
       ..address = fields[3] as String?
       ..city = fields[4] as String?
-      ..country = fields[5] as String?
-      ..email = fields[6] as String?
-      ..website = fields[7] as String?
-      ..phone = fields[8] as String?;
+      ..state = fields[5] as String?
+      ..country = fields[6] as String?
+      ..pincode = fields[7] as int?
+      ..email = fields[8] as String?
+      ..website = fields[9] as String?
+      ..phone = fields[10] as String?
+      ..altPhone = fields[11] as String?;
   }
 
   @override
   void write(BinaryWriter writer, Business obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -43,13 +46,19 @@ class BusinessAdapter extends TypeAdapter<Business> {
       ..writeByte(4)
       ..write(obj.city)
       ..writeByte(5)
-      ..write(obj.country)
+      ..write(obj.state)
       ..writeByte(6)
-      ..write(obj.email)
+      ..write(obj.country)
       ..writeByte(7)
-      ..write(obj.website)
+      ..write(obj.pincode)
       ..writeByte(8)
-      ..write(obj.phone);
+      ..write(obj.email)
+      ..writeByte(9)
+      ..write(obj.website)
+      ..writeByte(10)
+      ..write(obj.phone)
+      ..writeByte(11)
+      ..write(obj.altPhone);
   }
 
   @override

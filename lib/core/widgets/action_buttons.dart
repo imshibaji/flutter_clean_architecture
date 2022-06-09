@@ -21,6 +21,10 @@ class ActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return getMenuDropdown(context);
+  }
+
+  getMenuDropdown(BuildContext context) {
     var tm = context.watch<ThemeProvider>();
     return PopupMenuButton(
       tooltip: 'Menu Buttons',
@@ -30,12 +34,15 @@ class ActionButtons extends StatelessWidget {
             .map((choice) => PopupMenuItem<ButtonData>(
                   value: choice,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(
                         choice.icon,
                         color:
                             tm.isDarkMode == true ? Colors.white : Colors.black,
+                      ),
+                      const SizedBox(
+                        width: 12,
                       ),
                       Text(choice.label),
                     ],

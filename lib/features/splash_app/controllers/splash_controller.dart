@@ -17,7 +17,7 @@ class _SplashControllerState extends State<SplashController> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
-        const Duration(seconds: 8),
+        const Duration(seconds: 2),
         () => Nav.toReplace(context, '/'),
       );
     });
@@ -30,16 +30,16 @@ class _SplashControllerState extends State<SplashController> {
           body: Center(
         child: AnimatedTextKit(
           animatedTexts: [
-            FadeAnimatedText(
-              'Grow Your Business',
-              textStyle:
-                  const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
-            ),
-            ScaleAnimatedText(
-              'With',
-              textStyle:
-                  const TextStyle(fontSize: 70.0, fontFamily: 'Canterbury'),
-            ),
+            // FadeAnimatedText(
+            //   'Grow Your Business',
+            //   textStyle:
+            //       const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+            // ),
+            // ScaleAnimatedText(
+            //   'With',
+            //   textStyle:
+            //       const TextStyle(fontSize: 70.0, fontFamily: 'Canterbury'),
+            // ),
             RotateAnimatedText(
               'LEADS BOOK',
               textStyle:

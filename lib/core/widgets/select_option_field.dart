@@ -37,7 +37,7 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
     ThemeProvider tp = context.watch<ThemeProvider>();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 3.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
       child: DropdownButtonFormField<String>(
         validator: (value) => widget.errorTextStr = widget.validator!(value),
         onSaved: (value) => widget.onSaved!(value),

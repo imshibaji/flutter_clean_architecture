@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../../config/config.dart';
 import '../core.dart';
 
-List<Widget> actionsMenu(BuildContext context) {
+List<Widget> actionsMenu(
+  BuildContext context, {
+  List<Widget> preActions = const [],
+  List<Widget> postActions = const [],
+}) {
   return [
-    // IconButton(
-    //   onPressed: () {
-    //     Nav.to(context, '/profile');
-    //   },
-    //   icon: const Icon(Icons.account_circle_outlined),
-    // ),
-    const DayNightSwitch(),
+    ...ActionTopButtons.getPreAcction(context).toList(),
+    if (ActionTopButtons.dayNightSwitch) const DayNightSwitch(),
+    ...ActionTopButtons.getPostAcction(context).toList(),
   ];
 }
 

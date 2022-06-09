@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,24 +57,37 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
     );
     setState(() {
       _contact = contact;
-      name = TextEditingController(text: _contact!.displayName);
-      email = TextEditingController(text: _contact!.emails.first.address);
-      mobile = TextEditingController(text: _contact!.phones.first.number);
+
+      if (_contact!.displayName.isNotEmpty) {
+        name = TextEditingController(text: _contact!.displayName);
+      }
+      if (_contact!.phones.isNotEmpty) {
+        mobile = TextEditingController(text: _contact!.phones.first.number);
+      }
+      if (_contact!.emails.isNotEmpty) {
+        email = TextEditingController(text: _contact!.emails.first.address);
+      }
+
       if (_contact!.addresses.isNotEmpty) {
-        var adds = _contact!.addresses.first.address +
-            ', ' +
-            _contact!.addresses.first.street +
-            ', ' +
-            _contact!.addresses.first.city +
-            ', ' +
-            _contact!.addresses.first.state +
-            ', ' +
-            _contact!.addresses.first.country +
-            ', ' +
-            _contact!.addresses.first.postalCode;
+        final adds = _contact!.addresses.first.toVCard().join();
         address = TextEditingController(text: adds);
       }
     });
+  }
+
+  addContactFromPhone() {
+    if (Platform.isAndroid || Platform.isIOS) {
+      return InkWell(
+        onTap: () {
+          Nav.to(context, LeadApp.contactList);
+        },
+        child: const Icon(
+          Icons.contact_page,
+          semanticLabel: 'Add Contact From ContactList',
+        ),
+      );
+    }
+    return null;
   }
 
   @override
@@ -111,15 +125,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
             TextInputField(
               prefixIcon: Icons.face,
               labelTextStr: 'Name',
-              suffixIcon: InkWell(
-                onTap: () {
-                  Nav.to(context, LeadApp.contactList);
-                },
-                child: const Icon(
-                  Icons.contact_page,
-                  semanticLabel: 'Add Contact From ContactList',
-                ),
-              ),
+              suffixIcon: addContactFromPhone(),
               controller: name,
               validator: (val) {
                 if (val!.isNotEmpty) {
@@ -185,41 +191,33 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
                 return null;
               },
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: SelectOptionField(
-                    prefixIcon: Icons.source_outlined,
-                    labelTextStr: 'Source',
-                    options: leadSources,
-                    selected: 'Others',
-                    validator: (val) {
-                      if (val!.isNotEmpty) {
-                        lead.source = val;
-                        setState(() {});
-                        return null;
-                      }
-                      return 'Input Source of Contact';
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: SelectOptionField(
-                    prefixIcon: Icons.water_drop_outlined,
-                    labelTextStr: 'Status',
-                    options: leadStatuses,
-                    selected: 'New',
-                    validator: (val) {
-                      if (val!.isNotEmpty) {
-                        lead.status = val;
-                        setState(() {});
-                        return null;
-                      }
-                      return 'Input Status';
-                    },
-                  ),
-                ),
-              ],
+            SelectOptionField(
+              prefixIcon: Icons.source_outlined,
+              labelTextStr: 'Source',
+              options: leadSources,
+              selected: 'Others',
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  lead.source = val;
+                  setState(() {});
+                  return null;
+                }
+                return 'Input Source of Contact';
+              },
+            ),
+            SelectOptionField(
+              prefixIcon: Icons.water_drop_outlined,
+              labelTextStr: 'Status',
+              options: leadStatuses,
+              selected: 'New',
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  lead.status = val;
+                  setState(() {});
+                  return null;
+                }
+                return 'Input Status';
+              },
             ),
             Row(
               children: [

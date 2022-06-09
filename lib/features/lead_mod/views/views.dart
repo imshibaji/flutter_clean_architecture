@@ -23,3 +23,8 @@ export 'mobile/leads/list_leads.dart';
 export 'mobile/leads/view_lead.dart';
 export 'mobile/leads/add_lead.dart';
 export 'mobile/leads/edit_leads.dart';
+
+// Misc
+export 'mobile/help.dart';
+export 'mobile/business.dart';
+export 'mobile/profile.dart';

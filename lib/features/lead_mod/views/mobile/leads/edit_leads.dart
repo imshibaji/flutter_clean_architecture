@@ -135,41 +135,33 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
                 return null;
               },
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: SelectOptionField(
-                    prefixIcon: Icons.source_outlined,
-                    labelTextStr: 'Source',
-                    options: leadSources,
-                    selected: lead!.source ?? 'Others',
-                    validator: (val) {
-                      if (val!.isNotEmpty) {
-                        ilead.source = val;
-                        setState(() {});
-                        return null;
-                      }
-                      return 'Input Source of Contact';
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: SelectOptionField(
-                    prefixIcon: Icons.water_drop_outlined,
-                    labelTextStr: 'Status',
-                    options: leadStatuses,
-                    selected: lead!.status ?? 'Pending',
-                    validator: (val) {
-                      if (val!.isNotEmpty) {
-                        ilead.status = val;
-                        setState(() {});
-                        return null;
-                      }
-                      return 'Input Status';
-                    },
-                  ),
-                ),
-              ],
+            SelectOptionField(
+              prefixIcon: Icons.source_outlined,
+              labelTextStr: 'Source',
+              options: leadSources,
+              selected: lead!.source ?? 'Others',
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  ilead.source = val;
+                  setState(() {});
+                  return null;
+                }
+                return 'Input Source of Contact';
+              },
+            ),
+            SelectOptionField(
+              prefixIcon: Icons.water_drop_outlined,
+              labelTextStr: 'Status',
+              options: leadStatuses,
+              selected: lead!.status ?? 'Pending',
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  ilead.status = val;
+                  setState(() {});
+                  return null;
+                }
+                return 'Input Status';
+              },
             ),
             Row(
               children: [

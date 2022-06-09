@@ -2,26 +2,60 @@ import 'package:flutter/material.dart';
 
 import '../core/core.dart';
 import '../features/lead_mod/lead_app.dart';
-import '../features/main_app/app.dart';
+// import '../features/main_app/app.dart';
 
 // ignore: must_be_immutable
 class ActionTopButtons extends ActionButtons {
   ActionTopButtons({Key? key})
-      : super(key: key, buttonDatas: [
-          ButtonData(
-            icon: Icons.home,
-            label: 'Main App',
-            link: App.home,
-          ),
-          ButtonData(
-            icon: Icons.people,
-            label: 'Leads App',
-            link: LeadApp.home,
-          ),
-          ButtonData(
-            icon: Icons.logout,
-            label: 'Logout',
-            link: '/logout',
-          ),
-        ]);
+      : super(
+          key: key,
+          buttonDatas: [
+            ButtonData(
+              icon: Icons.business,
+              label: 'Business Details',
+              link: LeadApp.businessPage,
+            ),
+            ButtonData(
+              icon: Icons.person,
+              label: 'Owner Profile',
+              link: LeadApp.profile,
+            ),
+            ButtonData(
+              icon: Icons.help_outline_sharp,
+              label: 'Helps & Tutorials',
+              link: LeadApp.helpPage,
+            ),
+            // ButtonData(
+            //   icon: Icons.logout,
+            //   label: 'Logout',
+            //   link: '/logout',
+            // ),
+          ],
+        );
+
+  static const bool dayNightSwitch = true;
+
+  static List<Widget> getPreAcction(BuildContext context) {
+    return [
+      // IconButton(
+      //   onPressed: () {
+      //     Nav.to(context, '/business');
+      //   },
+      //   icon: const Icon(Icons.business),
+      // ),
+      // IconButton(
+      //   onPressed: () {
+      //     Nav.to(context, '/help');
+      //   },
+      //   icon: const Icon(Icons.help_outline),
+      // ),
+    ];
+  }
+
+  static List<Widget> getPostAcction(BuildContext context) {
+    final atb = ActionTopButtons();
+    return [
+      atb.getMenuDropdown(context),
+    ];
+  }
 }
