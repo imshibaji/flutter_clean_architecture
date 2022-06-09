@@ -1,14 +1,80 @@
+import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:clean_architecture/features/lead_mod/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 import '../../../../../core/core.dart';
+import '../../../dbobj/dbobjs.dart';
+import '../../../services/services.dart';
 
-class PrintDeal extends StatelessWidget {
+class PrintDeal extends StatefulWidget {
   const PrintDeal({Key? key}) : super(key: key);
+
+  @override
+  State<PrintDeal> createState() => _PrintDealState();
+}
+
+class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
+  Business? business;
+  Profile? profile;
+  Deal? deal;
+  Lead? lead;
+
+  BusinessService? bs;
+  ProfileService? ps;
+
+  LeadService? ls;
+
+  bool useDigiSign = true;
+
+  @override
+  void initState() {
+    super.initState();
+    dataInit();
+  }
+
+  void dataInit() {
+    if (business == null) {
+      bs = BusinessService();
+      if (bs!.box!.isNotEmpty) {
+        business = bs!.get(0);
+      } else {
+        showMessage(context, 'Please Setup Your Business details first');
+        Nav.close(context);
+      }
+    }
+    if (profile == null) {
+      ps = ProfileService();
+      if (ps!.box!.isNotEmpty) {
+        profile = ps!.get(0);
+      } else {
+        showMessage(context, 'Please Setup Your Profile Information');
+        Nav.close(context);
+      }
+    }
+  }
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    dealData(context);
+  }
+
+  void dealData(BuildContext context) {
+    deal = Nav.routeData(context) == null
+        ? Deal()
+        : Nav.routeData(context) as Deal;
+    // log(deal.toString());
+    final sp = context.read<ServiceProvider>();
+    lead = sp.leads!.firstWhere(
+      (element) => element.uid == deal!.leadUid,
+    );
+    // log(lead.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +84,23 @@ class PrintDeal extends StatelessWidget {
         actions: actionsMenu(context),
       ),
       body: PdfPreview(
+        pdfFileName: 'Invoice-${deal!.key + 1}.pdf',
         build: (format) => _generatePdf(format, 'Test Invoive PDF'),
         dynamicLayout: false,
         canChangeOrientation: false,
         initialPageFormat: PdfPageFormat.a4,
         canDebug: false,
         previewPageMargin: const EdgeInsets.all(20),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                useDigiSign = !useDigiSign;
+              });
+            },
+            child: const Text('Digital Sign'),
+          )
+        ],
       ),
     );
   }
@@ -34,8 +111,10 @@ class PrintDeal extends StatelessWidget {
       compress: true,
       title: 'Invoice',
       creator: 'LeadsBook',
+      author: 'Shibaji Debnath',
     );
     final font = await PdfGoogleFonts.nunitoExtraLight();
+    final signFont = await PdfGoogleFonts.dancingScriptRegular();
 
     pdf.addPage(
       pw.Page(
@@ -47,7 +126,7 @@ class PrintDeal extends StatelessWidget {
             children: [
               pageHeader(font),
               pw.Divider(),
-              pageBody(),
+              pageBody(font, signFont),
               pw.Divider(),
               pageFooter(font),
             ],
@@ -59,9 +138,157 @@ class PrintDeal extends StatelessWidget {
     return pdf.save();
   }
 
-  pw.Expanded pageBody() => pw.Expanded(
-        child: pw.Container(),
-      );
+  pw.Expanded pageBody(pw.Font font, [pw.Font? signFont]) {
+    return pw.Expanded(
+      child: pw.Container(
+        child: pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Center(
+              child: pw.Text(
+                'Invoice',
+                style: const pw.TextStyle(fontSize: 24),
+              ),
+            ),
+            pw.Divider(),
+            pw.SizedBox(height: 50),
+            ...clientInfo(font).toList(),
+            pw.SizedBox(
+              height: 30,
+            ),
+            invoiceTable(),
+            pw.SizedBox(height: 30),
+            signtureArea(signFont),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<pw.Widget> clientInfo(pw.Font font) {
+    return [
+      pw.Text(
+        'To',
+        style: const pw.TextStyle(fontSize: 24),
+      ),
+      pw.Text(
+        lead!.name ?? 'No Name',
+        style: const pw.TextStyle(fontSize: 16),
+      ),
+      pw.Text(
+        'Address: ' + lead!.address!,
+        style: pw.TextStyle(fontSize: 14, font: font),
+      ),
+      pw.Text(
+        'Mobile: ' + lead!.mobile! + ', ' + lead!.altMobile!,
+        style: pw.TextStyle(fontSize: 14, font: font),
+      ),
+      pw.Text(
+        'Email: ' + lead!.email!,
+        style: pw.TextStyle(fontSize: 16, font: font),
+      ),
+    ];
+  }
+
+  pw.Row signtureArea(pw.Font? signFont) {
+    var date = '${deal!.createdAt!.day}/'
+        '${deal!.createdAt!.month}/'
+        '${deal!.createdAt!.year} ';
+    return pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      children: [
+        pw.Text(
+          'Date: ' + date,
+          style: const pw.TextStyle(fontSize: 18),
+        ),
+        (useDigiSign == true)
+            ? pw.Column(children: [
+                pw.Text(
+                  'Digital Signature for Online Invoice',
+                  style: pw.TextStyle(
+                    fontSize: 9,
+                    color: PdfColors.black.shade(0.4),
+                  ),
+                ),
+                pw.Text(
+                  profile!.name ?? 'No Name',
+                  style: pw.TextStyle(fontSize: 28, font: signFont),
+                ),
+                pw.Text(
+                  'Signature',
+                  style: const pw.TextStyle(fontSize: 18),
+                ),
+              ])
+            : pw.Container(
+                child: pw.Column(children: [
+                  pw.SizedBox(height: 45, width: 165),
+                  pw.Text(
+                    'Signature',
+                    style: const pw.TextStyle(fontSize: 18),
+                  ),
+                ]),
+              ),
+      ],
+    );
+  }
+
+  pw.Table invoiceTable() {
+    return pw.Table(border: pw.TableBorder.all(), columnWidths: {
+      0: const pw.FixedColumnWidth(100),
+      1: const pw.FixedColumnWidth(20)
+    }, children: [
+      // Table Header
+      pw.TableRow(
+        verticalAlignment: pw.TableCellVerticalAlignment.middle,
+        children: [
+          pw.Padding(
+            padding: const pw.EdgeInsets.all(8),
+            child: pw.Text('Description', textAlign: pw.TextAlign.center),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.all(8),
+            child: pw.Text('Amount', textAlign: pw.TextAlign.center),
+          ),
+        ],
+      ),
+
+      // Body Padding
+      pw.TableRow(
+        verticalAlignment: pw.TableCellVerticalAlignment.middle,
+        children: [
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+            child: pw.Text(deal!.details ?? 'No Description'),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.all(5),
+            child: pw.Text(
+              deal!.price!.toStringAsFixed(2),
+              textAlign: pw.TextAlign.right,
+            ),
+          ),
+        ],
+      ),
+
+      // Table Footer
+      pw.TableRow(
+        verticalAlignment: pw.TableCellVerticalAlignment.middle,
+        children: [
+          pw.Padding(
+            padding: const pw.EdgeInsets.all(5),
+            child: pw.Text('Total ', textAlign: pw.TextAlign.right),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.all(5),
+            child: pw.Text(
+              deal!.price!.toStringAsFixed(2),
+              textAlign: pw.TextAlign.right,
+            ),
+          ),
+        ],
+      ),
+    ]);
+  }
 
   pw.SizedBox pageFooter(pw.Font font) {
     return pw.SizedBox(
@@ -74,7 +301,7 @@ class PrintDeal extends StatelessWidget {
               style: pw.TextStyle(font: font, fontSize: 20),
             ),
             pw.Text(
-              'Created By: LeadsBook v:3.0',
+              'Created By: LeadsBook',
               style: pw.TextStyle(font: font, fontSize: 14),
             ),
           ]),
@@ -87,14 +314,78 @@ class PrintDeal extends StatelessWidget {
       child: pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
-            pw.Text(
-              'Hello Text',
-              style: pw.TextStyle(font: font, fontSize: 20),
+            pw.Padding(
+              padding: const pw.EdgeInsets.only(left: 8.0),
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+                  pw.Text(
+                    business!.name!,
+                    style: pw.TextStyle(font: font, fontSize: 26),
+                  ),
+                  pw.Text(
+                    business!.address! +
+                        ', ' +
+                        business!.city! +
+                        ', ' +
+                        business!.state! +
+                        ', ' +
+                        business!.country! +
+                        ', ' +
+                        business!.pincode!.toString(),
+                    style: pw.TextStyle(font: font, fontSize: 12),
+                  ),
+                  pw.Text(
+                    '(M): ' + business!.phone! + ', ' + business!.altPhone!,
+                    style: pw.TextStyle(font: font, fontSize: 12),
+                  ),
+                  pw.Text(
+                    'Email: ' + business!.email!,
+                    style: pw.TextStyle(font: font, fontSize: 12),
+                  ),
+                  pw.Text(
+                    'Website: ' + business!.website!,
+                    style: pw.TextStyle(font: font, fontSize: 12),
+                  ),
+                ],
+              ),
             ),
-            pw.Text(
-              'Hello Text',
-              style: pw.TextStyle(font: font, fontSize: 20),
-            ),
+            pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.end, children: [
+              pw.Text(
+                'Contact Information',
+                style: pw.TextStyle(font: font, fontSize: 16),
+              ),
+              pw.Padding(
+                padding: const pw.EdgeInsets.only(right: 20),
+                child: pw.BarcodeWidget(
+                  data: 'Name: ' +
+                      business!.name! +
+                      '; Address: ' +
+                      business!.address! +
+                      ', ' +
+                      business!.city! +
+                      ', ' +
+                      business!.state! +
+                      ', ' +
+                      business!.country! +
+                      ', ' +
+                      business!.pincode!.toString() +
+                      '; Phone: ' +
+                      business!.phone! +
+                      ', ' +
+                      business!.altPhone! +
+                      '; Email: ' +
+                      business!.email! +
+                      '; Website: ' +
+                      business!.website!,
+                  barcode: pw.Barcode.fromType(pw.BarcodeType.QrCode),
+                  color: PdfColors.black,
+                  width: 90,
+                  height: 90,
+                ),
+              ),
+            ]),
           ]),
     );
   }

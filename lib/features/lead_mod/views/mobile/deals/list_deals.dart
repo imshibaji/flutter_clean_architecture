@@ -97,10 +97,17 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                     Nav.to(context, LeadApp.viewLead, arguments: lead);
                   },
                   leading: InkWell(
-                    child: const Icon(
-                      Icons.note_alt_outlined,
-                      size: 40,
-                    ),
+                    child: (check == false)
+                        ? const Icon(
+                            Icons.check_box_outline_blank_outlined,
+                            size: 40,
+                            color: Colors.orange,
+                          )
+                        : const Icon(
+                            Icons.check_box_outlined,
+                            size: 40,
+                            color: Colors.green,
+                          ),
                     onTap: () {
                       Nav.to(context, LeadApp.viewLead, arguments: lead);
                     },
@@ -133,11 +140,20 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                     ],
                   ),
                   onTap: () {
-                    showDealBottomMenu(context, deal, sp);
+                    showDealBottomMenu(
+                      context,
+                      deal,
+                      sp,
+                      onDeal: (deal) {
+                        setState(() {
+                          check = (deal.status!.toLowerCase() == 'paid');
+                        });
+                      },
+                    );
                   },
                   trailing: InkWell(
                     onTap: () {
-                      Nav.to(context, LeadApp.printDeal);
+                      Nav.to(context, LeadApp.printDeal, arguments: deal);
                     },
                     child: const Icon(
                       Icons.print_outlined,
