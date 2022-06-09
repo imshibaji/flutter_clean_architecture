@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:clean_architecture/features/lead_mod/providers/providers.dart';
+import 'package:clean_architecture/features/lead_mod/lead_app.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../../../dbobj/dbobjs.dart';
+import '../../../providers/providers.dart';
 import '../../../services/services.dart';
 
 class PrintDeal extends StatefulWidget {
@@ -45,7 +46,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
         business = bs!.get(0);
       } else {
         showMessage(context, 'Please Setup Your Business details first');
-        Nav.close(context);
+        Nav.toReplace(context, LeadApp.listDeal);
       }
     }
     if (profile == null) {
@@ -54,7 +55,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
         profile = ps!.get(0);
       } else {
         showMessage(context, 'Please Setup Your Profile Information');
-        Nav.close(context);
+        Nav.toReplace(context, LeadApp.listDeal);
       }
     }
   }
