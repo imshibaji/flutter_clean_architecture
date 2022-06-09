@@ -97,16 +97,16 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                     Nav.to(context, LeadApp.viewLead, arguments: lead);
                   },
                   leading: InkWell(
-                    child: (check == false)
+                    child: (deal.status!.toLowerCase() == 'paid')
                         ? const Icon(
-                            Icons.check_box_outline_blank_outlined,
-                            size: 40,
-                            color: Colors.orange,
-                          )
-                        : const Icon(
                             Icons.check_box_outlined,
                             size: 40,
                             color: Colors.green,
+                          )
+                        : const Icon(
+                            Icons.check_box_outline_blank_outlined,
+                            size: 40,
+                            color: Colors.orange,
                           ),
                     onTap: () {
                       Nav.to(context, LeadApp.viewLead, arguments: lead);
@@ -115,7 +115,12 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(deal.name!),
+                      Expanded(
+                        child: Text(
+                          deal.name!,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                       Text(deal.price!.toString()),
                     ],
                   ),
@@ -130,10 +135,11 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                       const SizedBox(
                         height: 3,
                       ),
+                      Text(lead.name! + ' | ' + dateTime),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(lead.name! + ' | ' + dateTime),
+                          const Text('Status: '),
                           StatusText(label: deal.status!),
                         ],
                       )

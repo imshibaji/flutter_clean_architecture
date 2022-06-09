@@ -65,15 +65,17 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
   }
 
   void dealData(BuildContext context) {
-    deal = Nav.routeData(context) == null
-        ? Deal()
-        : Nav.routeData(context) as Deal;
-    // log(deal.toString());
-    final sp = context.read<ServiceProvider>();
-    lead = sp.leads!.firstWhere(
-      (element) => element.uid == deal!.leadUid,
-    );
-    // log(lead.toString());
+    setState(() {
+      deal = Nav.routeData(context) == null
+          ? Deal()
+          : Nav.routeData(context) as Deal;
+      // log(deal.toString());
+      final sp = context.read<ServiceProvider>();
+      lead = sp.leads!.firstWhere(
+        (element) => element.uid == deal!.leadUid,
+      );
+      // log(lead.toString());
+    });
   }
 
   @override
@@ -83,25 +85,29 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
         title: const Text('Invoice'),
         actions: actionsMenu(context),
       ),
-      body: PdfPreview(
-        pdfFileName: 'Invoice-${deal!.key + 1}.pdf',
-        build: (format) => _generatePdf(format, 'Test Invoive PDF'),
-        dynamicLayout: false,
-        canChangeOrientation: false,
-        initialPageFormat: PdfPageFormat.a4,
-        canDebug: false,
-        previewPageMargin: const EdgeInsets.all(20),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                useDigiSign = !useDigiSign;
-              });
-            },
-            child: const Text('Digital Sign'),
-          )
-        ],
-      ),
+      body: deal != null
+          ? PdfPreview(
+              pdfFileName: 'Invoice-${deal!.key + 1}.pdf',
+              build: (format) => _generatePdf(format, 'Test Invoive PDF'),
+              dynamicLayout: false,
+              canChangeOrientation: false,
+              initialPageFormat: PdfPageFormat.a4,
+              canDebug: false,
+              previewPageMargin: const EdgeInsets.all(20),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      useDigiSign = !useDigiSign;
+                    });
+                  },
+                  child: const Text('Digital Sign'),
+                )
+              ],
+            )
+          : const Center(
+              child: Text('Invoice Generating...'),
+            ),
     );
   }
 
@@ -176,15 +182,18 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
         style: const pw.TextStyle(fontSize: 16),
       ),
       pw.Text(
-        'Address: ' + lead!.address!,
+        'Address: ' + (lead!.address ?? 'No Address'),
         style: pw.TextStyle(fontSize: 14, font: font),
       ),
       pw.Text(
-        'Mobile: ' + lead!.mobile! + ', ' + lead!.altMobile!,
+        'Mobile: ' +
+            lead!.mobile! +
+            ', Alt Mobile: ' +
+            (lead!.altMobile ?? 'No Number'),
         style: pw.TextStyle(fontSize: 14, font: font),
       ),
       pw.Text(
-        'Email: ' + lead!.email!,
+        'Email: ' + (lead!.email ?? 'No Email'),
         style: pw.TextStyle(fontSize: 16, font: font),
       ),
     ];
@@ -325,29 +334,33 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                     style: pw.TextStyle(font: font, fontSize: 26),
                   ),
                   pw.Text(
-                    business!.address! +
+                    (business!.address ?? '') +
                         ', ' +
-                        business!.city! +
+                        (business!.city ?? '') +
                         ', ' +
-                        business!.state! +
+                        (business!.state ?? '') +
                         ', ' +
-                        business!.country! +
+                        (business!.country ?? '') +
                         ', ' +
                         business!.pincode!.toString(),
                     style: pw.TextStyle(font: font, fontSize: 12),
                   ),
                   pw.Text(
-                    '(M): ' + business!.phone! + ', ' + business!.altPhone!,
+                    '(M): ' +
+                        (business!.phone ?? '') +
+                        ', ' +
+                        (business!.altPhone ?? ''),
                     style: pw.TextStyle(font: font, fontSize: 12),
                   ),
                   pw.Text(
                     'Email: ' + business!.email!,
                     style: pw.TextStyle(font: font, fontSize: 12),
                   ),
-                  pw.Text(
-                    'Website: ' + business!.website!,
-                    style: pw.TextStyle(font: font, fontSize: 12),
-                  ),
+                  if (business!.website!.isNotEmpty)
+                    pw.Text(
+                      'Website: ' + business!.website!,
+                      style: pw.TextStyle(font: font, fontSize: 12),
+                    ),
                 ],
               ),
             ),
@@ -360,25 +373,25 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                 padding: const pw.EdgeInsets.only(right: 20),
                 child: pw.BarcodeWidget(
                   data: 'Name: ' +
-                      business!.name! +
+                      (business!.name ?? '') +
                       '; Address: ' +
-                      business!.address! +
+                      (business!.address ?? '') +
                       ', ' +
-                      business!.city! +
+                      (business!.city ?? '') +
                       ', ' +
-                      business!.state! +
+                      (business!.state ?? '') +
                       ', ' +
-                      business!.country! +
+                      (business!.country ?? '') +
                       ', ' +
                       business!.pincode!.toString() +
                       '; Phone: ' +
-                      business!.phone! +
+                      (business!.phone ?? '') +
                       ', ' +
-                      business!.altPhone! +
+                      (business!.altPhone ?? '') +
                       '; Email: ' +
-                      business!.email! +
+                      (business!.email ?? '') +
                       '; Website: ' +
-                      business!.website!,
+                      (business!.website ?? ''),
                   barcode: pw.Barcode.fromType(pw.BarcodeType.QrCode),
                   color: PdfColors.black,
                   width: 90,
