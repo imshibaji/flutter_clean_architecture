@@ -327,14 +327,14 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
 void doneDeal(Deal deal, ServiceProvider sp) async {
   if (deal.status!.toLowerCase() != 'paid') {
     deal.status = 'Paid';
-    deal.save();
+    await deal.save();
 
     final ls = LeadService();
     Lead lead = ls
         .getAll()
         .firstWhere((element) => element.uid!.startsWith(deal.leadUid!));
     lead.status = 'Success';
-    lead.save();
+    await lead.save();
 
     final ps = PaymentService();
     Payment payment = Payment();
@@ -346,29 +346,38 @@ void doneDeal(Deal deal, ServiceProvider sp) async {
     payment.type = 'Income';
     payment.createdAt = DateTime.now();
     int i = await ps.add(payment);
+    payment.save();
+    // log(payment.toString());
     log(i.toString());
   }
 
   sp.getAllDeals();
 }
 
-void notDoneDeal(Deal deal, ServiceProvider sp) {
+void notDoneDeal(Deal deal, ServiceProvider sp) async {
   if (deal.status!.toLowerCase() == 'paid') {
     deal.status = 'Pending';
-    deal.save();
+    await deal.save();
+    // log("Deal: " + deal.uid!);
+
+    final ps = PaymentService();
+    Payment payment = ps.getAll().firstWhere((pay) {
+      if (pay.dealUid != null && pay.dealUid!.isNotEmpty) {
+        return pay.dealUid!.startsWith(deal.uid!);
+      }
+      return false;
+    });
+
+    // log('PayDeal: ' + payment.dealUid!);
+    // log(payment.toString());
+    await payment.delete();
 
     final ls = LeadService();
     Lead lead = ls
         .getAll()
         .firstWhere((element) => element.uid!.startsWith(deal.leadUid!));
     lead.status = 'Rejected';
-    lead.save();
-
-    final ps = PaymentService();
-    Payment payment = ps
-        .getAll()
-        .firstWhere((element) => element.dealUid!.startsWith(deal.uid!));
-    payment.delete();
+    await lead.save();
   }
   sp.getAllDeals();
 }

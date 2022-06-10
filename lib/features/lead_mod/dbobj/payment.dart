@@ -24,4 +24,9 @@ class Payment extends HiveObject {
   String? leadUid;
   @HiveField(PaymentFields.dealUid)
   String? dealUid;
+
+  @override
+  String toString() {
+    return 'Payment(id: $id, uid: $uid, details: $details, amount: $amount, type: $type, createdAt: $createdAt, leadUid: $leadUid, dealUid: $dealUid)';
+  }
 }
