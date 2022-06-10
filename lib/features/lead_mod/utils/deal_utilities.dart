@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:clean_architecture/features/lead_mod/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -321,14 +324,51 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
   );
 }
 
-void doneDeal(Deal deal, ServiceProvider sp) {
-  deal.status = 'Paid';
-  deal.save();
+void doneDeal(Deal deal, ServiceProvider sp) async {
+  if (deal.status!.toLowerCase() != 'paid') {
+    deal.status = 'Paid';
+    deal.save();
+
+    final ls = LeadService();
+    Lead lead = ls
+        .getAll()
+        .firstWhere((element) => element.uid!.startsWith(deal.leadUid!));
+    lead.status = 'Success';
+    lead.save();
+
+    final ps = PaymentService();
+    Payment payment = Payment();
+    payment.uid = uuid();
+    payment.dealUid = deal.uid;
+    payment.details = deal.details;
+    payment.amount = deal.price;
+    payment.leadUid = deal.leadUid;
+    payment.type = 'Income';
+    payment.createdAt = DateTime.now();
+    int i = await ps.add(payment);
+    log(i.toString());
+  }
+
   sp.getAllDeals();
 }
 
 void notDoneDeal(Deal deal, ServiceProvider sp) {
-  deal.status = 'Pending';
-  deal.save();
+  if (deal.status!.toLowerCase() == 'paid') {
+    deal.status = 'Pending';
+    deal.save();
+
+    final ls = LeadService();
+    Lead lead = ls
+        .getAll()
+        .firstWhere((element) => element.uid!.startsWith(deal.leadUid!));
+    lead.status = 'Rejected';
+    lead.save();
+
+    final ps = PaymentService();
+    Payment payment = ps
+        .getAll()
+        .firstWhere((element) => element.dealUid!.startsWith(deal.uid!));
+    payment.delete();
+  }
   sp.getAllDeals();
 }

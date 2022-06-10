@@ -92,19 +92,19 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
           );
         },
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        autofocus: true,
-        tooltip: 'Add Lead',
-        // mini: true,
-        child: const Icon(Icons.person_add_alt),
-        onPressed: () {
-          Nav.to(context, LeadApp.addLead);
-        },
-      ),
       bottomNavigationBar: LeadAppBottomBar(),
+      // floatingActionButtonLocation:
+      //     FloatingActionButtonLocation.miniCenterFloat,
+      // floatingActionButton: FloatingActionButton(
+      //   shape: const CircleBorder(),
+      //   autofocus: true,
+      //   tooltip: 'Add Lead',
+      //   // mini: true,
+      //   child: const Icon(Icons.person_add_alt),
+      //   onPressed: () {
+      //     Nav.to(context, LeadApp.addLead);
+      //   },
+      // ),
     );
   }
 

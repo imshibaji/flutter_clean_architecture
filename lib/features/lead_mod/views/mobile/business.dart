@@ -184,6 +184,7 @@ class _BusinessMobileViewState extends State<BusinessMobileView> {
 
       final data = iBiz.toString();
       log(data);
+      showMessage(context, 'Business Data saved successfully.');
     }
   }
 

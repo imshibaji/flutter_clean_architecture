@@ -71,6 +71,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
           ? Deal()
           : Nav.routeData(context) as Deal;
       // log(deal.toString());
+
       final sp = context.read<ServiceProvider>();
       lead = sp.leads!.firstWhere(
         (element) => element.uid == deal!.leadUid,
