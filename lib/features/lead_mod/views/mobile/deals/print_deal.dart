@@ -84,12 +84,14 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Invoice'),
+        title: Text((deal != null) ? 'Invoice#${deal!.key + 1}' : 'Invoice'),
         actions: actionsMenu(context),
       ),
       body: deal != null
           ? PdfPreview(
-              pdfFileName: 'Invoice-${deal!.key + 1}.pdf',
+              pdfFileName: (deal != null)
+                  ? 'Invoice-${deal!.key + 1}.pdf'
+                  : 'Invoice.pdf',
               build: (format) => _generatePdf(format, 'Test Invoive PDF'),
               dynamicLayout: false,
               canChangeOrientation: false,
@@ -117,7 +119,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
     final pdf = pw.Document(
       version: PdfVersion.pdf_1_5,
       compress: true,
-      title: 'Invoice',
+      title: (deal != null) ? 'Invoice#${deal!.key + 1}' : 'Invoice',
       creator: 'LeadsBook',
       author: 'Shibaji Debnath',
     );
@@ -154,7 +156,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
           children: [
             pw.Center(
               child: pw.Text(
-                'Invoice',
+                'Invoice#${deal!.key + 1}',
                 style: const pw.TextStyle(fontSize: 24),
               ),
             ),
@@ -179,25 +181,29 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
         'To',
         style: const pw.TextStyle(fontSize: 24),
       ),
-      pw.Text(
-        lead!.name ?? 'No Name',
-        style: const pw.TextStyle(fontSize: 16),
-      ),
-      pw.Text(
-        'Address: ' + (lead!.address ?? 'No Address'),
-        style: pw.TextStyle(fontSize: 14, font: font),
-      ),
-      pw.Text(
-        'Mobile: ' +
-            lead!.mobile! +
-            ', Alt Mobile: ' +
-            (lead!.altMobile ?? 'No Number'),
-        style: pw.TextStyle(fontSize: 14, font: font),
-      ),
-      pw.Text(
-        'Email: ' + (lead!.email ?? 'No Email'),
-        style: pw.TextStyle(fontSize: 16, font: font),
-      ),
+      if (lead != null)
+        pw.Text(
+          lead!.name ?? 'No Name',
+          style: const pw.TextStyle(fontSize: 16),
+        ),
+      if (lead != null)
+        pw.Text(
+          'Address: ' + (lead!.address ?? 'No Address'),
+          style: pw.TextStyle(fontSize: 14, font: font),
+        ),
+      if (lead != null)
+        pw.Text(
+          'Mobile: ' +
+              lead!.mobile! +
+              ', Alt Mobile: ' +
+              (lead!.altMobile ?? 'No Number'),
+          style: pw.TextStyle(fontSize: 14, font: font),
+        ),
+      if (lead != null)
+        pw.Text(
+          'Email: ' + (lead!.email ?? 'No Email'),
+          style: pw.TextStyle(fontSize: 16, font: font),
+        ),
     ];
   }
 
@@ -221,10 +227,11 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                     color: PdfColors.black.shade(0.4),
                   ),
                 ),
-                pw.Text(
-                  profile!.name ?? 'No Name',
-                  style: pw.TextStyle(fontSize: 28, font: signFont),
-                ),
+                if (profile != null)
+                  pw.Text(
+                    profile!.name ?? 'No Name',
+                    style: pw.TextStyle(fontSize: 28, font: signFont),
+                  ),
                 pw.Text(
                   'Signature',
                   style: const pw.TextStyle(fontSize: 18),
@@ -267,17 +274,20 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
       pw.TableRow(
         verticalAlignment: pw.TableCellVerticalAlignment.middle,
         children: [
-          pw.Padding(
-            padding: const pw.EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-            child: pw.Text(deal!.details ?? 'No Description'),
-          ),
-          pw.Padding(
-            padding: const pw.EdgeInsets.all(5),
-            child: pw.Text(
-              deal!.price!.toStringAsFixed(2),
-              textAlign: pw.TextAlign.right,
+          if (deal != null)
+            pw.Padding(
+              padding:
+                  const pw.EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+              child: pw.Text(deal!.details ?? 'No Description'),
             ),
-          ),
+          if (deal != null)
+            pw.Padding(
+              padding: const pw.EdgeInsets.all(5),
+              child: pw.Text(
+                deal!.price!.toStringAsFixed(2),
+                textAlign: pw.TextAlign.right,
+              ),
+            ),
         ],
       ),
 
@@ -289,13 +299,14 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
             padding: const pw.EdgeInsets.all(5),
             child: pw.Text('Total ', textAlign: pw.TextAlign.right),
           ),
-          pw.Padding(
-            padding: const pw.EdgeInsets.all(5),
-            child: pw.Text(
-              deal!.price!.toStringAsFixed(2),
-              textAlign: pw.TextAlign.right,
+          if (deal != null)
+            pw.Padding(
+              padding: const pw.EdgeInsets.all(5),
+              child: pw.Text(
+                deal!.price!.toStringAsFixed(2),
+                textAlign: pw.TextAlign.right,
+              ),
             ),
-          ),
         ],
       ),
     ]);
@@ -331,34 +342,38 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
-                  pw.Text(
-                    business!.name!,
-                    style: pw.TextStyle(font: font, fontSize: 26),
-                  ),
-                  pw.Text(
-                    (business!.address ?? '') +
-                        ', ' +
-                        (business!.city ?? '') +
-                        ', ' +
-                        (business!.state ?? '') +
-                        ', ' +
-                        (business!.country ?? '') +
-                        ', ' +
-                        business!.pincode!.toString(),
-                    style: pw.TextStyle(font: font, fontSize: 12),
-                  ),
-                  pw.Text(
-                    '(M): ' +
-                        (business!.phone ?? '') +
-                        ', ' +
-                        (business!.altPhone ?? ''),
-                    style: pw.TextStyle(font: font, fontSize: 12),
-                  ),
-                  pw.Text(
-                    'Email: ' + business!.email!,
-                    style: pw.TextStyle(font: font, fontSize: 12),
-                  ),
-                  if (business!.website!.isNotEmpty)
+                  if (business != null)
+                    pw.Text(
+                      business!.name!,
+                      style: pw.TextStyle(font: font, fontSize: 26),
+                    ),
+                  if (business != null)
+                    pw.Text(
+                      (business!.address ?? '') +
+                          ', ' +
+                          (business!.city ?? '') +
+                          ', ' +
+                          (business!.state ?? '') +
+                          ', ' +
+                          (business!.country ?? '') +
+                          ', ' +
+                          business!.pincode!.toString(),
+                      style: pw.TextStyle(font: font, fontSize: 12),
+                    ),
+                  if (business != null)
+                    pw.Text(
+                      '(M): ' +
+                          (business!.phone ?? '') +
+                          ', ' +
+                          (business!.altPhone ?? ''),
+                      style: pw.TextStyle(font: font, fontSize: 12),
+                    ),
+                  if (business != null)
+                    pw.Text(
+                      'Email: ' + business!.email!,
+                      style: pw.TextStyle(font: font, fontSize: 12),
+                    ),
+                  if (business != null && business!.website!.isNotEmpty)
                     pw.Text(
                       'Website: ' + business!.website!,
                       style: pw.TextStyle(font: font, fontSize: 12),
@@ -371,35 +386,36 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                 'Contact Information',
                 style: pw.TextStyle(font: font, fontSize: 16),
               ),
-              pw.Padding(
-                padding: const pw.EdgeInsets.only(right: 20),
-                child: pw.BarcodeWidget(
-                  data: 'Name: ' +
-                      (business!.name ?? '') +
-                      '; Address: ' +
-                      (business!.address ?? '') +
-                      ', ' +
-                      (business!.city ?? '') +
-                      ', ' +
-                      (business!.state ?? '') +
-                      ', ' +
-                      (business!.country ?? '') +
-                      ', ' +
-                      business!.pincode!.toString() +
-                      '; Phone: ' +
-                      (business!.phone ?? '') +
-                      ', ' +
-                      (business!.altPhone ?? '') +
-                      '; Email: ' +
-                      (business!.email ?? '') +
-                      '; Website: ' +
-                      (business!.website ?? ''),
-                  barcode: pw.Barcode.fromType(pw.BarcodeType.QrCode),
-                  color: PdfColors.black,
-                  width: 90,
-                  height: 90,
+              if (business != null)
+                pw.Padding(
+                  padding: const pw.EdgeInsets.only(right: 20),
+                  child: pw.BarcodeWidget(
+                    data: 'Name: ' +
+                        (business!.name ?? '') +
+                        '; Address: ' +
+                        (business!.address ?? '') +
+                        ', ' +
+                        (business!.city ?? '') +
+                        ', ' +
+                        (business!.state ?? '') +
+                        ', ' +
+                        (business!.country ?? '') +
+                        ', ' +
+                        business!.pincode!.toString() +
+                        '; Phone: ' +
+                        (business!.phone ?? '') +
+                        ', ' +
+                        (business!.altPhone ?? '') +
+                        '; Email: ' +
+                        (business!.email ?? '') +
+                        '; Website: ' +
+                        (business!.website ?? ''),
+                    barcode: pw.Barcode.fromType(pw.BarcodeType.QrCode),
+                    color: PdfColors.black,
+                    width: 90,
+                    height: 90,
+                  ),
                 ),
-              ),
             ]),
           ]),
     );

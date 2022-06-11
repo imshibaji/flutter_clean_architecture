@@ -309,31 +309,35 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
             const SizedBox(
               height: 25,
             ),
-            TextInputField(
-              prefixIcon: Icons.edit_note,
-              labelTextStr: 'Discuss Details',
-              onTap: () {
-                setState(() {
-                  isForm = true;
-                });
-              },
-              onSaved: (val) {
-                setState(() {
-                  isForm = false;
-                });
-              },
-              onFieldSubmitted: (val) {
-                setState(() {
-                  isForm = false;
-                });
-              },
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  discussion = val;
-                  return null;
-                }
-                return 'Input Discussion Details';
-              },
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: TextInputField(
+                prefixIcon: Icons.edit_note,
+                labelTextStr: 'Discuss Details',
+                onTap: () {
+                  setState(() {
+                    isForm = true;
+                  });
+                },
+                onSaved: (val) {
+                  setState(() {
+                    isForm = false;
+                  });
+                },
+                onFieldSubmitted: (val) {
+                  setState(() {
+                    isForm = false;
+                  });
+                },
+                validator: (val) {
+                  if (val!.isNotEmpty) {
+                    discussion = val;
+                    return null;
+                  }
+                  return 'Input Discussion Details';
+                },
+              ),
             ),
             const SizedBox(
               height: 15,
@@ -344,13 +348,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
                   child: SelectOptionField(
                     prefixIcon: Icons.water_drop_outlined,
                     labelTextStr: 'Lead Status',
-                    options: const [
-                      'Pending',
-                      'Interested',
-                      'Success',
-                      'Rejected',
-                      'Expired',
-                    ],
+                    options: followupStatuses,
                     selected: 'Pending',
                     validator: (val) {
                       if (val!.isNotEmpty) {

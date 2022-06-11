@@ -99,14 +99,14 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
           children: [
             Row(
               children: [
-                Text(lead.purpose!),
+                Text(lead.purpose ?? 'No Purpose'),
                 const SizedBox(
                   width: 6,
                 ),
                 StatusText(label: followup.status ?? 'new')
               ],
             ),
-            Text(lead.name! + ' | ' + dateTime)
+            Text((lead.name ?? 'No Name') + ' | ' + dateTime)
           ],
         ),
         shape: Border.all(width: 0.5),

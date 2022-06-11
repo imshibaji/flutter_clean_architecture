@@ -17,6 +17,7 @@ void showDealBottomMenu(BuildContext context, Deal deal, ServiceProvider sp,
     {Function(Deal)? onDeal}) {
   showModalBottomSheet(
     context: context,
+    isScrollControlled: true,
     builder: (_) => bottomDealMenus(context, deal, sp, onDeal: onDeal),
   );
 }
@@ -211,47 +212,59 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
             height: 370,
             child: Column(
               children: [
-                TextInputField(
-                  prefixIcon: Icons.edit_note,
-                  labelTextStr: 'Deal Name',
-                  initialValue: deal.name,
-                  validator: (val) {
-                    if (val!.isNotEmpty) {
-                      ideal.name = val;
-                      return null;
-                    }
-                    return 'Input Discussion Details';
-                  },
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: TextInputField(
+                    prefixIcon: Icons.edit_note,
+                    labelTextStr: 'Deal Name',
+                    initialValue: deal.name,
+                    validator: (val) {
+                      if (val!.isNotEmpty) {
+                        ideal.name = val;
+                        return null;
+                      }
+                      return 'Input Discussion Details';
+                    },
+                  ),
                 ),
-                TextInputField(
-                  prefixIcon: Icons.edit_note,
-                  labelTextStr: 'Deal Deatils',
-                  maxLines: 3,
-                  textInputAction: TextInputAction.done,
-                  contentPadding: const EdgeInsets.all(9),
-                  initialValue: deal.details,
-                  validator: (val) {
-                    if (val!.isNotEmpty) {
-                      ideal.details = val;
-                      return null;
-                    }
-                    return 'Input Deal Details';
-                  },
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: TextInputField(
+                    prefixIcon: Icons.edit_note,
+                    labelTextStr: 'Deal Deatils',
+                    maxLines: 3,
+                    textInputAction: TextInputAction.done,
+                    contentPadding: const EdgeInsets.all(9),
+                    initialValue: deal.details,
+                    validator: (val) {
+                      if (val!.isNotEmpty) {
+                        ideal.details = val;
+                        return null;
+                      }
+                      return 'Input Deal Details';
+                    },
+                  ),
                 ),
-                TextInputField(
-                  prefixIcon: Icons.edit_note,
-                  labelTextStr: 'Deal Amount',
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.number,
-                  contentPadding: const EdgeInsets.all(9),
-                  initialValue: deal.price.toString(),
-                  validator: (val) {
-                    if (val!.isNotEmpty) {
-                      ideal.price = double.parse(val);
-                      return null;
-                    }
-                    return 'Input Deal Amount';
-                  },
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom + 20),
+                  child: TextInputField(
+                    prefixIcon: Icons.edit_note,
+                    labelTextStr: 'Deal Amount',
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    contentPadding: const EdgeInsets.all(9),
+                    initialValue: deal.price.toString(),
+                    validator: (val) {
+                      if (val!.isNotEmpty) {
+                        ideal.price = double.parse(val);
+                        return null;
+                      }
+                      return 'Input Deal Amount';
+                    },
+                  ),
                 ),
                 SelectOptionField(
                   prefixIcon: Icons.water_drop_outlined,
