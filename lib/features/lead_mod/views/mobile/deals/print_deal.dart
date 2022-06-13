@@ -35,14 +35,14 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
 
   @override
   void initState() {
-    super.initState();
     dataInit();
+    super.initState();
   }
 
   void dataInit() {
     if (business == null) {
       bs = BusinessService();
-      if (bs!.box!.isNotEmpty) {
+      if (bs != null && bs!.box != null && bs!.box!.isNotEmpty) {
         business = bs!.get(0);
       } else {
         showMessage(context, 'Please Setup Your Business details first');
@@ -51,7 +51,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
     }
     if (profile == null) {
       ps = ProfileService();
-      if (ps!.box!.isNotEmpty) {
+      if (ps != null && ps!.box != null && ps!.box!.isNotEmpty) {
         profile = ps!.get(0);
       } else {
         showMessage(context, 'Please Setup Your Profile Information');
@@ -66,18 +66,24 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
   }
 
   void dealData(BuildContext context) {
-    setState(() {
-      deal = Nav.routeData(context) == null
-          ? Deal()
-          : Nav.routeData(context) as Deal;
-      // log(deal.toString());
+    if (ps != null && bs != null) {
+      setState(() {
+        deal = Nav.routeData(context) == null
+            ? Deal()
+            : Nav.routeData(context) as Deal;
+        // log(deal.toString());
 
-      final sp = context.read<ServiceProvider>();
-      lead = sp.leads!.firstWhere(
-        (element) => element.uid == deal!.leadUid,
-      );
-      // log(lead.toString());
-    });
+        final sp = context.read<ServiceProvider>();
+        lead = sp.leads!.firstWhere(
+          (element) => element.uid == deal!.leadUid,
+        );
+        // log(lead.toString());
+      });
+    } else {
+      showMessage(
+          context, 'Please Setup Your Business and Profile details first');
+      Nav.toReplace(context, LeadApp.listDeal);
+    }
   }
 
   @override

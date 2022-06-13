@@ -110,7 +110,9 @@ class _BusinessMobileViewState extends State<BusinessMobileView> {
                 labelTextStr: 'Pincode',
                 prefixIcon: Icons.map,
                 keyboardType: TextInputType.number,
-                initialValue: business!.pincode.toString(),
+                initialValue: (business!.pincode != null)
+                    ? business!.pincode.toString()
+                    : '',
                 validator: (val) {
                   if (val!.isNotEmpty) {
                     business!.pincode = int.parse(val);

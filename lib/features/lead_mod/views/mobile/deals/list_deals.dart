@@ -59,7 +59,7 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
           ),
         ),
         Expanded(
-          child: allDeals(sp.deals!, sp),
+          child: allDeals(sp.deals ?? [], sp),
         ),
       ],
     );
@@ -97,7 +97,8 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                     Nav.to(context, LeadApp.viewLead, arguments: lead);
                   },
                   leading: InkWell(
-                    child: (deal.status!.toLowerCase() == 'paid')
+                    child: (deal.status != null &&
+                            deal.status!.toLowerCase() == 'paid')
                         ? const Icon(
                             Icons.check_box_outlined,
                             size: 40,
@@ -122,19 +123,19 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                             Text(
                               'Invoice#' +
                                   (deal.key + 1).toString() +
-                                  ' | Created At: ' +
+                                  ' | At: ' +
                                   dateTime,
                               textAlign: TextAlign.left,
-                              style: const TextStyle(fontSize: 10),
+                              style: const TextStyle(fontSize: 8),
                             ),
                             Text(
-                              deal.name!,
+                              deal.name ?? 'No Name',
                               textAlign: TextAlign.left,
                             ),
                           ],
                         ),
                       ),
-                      Text(deal.price!.toString()),
+                      Text((deal.price ?? '0').toString()),
                     ],
                   ),
                   subtitle: Column(
@@ -144,7 +145,7 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            lead.name! + ' | ',
+                            (lead.name ?? 'No Name') + ' | ',
                             style: const TextStyle(fontSize: 10),
                           ),
                           const Text(
@@ -152,7 +153,7 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                             style: TextStyle(fontSize: 10),
                           ),
                           StatusText(
-                            label: deal.status!,
+                            label: deal.status ?? 'No Status',
                             size: 10,
                           ),
                         ],
@@ -161,7 +162,12 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                         height: 3,
                       ),
                       Text(
-                        deal.details!.substring(0, 50),
+                        (deal.details ?? 'No Details').substring(
+                          0,
+                          (deal.details!.length > 50)
+                              ? 50
+                              : deal.details!.length,
+                        ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                       ),

@@ -127,10 +127,10 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
           },
         ),
         onLongPress: () {
-          showFollowupBottomMenu(context, lead, followup, sp);
+          Nav.to(context, LeadApp.viewLead, arguments: lead);
         },
         onTap: () {
-          Nav.to(context, LeadApp.viewLead, arguments: lead);
+          showFollowupBottomMenu(context, lead, followup, sp);
         },
         trailing: IconButton(
           onPressed: () {
