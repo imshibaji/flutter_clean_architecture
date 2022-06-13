@@ -54,9 +54,8 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               initialValue: lead!.purpose ?? '',
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  setState(() {
-                    ilead.purpose = val;
-                  });
+                  ilead.purpose = val;
+                  // setState(() {});
                   return null;
                 }
                 return null;
@@ -68,9 +67,8 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               initialValue: lead!.name ?? '',
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  setState(() {
-                    ilead.name = val;
-                  });
+                  ilead.name = val;
+                  // setState(() {});
                   return null;
                 }
                 return 'Input Customer Name';
@@ -83,9 +81,8 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               keyboardType: TextInputType.emailAddress,
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  setState(() {
-                    ilead.email = val;
-                  });
+                  ilead.email = val;
+                  // setState(() {});
                   return null;
                 }
                 return null;
@@ -99,7 +96,7 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               validator: (val) {
                 if (val!.isNotEmpty) {
                   ilead.mobile = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return 'Input Customer Mobile Number';
@@ -112,9 +109,8 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               keyboardType: TextInputType.number,
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  setState(() {
-                    ilead.altMobile = val;
-                  });
+                  ilead.altMobile = val;
+                  // setState(() {});
                   return null;
                 }
                 return null;
@@ -127,9 +123,8 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               keyboardType: TextInputType.streetAddress,
               validator: (val) {
                 if (val!.isNotEmpty) {
-                  setState(() {
-                    ilead.address = val;
-                  });
+                  ilead.address = val;
+                  // setState(() {});
                   return null;
                 }
                 return null;
@@ -143,7 +138,7 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               validator: (val) {
                 if (val!.isNotEmpty) {
                   ilead.source = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return 'Input Source of Contact';
@@ -157,7 +152,7 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               validator: (val) {
                 if (val!.isNotEmpty) {
                   ilead.status = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return 'Input Status';

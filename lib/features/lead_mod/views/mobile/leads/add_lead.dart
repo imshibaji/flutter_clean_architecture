@@ -116,7 +116,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.purpose = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return null;
@@ -130,7 +130,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.name = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return 'Input Customer Name';
@@ -144,7 +144,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.email = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return null;
@@ -158,7 +158,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.mobile = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return 'Input Customer Mobile Number';
@@ -171,7 +171,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.altMobile = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return null;
@@ -185,7 +185,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.address = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return null;
@@ -199,7 +199,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.source = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return 'Input Source of Contact';
@@ -213,7 +213,7 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
               validator: (val) {
                 if (val!.isNotEmpty) {
                   lead.status = val;
-                  setState(() {});
+                  // setState(() {});
                   return null;
                 }
                 return 'Input Status';
