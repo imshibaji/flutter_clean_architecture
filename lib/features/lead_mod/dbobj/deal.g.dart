@@ -22,6 +22,7 @@ class DealAdapter extends TypeAdapter<Deal> {
       ..name = fields[2] as String?
       ..details = fields[3] as String?
       ..price = fields[4] as double?
+      ..discount = fields[8] as double?
       ..status = fields[5] as String?
       ..createdAt = fields[6] as DateTime?
       ..leadUid = fields[7] as String?;
@@ -30,7 +31,7 @@ class DealAdapter extends TypeAdapter<Deal> {
   @override
   void write(BinaryWriter writer, Deal obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,6 +42,8 @@ class DealAdapter extends TypeAdapter<Deal> {
       ..write(obj.details)
       ..writeByte(4)
       ..write(obj.price)
+      ..writeByte(8)
+      ..write(obj.discount)
       ..writeByte(5)
       ..write(obj.status)
       ..writeByte(6)

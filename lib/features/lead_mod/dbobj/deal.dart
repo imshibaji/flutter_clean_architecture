@@ -18,6 +18,8 @@ class Deal extends HiveObject {
   String? details;
   @HiveField(DealFields.price)
   double? price;
+  @HiveField(DealFields.discount)
+  double? discount;
   @HiveField(DealFields.status)
   String? status;
   @HiveField(DealFields.createdAt)
@@ -27,6 +29,6 @@ class Deal extends HiveObject {
 
   @override
   String toString() {
-    return 'Deal(id: $id, uid: $uid, name: $name, details: $details, price: $price, status: $status, createdAt: $createdAt, leadUid: $leadUid)';
+    return 'Deal(id: $id, uid: $uid, name: $name, details: $details, price: $price, discount: $discount, status: $status, createdAt: $createdAt, leadUid: $leadUid)';
   }
 }

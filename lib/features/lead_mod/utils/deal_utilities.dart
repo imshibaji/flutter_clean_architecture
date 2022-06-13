@@ -209,7 +209,7 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
           title: const Text('Edit Deal'),
           scrollable: true,
           content: SizedBox(
-            height: 370,
+            height: 430,
             child: Column(
               children: [
                 Padding(
@@ -247,24 +247,36 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
                     },
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom + 20),
-                  child: TextInputField(
-                    prefixIcon: Icons.edit_note,
-                    labelTextStr: 'Deal Amount',
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
-                    contentPadding: const EdgeInsets.all(9),
-                    initialValue: deal.price.toString(),
-                    validator: (val) {
-                      if (val!.isNotEmpty) {
-                        ideal.price = double.parse(val);
-                        return null;
-                      }
-                      return 'Input Deal Amount';
-                    },
-                  ),
+                TextInputField(
+                  prefixIcon: Icons.edit_note,
+                  labelTextStr: 'Deal Amount',
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.number,
+                  contentPadding: const EdgeInsets.all(9),
+                  initialValue: deal.price.toString(),
+                  validator: (val) {
+                    if (val!.isNotEmpty) {
+                      ideal.price = double.parse(val);
+                      return null;
+                    }
+                    return 'Input Deal Amount';
+                  },
+                ),
+                TextInputField(
+                  prefixIcon: Icons.edit_note,
+                  labelTextStr: 'Discount Amount',
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.number,
+                  contentPadding: const EdgeInsets.all(9),
+                  initialValue:
+                      (deal.discount != null) ? deal.discount.toString() : '',
+                  validator: (val) {
+                    if (val!.isNotEmpty) {
+                      ideal.discount = double.parse(val);
+                      return null;
+                    }
+                    return 'Input Discount Amount';
+                  },
                 ),
                 SelectOptionField(
                   prefixIcon: Icons.water_drop_outlined,
