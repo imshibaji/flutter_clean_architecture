@@ -30,7 +30,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   PageController pageController = PageController(initialPage: 0);
-  double formHeight = 430;
+  double formHeight = 480;
   Deal ideal = Deal();
   int pageOffset = 0;
   bool isDone = false;
@@ -249,15 +249,15 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(deal.name!),
-                Text(deal.price!.toString()),
+                Text(deal.name ?? 'No Name'),
+                Text(((deal.price ?? 0) - (deal.discount ?? 0)).toString()),
               ],
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  deal.details!,
+                  deal.details ?? 'No Details',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
@@ -507,34 +507,71 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
                 return 'Input Deal Details';
               },
             ),
-            TextInputField(
-              prefixIcon: Icons.edit_note,
-              labelTextStr: 'Deal Amount',
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.number,
-              contentPadding: const EdgeInsets.all(9),
-              onTap: () {
-                setState(() {
-                  formHeight = 650;
-                });
-              },
-              onSaved: (val) {
-                setState(() {
-                  formHeight = formHeight;
-                });
-              },
-              onFieldSubmitted: (val) {
-                setState(() {
-                  formHeight = formHeight;
-                });
-              },
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  ideal.price = double.parse(val);
-                  return null;
-                }
-                return 'Input Deal Amount';
-              },
+            Row(
+              children: [
+                Expanded(
+                  child: TextInputField(
+                    prefixIcon: Icons.edit_note,
+                    labelTextStr: 'Amount',
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    contentPadding: const EdgeInsets.all(9),
+                    onTap: () {
+                      setState(() {
+                        formHeight = 750;
+                      });
+                    },
+                    onSaved: (val) {
+                      setState(() {
+                        formHeight = formHeight;
+                      });
+                    },
+                    onFieldSubmitted: (val) {
+                      setState(() {
+                        formHeight = formHeight;
+                      });
+                    },
+                    validator: (val) {
+                      if (val!.isNotEmpty) {
+                        ideal.price = double.parse(val);
+                        return null;
+                      }
+                      return 'Input Amount';
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: TextInputField(
+                    prefixIcon: Icons.edit_note,
+                    labelTextStr: 'Discount',
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    contentPadding: const EdgeInsets.all(9),
+                    onTap: () {
+                      setState(() {
+                        formHeight = 750;
+                      });
+                    },
+                    onSaved: (val) {
+                      setState(() {
+                        formHeight = formHeight;
+                      });
+                    },
+                    onFieldSubmitted: (val) {
+                      setState(() {
+                        formHeight = formHeight;
+                      });
+                    },
+                    validator: (val) {
+                      if (val!.isNotEmpty) {
+                        ideal.discount = double.parse(val);
+                        return null;
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
             ),
             SelectOptionField(
               prefixIcon: Icons.water_drop_outlined,
