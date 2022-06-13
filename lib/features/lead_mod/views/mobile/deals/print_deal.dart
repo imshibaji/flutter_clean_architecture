@@ -192,12 +192,12 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
           lead!.name ?? 'No Name',
           style: const pw.TextStyle(fontSize: 16),
         ),
-      if (lead != null)
+      if (lead != null && lead!.address != null)
         pw.Text(
           'Address: ' + (lead!.address ?? 'No Address'),
           style: pw.TextStyle(fontSize: 14, font: font),
         ),
-      if (lead != null)
+      if (lead != null && lead!.mobile != null)
         pw.Text(
           'Mobile: ' +
               lead!.mobile! +
@@ -205,7 +205,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
               (lead!.altMobile ?? 'No Number'),
           style: pw.TextStyle(fontSize: 14, font: font),
         ),
-      if (lead != null)
+      if (lead != null && lead!.email != null)
         pw.Text(
           'Email: ' + (lead!.email ?? 'No Email'),
           style: pw.TextStyle(fontSize: 16, font: font),
@@ -233,7 +233,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                     color: PdfColors.black.shade(0.4),
                   ),
                 ),
-                if (profile != null)
+                if (profile != null && profile!.name != null)
                   pw.Text(
                     profile!.name ?? 'No Name',
                     style: pw.TextStyle(fontSize: 28, font: signFont),
@@ -366,9 +366,9 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
-                  if (business != null)
+                  if (business != null && business!.name != null)
                     pw.Text(
-                      business!.name!,
+                      business!.name ?? 'No Name',
                       style: pw.TextStyle(font: font, fontSize: 26),
                     ),
                   if (business != null)
@@ -394,12 +394,12 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                     ),
                   if (business != null)
                     pw.Text(
-                      'Email: ' + business!.email!,
+                      'Email: ' + (business!.email ?? ''),
                       style: pw.TextStyle(font: font, fontSize: 12),
                     ),
-                  if (business != null && business!.website!.isNotEmpty)
+                  if (business != null && business!.website != null)
                     pw.Text(
-                      'Website: ' + business!.website!,
+                      'Website: ' + (business!.website ?? ''),
                       style: pw.TextStyle(font: font, fontSize: 12),
                     ),
                 ],
@@ -425,7 +425,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                         ', ' +
                         (business!.country ?? '') +
                         ', ' +
-                        business!.pincode!.toString() +
+                        (business!.pincode ?? '').toString() +
                         '; Phone: ' +
                         (business!.phone ?? '') +
                         ', ' +
