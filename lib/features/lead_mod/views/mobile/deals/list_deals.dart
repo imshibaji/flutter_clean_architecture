@@ -116,9 +116,22 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(
-                          deal.name!,
-                          textAlign: TextAlign.left,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Invoice#' +
+                                  (deal.key + 1).toString() +
+                                  ' | Created At: ' +
+                                  dateTime,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(fontSize: 10),
+                            ),
+                            Text(
+                              deal.name!,
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
                         ),
                       ),
                       Text(deal.price!.toString()),
@@ -127,22 +140,31 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        deal.details!,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            lead.name! + ' | ',
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                          const Text(
+                            'Status: ',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          StatusText(
+                            label: deal.status!,
+                            size: 10,
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 3,
                       ),
-                      Text(lead.name! + ' | ' + dateTime),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Text('Status: '),
-                          StatusText(label: deal.status!),
-                        ],
-                      )
+                      Text(
+                        deal.details!.substring(0, 50),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
                     ],
                   ),
                   onTap: () {
