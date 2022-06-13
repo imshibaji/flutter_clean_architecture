@@ -66,7 +66,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
   }
 
   void dealData(BuildContext context) {
-    if (ps != null && bs != null) {
+    if (ps != null && bs != null && deal == null) {
       setState(() {
         deal = Nav.routeData(context) == null
             ? Deal()
@@ -298,6 +298,24 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
       ),
 
       // Table Footer
+      if (deal!.discount != null)
+        pw.TableRow(
+          verticalAlignment: pw.TableCellVerticalAlignment.middle,
+          children: [
+            pw.Padding(
+              padding: const pw.EdgeInsets.all(5),
+              child: pw.Text('Discount ', textAlign: pw.TextAlign.right),
+            ),
+            if (deal != null)
+              pw.Padding(
+                padding: const pw.EdgeInsets.all(5),
+                child: pw.Text(
+                  deal!.discount!.toStringAsFixed(2),
+                  textAlign: pw.TextAlign.right,
+                ),
+              ),
+          ],
+        ),
       pw.TableRow(
         verticalAlignment: pw.TableCellVerticalAlignment.middle,
         children: [
@@ -309,7 +327,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
             pw.Padding(
               padding: const pw.EdgeInsets.all(5),
               child: pw.Text(
-                deal!.price!.toStringAsFixed(2),
+                ((deal!.price ?? 0) - (deal!.discount ?? 0)).toStringAsFixed(2),
                 textAlign: pw.TextAlign.right,
               ),
             ),

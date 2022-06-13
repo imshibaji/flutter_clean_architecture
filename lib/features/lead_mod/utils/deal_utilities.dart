@@ -275,7 +275,7 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
                       ideal.discount = double.parse(val);
                       return null;
                     }
-                    return 'Input Discount Amount';
+                    return null;
                   },
                 ),
                 SelectOptionField(
@@ -338,9 +338,8 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
                   final sp = context.read<ServiceProvider>();
                   sp.getAllDeals();
 
-                  showMessage(context, 'Deal Data is Updated.');
-
                   Nav.close(context);
+                  showMessage(context, 'Deal Data is Updated.');
                 }
               },
             ),
@@ -368,7 +367,7 @@ void doneDeal(BuildContext context, Deal deal, ServiceProvider sp) async {
     payment.uid = uuid();
     payment.dealUid = deal.uid;
     payment.details = deal.details;
-    payment.amount = deal.price;
+    payment.amount = ((deal.price ?? 0) - (deal.discount ?? 0));
     payment.leadUid = deal.leadUid;
     payment.type = 'Income';
     payment.createdAt = DateTime.now();

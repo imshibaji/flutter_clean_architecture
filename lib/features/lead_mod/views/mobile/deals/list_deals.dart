@@ -135,7 +135,8 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                           ],
                         ),
                       ),
-                      Text((deal.price ?? '0').toString()),
+                      Text(((deal.price ?? 0) - (deal.discount ?? 0))
+                          .toString()),
                     ],
                   ),
                   subtitle: Column(

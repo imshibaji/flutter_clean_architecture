@@ -78,10 +78,8 @@ SizedBox bottomFollowupMenus(
           showMessage(context, 'Followup Status Update as Done.');
 
           sp.getAllFollowups();
-
-          onFollowup!(followup);
-
           Nav.close(context);
+          onFollowup!(followup);
         },
       ),
       ElevatedButton.icon(
@@ -99,9 +97,8 @@ SizedBox bottomFollowupMenus(
           showMessage(context, 'Followup Status Update as Pending.');
 
           sp.getAllFollowups();
-          onFollowup!(followup);
-
           Nav.close(context);
+          onFollowup!(followup);
         },
       ),
       ElevatedButton.icon(
