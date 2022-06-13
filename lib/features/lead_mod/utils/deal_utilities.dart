@@ -53,7 +53,7 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp,
           style: TextStyle(color: Colors.green),
         ),
         onPressed: () {
-          doneDeal(deal, sp);
+          doneDeal(context, deal, sp);
           onDeal!(deal);
           Nav.close(context);
         },
@@ -68,7 +68,7 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp,
           style: TextStyle(color: Colors.orange),
         ),
         onPressed: () {
-          notDoneDeal(deal, sp);
+          notDoneDeal(context, deal, sp);
           onDeal!(deal);
           Nav.close(context);
         },
@@ -326,6 +326,8 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
                   final sp = context.read<ServiceProvider>();
                   sp.getAllDeals();
 
+                  showMessage(context, 'Deal Data is Updated.');
+
                   Nav.close(context);
                 }
               },
@@ -337,7 +339,7 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
   );
 }
 
-void doneDeal(Deal deal, ServiceProvider sp) async {
+void doneDeal(BuildContext context, Deal deal, ServiceProvider sp) async {
   if (deal.status!.toLowerCase() != 'paid') {
     deal.status = 'Paid';
     await deal.save();
@@ -361,13 +363,14 @@ void doneDeal(Deal deal, ServiceProvider sp) async {
     int i = await ps.add(payment);
     payment.save();
     // log(payment.toString());
+    showMessage(context, 'Deal Data is Updated as Paid.');
     log(i.toString());
   }
 
   sp.getAllDeals();
 }
 
-void notDoneDeal(Deal deal, ServiceProvider sp) async {
+void notDoneDeal(BuildContext context, Deal deal, ServiceProvider sp) async {
   if (deal.status!.toLowerCase() == 'paid') {
     deal.status = 'Pending';
     await deal.save();
@@ -391,6 +394,8 @@ void notDoneDeal(Deal deal, ServiceProvider sp) async {
         .firstWhere((element) => element.uid!.startsWith(deal.leadUid!));
     lead.status = 'Rejected';
     await lead.save();
+
+    showMessage(context, 'Deal Data is Updated as Pending.');
   }
   sp.getAllDeals();
 }

@@ -75,6 +75,7 @@ SizedBox bottomFollowupMenus(
         onPressed: () {
           followup.isDone = true;
           followup.save();
+          showMessage(context, 'Followup Status Update as Done.');
 
           sp.getAllFollowups();
 
@@ -95,6 +96,7 @@ SizedBox bottomFollowupMenus(
         onPressed: () {
           followup.isDone = false;
           followup.save();
+          showMessage(context, 'Followup Status Update as Pending.');
 
           sp.getAllFollowups();
           onFollowup!(followup);
@@ -118,6 +120,7 @@ SizedBox bottomFollowupMenus(
             onAction: () {
               followup.delete();
               sp.getAllFollowups();
+              showMessage(context, 'Followup Data is Deleted.');
               onFollowup!(followup);
             },
           );
