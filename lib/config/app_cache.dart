@@ -33,4 +33,12 @@ class AppCache {
     }
     return false;
   }
+
+  void enableOrDisableLoginScreen(bool isEnableOrDisable) {
+    Cache.saveData('is_login_screen', isEnableOrDisable);
+  }
+
+  Future<bool> checkLoginScreen() async {
+    return await Cache.readData('is_login_screen') as bool;
+  }
 }

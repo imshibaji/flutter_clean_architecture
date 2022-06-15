@@ -16,6 +16,8 @@ class Profile extends HiveObject {
   String? name;
   @HiveField(ProfileFields.email)
   String? email;
+  @HiveField(ProfileFields.password)
+  String? password;
   @HiveField(ProfileFields.mobile)
   String? mobile;
   @HiveField(ProfileFields.website)

@@ -6,6 +6,8 @@ import '../features/lead_mod/lead_app.dart';
 
 // ignore: must_be_immutable
 class ActionTopButtons extends ActionButtons {
+  static const bool dayNightSwitch = true;
+
   ActionTopButtons({Key? key})
       : super(
           key: key,
@@ -32,8 +34,6 @@ class ActionTopButtons extends ActionButtons {
             // ),
           ],
         );
-
-  static const bool dayNightSwitch = true;
 
   static List<Widget> getPreAcction(BuildContext context) {
     return [

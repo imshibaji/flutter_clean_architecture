@@ -35,8 +35,10 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
 
   @override
   void initState() {
-    dataInit();
     super.initState();
+    Future.delayed(Duration.zero, () {
+      dataInit();
+    });
   }
 
   void dataInit() {
@@ -66,24 +68,18 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
   }
 
   void dealData(BuildContext context) {
-    if (ps != null && bs != null && deal == null) {
-      setState(() {
-        deal = Nav.routeData(context) == null
-            ? Deal()
-            : Nav.routeData(context) as Deal;
-        // log(deal.toString());
+    setState(() {
+      deal = Nav.routeData(context) == null
+          ? Deal()
+          : Nav.routeData(context) as Deal;
+      // log(deal.toString());
 
-        final sp = context.read<ServiceProvider>();
-        lead = sp.leads!.firstWhere(
-          (element) => element.uid == deal!.leadUid,
-        );
-        // log(lead.toString());
-      });
-    } else {
-      showMessage(
-          context, 'Please Setup Your Business and Profile details first');
-      Nav.toReplace(context, LeadApp.listDeal);
-    }
+      final sp = context.read<ServiceProvider>();
+      lead = sp.leads!.firstWhere(
+        (element) => element.uid == deal!.leadUid,
+      );
+      // log(lead.toString());
+    });
   }
 
   @override

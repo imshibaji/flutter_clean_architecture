@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/classes/controller_manager.dart';
-import '../../../core/classes/display_manager.dart';
+import '../../../core/core.dart';
 import '../lead_mod.dart';
 
 class DashboardController extends StatelessController {

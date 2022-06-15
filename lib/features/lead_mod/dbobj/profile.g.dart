@@ -21,6 +21,7 @@ class ProfileAdapter extends TypeAdapter<Profile> {
       ..uid = fields[1] as String?
       ..name = fields[2] as String?
       ..email = fields[3] as String?
+      ..password = fields[9] as String?
       ..mobile = fields[4] as String?
       ..website = fields[5] as String?
       ..apiServerLink = fields[6] as String?
@@ -31,7 +32,7 @@ class ProfileAdapter extends TypeAdapter<Profile> {
   @override
   void write(BinaryWriter writer, Profile obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -40,6 +41,8 @@ class ProfileAdapter extends TypeAdapter<Profile> {
       ..write(obj.name)
       ..writeByte(3)
       ..write(obj.email)
+      ..writeByte(9)
+      ..write(obj.password)
       ..writeByte(4)
       ..write(obj.mobile)
       ..writeByte(5)

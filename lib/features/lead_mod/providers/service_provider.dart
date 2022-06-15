@@ -20,7 +20,9 @@ class ServiceProvider extends ChangeNotifier {
   Business? business;
 
   ServiceProvider() {
-    init();
+    Future.delayed(Duration.zero, () {
+      init();
+    });
   }
 
   init() {
@@ -33,7 +35,7 @@ class ServiceProvider extends ChangeNotifier {
   }
 
   getAllLeads() {
-    Future.microtask(() {
+    Future.delayed(Duration.zero, () {
       ls = LeadService();
       leads = ls!.getAll();
       notifyListeners();

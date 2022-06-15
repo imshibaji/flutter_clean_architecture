@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -20,6 +19,7 @@ class _OwnerProfileMobileViewState extends State<OwnerProfileMobileView> {
   Profile? profile;
 
   String? imgPath;
+  bool seePass = true;
 
   @override
   void initState() {
@@ -51,19 +51,22 @@ class _OwnerProfileMobileViewState extends State<OwnerProfileMobileView> {
           padding: const EdgeInsets.all(8.0),
           child: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: InkWell(
-                  onTap: () {
-                    // Image Uploader Function
-                  },
-                  child: CircleAvatar(
-                    child: (imgPath == null)
-                        ? const Text('🙂')
-                        : Image.file(File(imgPath!)),
-                    radius: 60,
-                  ),
-                ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8),
+              //   child: InkWell(
+              //     onTap: () {
+              //       // Image Uploader Function
+              //     },
+              //     child: CircleAvatar(
+              //       child: (imgPath == null)
+              //           ? const Text('🙂')
+              //           : Image.file(File(imgPath!)),
+              //       radius: 60,
+              //     ),
+              //   ),
+              // ),
+              const SizedBox(
+                height: 20,
               ),
               TextInputField(
                 labelTextStr: 'Name',
@@ -78,18 +81,6 @@ class _OwnerProfileMobileViewState extends State<OwnerProfileMobileView> {
                 },
               ),
               TextInputField(
-                labelTextStr: 'Email',
-                prefixIcon: Icons.email_outlined,
-                keyboardType: TextInputType.emailAddress,
-                initialValue: profile!.email,
-                validator: (val) {
-                  if (val!.isNotEmpty) {
-                    profile!.email = val;
-                  }
-                  return null;
-                },
-              ),
-              TextInputField(
                 labelTextStr: 'Mobile',
                 prefixIcon: Icons.call,
                 keyboardType: TextInputType.phone,
@@ -97,30 +88,56 @@ class _OwnerProfileMobileViewState extends State<OwnerProfileMobileView> {
                 validator: (val) {
                   if (val!.isNotEmpty) {
                     profile!.mobile = val;
+                    return null;
                   }
-                  return null;
+                  return 'Input your Mobile Number';
                 },
               ),
+              TextInputField(
+                labelTextStr: 'Email',
+                prefixIcon: Icons.email_outlined,
+                keyboardType: TextInputType.emailAddress,
+                initialValue: profile!.email,
+                validator: (val) {
+                  if (val!.isNotEmpty) {
+                    profile!.email = val;
+                    return null;
+                  }
+                  return 'Input Your Email';
+                },
+              ),
+
               const Divider(),
               const Center(child: Text('API Access Information')),
               const Divider(),
+              // TextInputField(
+              //   labelTextStr: 'Website',
+              //   prefixIcon: Icons.web,
+              //   readOnly: true,
+              //   initialValue: 'Premium Access Only',
+              // ),
               TextInputField(
-                labelTextStr: 'Website',
-                prefixIcon: Icons.web,
+                labelTextStr: 'API URL / Link',
+                prefixIcon: Icons.api_rounded,
                 readOnly: true,
+                initialValue: 'Premium Access Only',
               ),
               TextInputField(
-                labelTextStr: 'API Server Link',
-                prefixIcon: Icons.map,
+                labelTextStr: 'API Auth Key',
+                prefixIcon: Icons.security_rounded,
                 readOnly: true,
+                initialValue: 'Premium Access Only',
               ),
-              TextInputField(
-                labelTextStr: 'Auth Key',
-                prefixIcon: Icons.key,
-                readOnly: true,
+
+              AppButton(
+                label: 'Save Now',
+                onPressed: onSubmit,
               ),
-              AppButton(label: 'Save Now', onPressed: onSubmit),
+
               ...copyright().toList(),
+              const SizedBox(
+                height: 15,
+              ),
             ],
           ),
         ),

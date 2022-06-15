@@ -28,7 +28,7 @@ class Display extends StatelessWidget {
     return Title(
       color: headerColor ?? Theme.of(context).primaryColor,
       title: title,
-      child: Container(
+      child: SizedBox(
         child: (width > 1400 && desktopLarge != null)
             ? desktopLarge
             : (width > 1200 && desktop != null)
