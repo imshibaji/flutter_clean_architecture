@@ -3,7 +3,7 @@ description: A new Leads Managment project.
 
 
 flutter_app_name:
-  name: "LeadsBook"
+  name: "LeadBook"
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.4.2+20
+version: 1.4.3+21
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
@@ -55,6 +55,7 @@ dependencies:
   flutter_speed_dial: ^6.0.0
   share_plus: ^4.0.5
   printing: ^5.9.1
+  json_theme: ^4.0.0+2
 
 dev_dependencies:
   flutter_test:

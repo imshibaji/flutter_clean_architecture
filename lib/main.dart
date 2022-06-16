@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
+// import 'core/core.dart';
 import 'hive_helper/register_adapters.dart';
 
 void main() {
@@ -12,16 +13,20 @@ void main() {
   registerAdapters();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
+      .then((_) async {
     runApp(MultiProvider(
       providers: appProviders,
-      child: const CleanApp(),
+      child: const CleanApp(
+          // lightTheme: await getLightTheme(),
+          // darkTheme: await getDarkTheme(),
+          ),
     ));
   });
 }
 
 class CleanApp extends StatelessWidget {
-  const CleanApp({Key? key}) : super(key: key);
+  final ThemeData? lightTheme, darkTheme;
+  const CleanApp({Key? key, this.lightTheme, this.darkTheme}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -32,8 +37,8 @@ class CleanApp extends StatelessWidget {
     return MaterialApp(
       title: 'Lead Book',
       debugShowCheckedModeBanner: false,
-      theme: MyTheme().lightTheme,
-      darkTheme: MyTheme().darkTheme,
+      theme: lightTheme ?? MyTheme().lightTheme,
+      darkTheme: darkTheme ?? MyTheme().darkTheme,
       themeMode: tm.themeMode,
       initialRoute: 'splash/',
       routes: Routes().routes,

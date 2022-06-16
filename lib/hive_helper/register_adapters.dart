@@ -27,45 +27,31 @@ void registerAdapters() async {
       log(appPath);
 
       String dbLeads = appPath + '/' + LeadService.boxName + '.db';
-      copyData(File(dbLeads));
+      copyData(dbLeads);
 
       if (await File(dbLeads).exists() == false) {
         await Hive.openBox<Lead>(LeadService.boxName, path: dbLeads);
       }
 
       String dbDeals = appPath + '/' + DealService.boxName + '.db';
-      copyData(File(dbDeals));
-
-      if (await File(dbDeals).exists() == false) {
-        await Hive.openBox<Deal>(DealService.boxName, path: dbDeals);
-      }
+      copyData(dbDeals);
+      await Hive.openBox<Deal>(DealService.boxName, path: dbDeals);
 
       String dbFollowups = appPath + '/' + FollowupService.boxName + '.db';
-      copyData(File(dbFollowups));
-
-      if (await File(dbFollowups).exists() == false) {
-        await Hive.openBox<Followup>(FollowupService.boxName,
-            path: dbFollowups);
-      }
+      copyData(dbFollowups);
+      await Hive.openBox<Followup>(FollowupService.boxName, path: dbFollowups);
 
       String dbPayments = appPath + '/' + PaymentService.boxName + '.db';
-      copyData(File(dbPayments));
-      if (await File(dbPayments).exists() == false) {
-        await Hive.openBox<Payment>(PaymentService.boxName, path: dbPayments);
-      }
+      copyData(dbPayments);
+      await Hive.openBox<Payment>(PaymentService.boxName, path: dbPayments);
 
       String dbProfile = appPath + '/' + ProfileService.boxName + '.db';
-      copyData(File(dbProfile));
-
-      if (await File(dbProfile).exists() == false) {
-        await Hive.openBox<Profile>(ProfileService.boxName, path: dbProfile);
-      }
+      copyData(dbProfile);
+      await Hive.openBox<Profile>(ProfileService.boxName, path: dbProfile);
 
       String dbBusiness = appPath + '/' + BusinessService.boxName + '.db';
-      copyData(File(dbBusiness));
-      if (await File(dbBusiness).exists() == false) {
-        await Hive.openBox<Business>(BusinessService.boxName, path: dbBusiness);
-      }
+      copyData(dbBusiness);
+      await Hive.openBox<Business>(BusinessService.boxName, path: dbBusiness);
     }
 
     // await Hive.openBox<Lead>(LeadService.boxName);
@@ -76,14 +62,21 @@ void registerAdapters() async {
   });
 }
 
-void copyData(File file) async {
+Future<Directory?> copyData(String dbPath) async {
   Directory appDir = await getApplicationDocumentsDirectory();
-  // print(appDir.listSync());
+  String oldAppDataPath = appDir.path;
+  String newAppDataPath = appDir.path + '/data';
 
-  if (await file.exists() == true) {
-    String appPath = appDir.path + '/data';
-    Directory copyPath = await Directory(appPath).create(recursive: true);
-    file.rename(copyPath.path + '/' + file.absolute.path);
-    // print(file.path);
+  Directory oldFile = Directory(oldAppDataPath + '/' + dbPath.split('/').last);
+  // log(oldFile.path);
+  // print(await oldFile.exists());
+  if (await oldFile.exists()) {
+    Directory copyPath =
+        await Directory(newAppDataPath).create(recursive: true);
+    Directory newFile =
+        await oldFile.rename(copyPath.path + '/' + dbPath.split('/').last);
+    // log(newFile.path);
+    return newFile;
   }
+  return null;
 }
