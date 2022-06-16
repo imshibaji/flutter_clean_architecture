@@ -1,6 +1,9 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:clean_architecture/features/lead_mod/utils/backup_restore.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../core/core.dart';
 import '../../dbobj/dbobjs.dart';
@@ -133,7 +136,8 @@ class _OwnerProfileMobileViewState extends State<OwnerProfileMobileView> {
                 label: 'Save Now',
                 onPressed: onSubmit,
               ),
-
+              const Divider(),
+              // backupUi(),
               ...copyright().toList(),
               const SizedBox(
                 height: 15,
@@ -142,6 +146,31 @@ class _OwnerProfileMobileViewState extends State<OwnerProfileMobileView> {
           ),
         ),
       ),
+    );
+  }
+
+  Row backupUi() {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton.icon(
+            onPressed: () async {
+              Directory? appDocDir = await getApplicationDocumentsDirectory();
+              String appPath = appDocDir.path + '/data';
+              backup(appPath, 'backup/data.zip');
+            },
+            icon: const Icon(Icons.save_as_outlined),
+            label: const Text('Backup DB'),
+          ),
+        ),
+        Expanded(
+          child: ElevatedButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.restore_rounded),
+            label: const Text('Restore DB'),
+          ),
+        ),
+      ],
     );
   }
 

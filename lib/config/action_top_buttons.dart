@@ -22,11 +22,16 @@ class ActionTopButtons extends ActionButtons {
               label: 'Owner Profile',
               link: LeadApp.profile,
             ),
-            ButtonData(
-              icon: Icons.help_outline_sharp,
-              label: 'Helps & Tutorials',
-              link: LeadApp.helpPage,
-            ),
+            // ButtonData(
+            //   icon: Icons.help_outline_sharp,
+            //   label: 'Helps & Tutorials',
+            //   link: LeadApp.helpPage,
+            // ),
+            // ButtonData(
+            //   icon: Icons.settings_applications_outlined,
+            //   label: 'Settings',
+            //   link: LeadApp.settings,
+            // ),
             // ButtonData(
             //   icon: Icons.logout,
             //   label: 'Logout',

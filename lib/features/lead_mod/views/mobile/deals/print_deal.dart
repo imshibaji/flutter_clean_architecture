@@ -42,6 +42,11 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
   }
 
   void dataInit() {
+    fillupBusinessData();
+    fillupProfleData();
+  }
+
+  void fillupBusinessData() {
     if (business == null) {
       bs = BusinessService();
       if (bs != null && bs!.box != null && bs!.box!.isNotEmpty) {
@@ -51,6 +56,13 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
         Nav.toReplace(context, LeadApp.listDeal);
       }
     }
+    if ((business!.name == null || business!.name!.isEmpty)) {
+      showMessage(context, 'Please Fill-up Your Business Details');
+      Nav.toReplace(context, LeadApp.businessPage);
+    }
+  }
+
+  void fillupProfleData() {
     if (profile == null) {
       ps = ProfileService();
       if (ps != null && ps!.box != null && ps!.box!.isNotEmpty) {
@@ -59,6 +71,10 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
         showMessage(context, 'Please Setup Your Profile Information');
         Nav.toReplace(context, LeadApp.listDeal);
       }
+    }
+    if ((profile!.name == null || profile!.name!.isEmpty)) {
+      showMessage(context, 'Please Fill-up Your Profile Details');
+      Nav.toReplace(context, LeadApp.profile);
     }
   }
 
@@ -377,7 +393,7 @@ class _PrintDealState extends State<PrintDeal> with AfterLayoutMixin {
                           ', ' +
                           (business!.country ?? '') +
                           ', ' +
-                          business!.pincode!.toString(),
+                          (business!.pincode ?? '').toString(),
                       style: pw.TextStyle(font: font, fontSize: 12),
                     ),
                   if (business != null)

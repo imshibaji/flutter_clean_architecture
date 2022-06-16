@@ -151,7 +151,7 @@ void showTransactionAdd(BuildContext context) {
                 options: transactonsStatuses,
                 selected: null,
                 validator: (val) {
-                  if (val!.isNotEmpty) {
+                  if (val != null && val.isNotEmpty) {
                     payment.type = val;
                     return null;
                   }

@@ -26,3 +26,4 @@ export 'mobile/leads/edit_leads.dart';
 export 'mobile/help.dart';
 export 'mobile/business.dart';
 export 'mobile/profile.dart';
+export 'mobile/settings.dart';

@@ -19,6 +19,23 @@ class _SettingsState extends State<Settings> {
   bool seePass = true;
 
   @override
+  void initState() {
+    super.initState();
+    ps = ProfileService();
+    if (ps!.box!.isNotEmpty) {
+      if (profile == null) {
+        setState(() {
+          profile = ps!.get(0);
+          // log(business.toString());
+        });
+      }
+    } else {
+      profile = Profile();
+      ps!.add(profile!);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

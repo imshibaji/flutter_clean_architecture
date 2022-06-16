@@ -83,16 +83,28 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
                     return Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: ListTile(
-                        title: Row(
+                        title: Text(title),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(title),
-                            const SizedBox(
-                              width: 5,
+                            Row(
+                              children: [
+                                const Text(
+                                  'Status',
+                                  style: TextStyle(fontSize: 8),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                StatusText(
+                                  label: lead.status!,
+                                  size: 8,
+                                ),
+                              ],
                             ),
-                            StatusText(label: lead.status!),
+                            Text("> " + details),
                           ],
                         ),
-                        subtitle: Text("> " + details),
                         shape: Border.all(width: 0.5),
                         leading: const Icon(
                           Icons.person,
