@@ -16,7 +16,7 @@ class ListLeadForMobile extends StatefulWidget {
 }
 
 class _ListLeadForMobileState extends State<ListLeadForMobile> {
-  String status = 'All';
+  final PageController _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +39,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
     );
   }
 
-  void setStatus(String stat) {
-    setState(() {
-      status = stat;
-    });
-  }
-
   Widget infoList(ServiceProvider sp) {
-    var leads = getFilterDatas(sp.leads!.reversed.toList(), status);
     return Column(
       children: [
         // searchBar(),
@@ -59,79 +52,103 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
             children: [
               ChipButton(
                 label: 'All',
-                onPressed: () => setStatus('All'),
+                onPressed: () => _controller.animateToPage(0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInSine),
               ),
-              for (String status in leadStatuses)
+              for (var i = 0; i < leadStatuses.length; i++)
                 ChipButton(
-                  label: status,
-                  onPressed: () => setStatus(status),
+                  label: leadStatuses[i],
+                  onPressed: () => _controller.animateToPage(
+                    (i + 1),
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInSine,
+                  ),
                 ),
             ],
           ),
         ),
         Expanded(
-          child: leads.isNotEmpty
-              ? ListView.builder(
-                  itemCount: leads.length,
-                  itemBuilder: (context, index) {
-                    // Data Aquare;
-                    Lead lead = leads[index];
-
-                    String title = lead.name ?? 'No Name';
-                    String details = (lead.purpose ?? 'No Details');
-
-                    return Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: ListTile(
-                        title: Text(title),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  'Status',
-                                  style: TextStyle(fontSize: 8),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                StatusText(
-                                  label: lead.status!,
-                                  size: 8,
-                                ),
-                              ],
-                            ),
-                            Text("> " + details),
-                          ],
-                        ),
-                        shape: Border.all(width: 0.5),
-                        leading: const Icon(
-                          Icons.person,
-                          size: 36,
-                        ),
-                        onTap: () {
-                          Nav.to(
-                            context,
-                            LeadApp.viewLead,
-                            arguments: lead,
-                          );
-                        },
-                        trailing: IconButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (_) => bottomMenus(lead, sp),
-                            );
-                          },
-                          icon: const Icon(Icons.more_rounded),
-                        ),
-                      ),
-                    );
-                  })
-              : const Center(child: Text('No Leads Listed..')),
+          child: PageView(
+            controller: _controller,
+            children: [
+              leadList(getFilterDatas(sp.leads!.reversed.toList(), 'All'), sp),
+              for (String status in leadStatuses)
+                leadList(
+                  getFilterDatas(sp.leads!.reversed.toList(), status),
+                  sp,
+                  notFound: 'No $status list found..',
+                ),
+            ],
+          ),
         ),
       ],
+    );
+  }
+
+  Container leadList(List<dynamic> leads, ServiceProvider sp,
+      {String notFound = 'No Leads Listed..'}) {
+    return Container(
+      child: leads.isNotEmpty
+          ? ListView.builder(
+              itemCount: leads.length,
+              itemBuilder: (context, index) {
+                // Data Aquare;
+                Lead lead = leads[index];
+
+                String title = lead.name ?? 'No Name';
+                String details = (lead.purpose ?? 'No Details');
+
+                return Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: ListTile(
+                    title: Text(title),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Text(
+                              'Status',
+                              style: TextStyle(fontSize: 8),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            StatusText(
+                              label: lead.status!,
+                              size: 8,
+                            ),
+                          ],
+                        ),
+                        Text("> " + details),
+                      ],
+                    ),
+                    shape: Border.all(width: 0.5),
+                    leading: const Icon(
+                      Icons.person,
+                      size: 36,
+                    ),
+                    onTap: () {
+                      Nav.to(
+                        context,
+                        LeadApp.viewLead,
+                        arguments: lead,
+                      );
+                    },
+                    trailing: IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (_) => bottomMenus(lead, sp),
+                        );
+                      },
+                      icon: const Icon(Icons.more_rounded),
+                    ),
+                  ),
+                );
+              })
+          : Center(child: Text(notFound)),
     );
   }
 

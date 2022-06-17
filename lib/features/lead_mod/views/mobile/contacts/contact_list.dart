@@ -14,8 +14,9 @@ class ContactListPage extends StatefulWidget {
 
 class _ContactListPageState extends State<ContactListPage>
     with AfterLayoutMixin<ContactListPage> {
-  List<Contact>? _contacts;
+  List<Contact>? _contacts, _allContact;
   bool _permissionDenied = false;
+  String? searchTerm;
 
   @override
   void initState() {
@@ -63,18 +64,61 @@ class _ContactListPageState extends State<ContactListPage>
         : (await FlutterContacts.getContacts()).toList();
     setState(() {
       _contacts = contacts;
+      _allContact = contacts;
     });
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Phone Contacts')),
-        body: _body(),
+        body: Column(
+          children: [
+            searchArea(),
+            _body(),
+          ],
+        ),
         // floatingActionButton: FloatingActionButton(
         //   onPressed: () => Navigator.of(context).pushNamed('/editContact'),
         //   child: const Icon(Icons.add),
         // ),
       );
+
+  TextInputField searchArea() {
+    return TextInputField(
+      labelTextStr: 'Quick Search',
+      prefixIcon: Icons.person,
+      onChanged: (val) {
+        setState(() {
+          final allContacts = _allContact;
+          if (val != null && val.isNotEmpty && val != '') {
+            searchTerm = val;
+            _contacts = allContacts!
+                .where((element) => (element.displayName.startsWith(val) ||
+                    element.phones.first.number.startsWith(val)))
+                .toList();
+          } else {
+            _contacts = allContacts;
+          }
+        });
+      },
+      suffixIcon: IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: () {
+          setState(() {
+            if (searchTerm != null) {
+              _contacts = _allContact!
+                  .where((element) =>
+                      (element.displayName.startsWith(searchTerm!) ||
+                          element.phones.first.number.startsWith(searchTerm!)))
+                  .toList();
+            } else {
+              _contacts = _allContact;
+            }
+          });
+        },
+      ),
+    );
+  }
 
   Widget _body() {
     if (_permissionDenied) {
@@ -83,21 +127,23 @@ class _ContactListPageState extends State<ContactListPage>
     if (_contacts == null) {
       return const Center(child: CircularProgressIndicator());
     }
-    return ListView.builder(
-        itemCount: _contacts!.length,
-        itemBuilder: (context, i) {
-          final contact = _contacts![i];
-          return ListTile(
-            leading: avatar(contact, 18.0),
-            title: Text(contact.displayName),
-            onTap: () => Nav.to(
-              context,
-              LeadApp.addLead,
-              arguments: contact,
-            ),
-            // onLongPress: () => Navigator.of(context)
-            //     .pushNamed(LeadApp.contactPage, arguments: contact),
-          );
-        });
+    return Expanded(
+      child: ListView.builder(
+          itemCount: _contacts!.length,
+          itemBuilder: (context, i) {
+            final contact = _contacts![i];
+            return ListTile(
+              leading: avatar(contact, 18.0),
+              title: Text(contact.displayName),
+              onTap: () => Nav.to(
+                context,
+                LeadApp.addLead,
+                arguments: contact,
+              ),
+              // onLongPress: () => Navigator.of(context)
+              //     .pushNamed(LeadApp.contactPage, arguments: contact),
+            );
+          }),
+    );
   }
 }

@@ -16,7 +16,7 @@ class FollowupForMobile extends StatefulWidget {
 }
 
 class _FollowupForMobileState extends State<FollowupForMobile> {
-  bool status = false;
+  final PageController _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,6 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
         actions: actionsMenu(context),
       ),
       body: Consumer<ServiceProvider>(builder: (context, sp, child) {
-        var followups = getFollowupFilter(sp.followups!, status);
         return Column(
           children: [
             // searchBar(),
@@ -41,29 +40,39 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
                   Expanded(
                     child: ChipButton(
                       label: 'Pending',
-                      onPressed: () => setStatus(false),
+                      onPressed: () => _controller.previousPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInQuad),
                     ),
                   ),
                   Expanded(
                     child: ChipButton(
                       label: 'Done',
-                      onPressed: () => setStatus(true),
+                      onPressed: () => _controller.nextPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInQuad),
                     ),
                   ),
                 ],
               ),
             ),
             Expanded(
-              child: followups.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: followups.length,
-                      itemBuilder: (context, index) =>
-                          listItem(followups[index], sp),
-                    )
-                  : const Center(
-                      child: Text('No Followup Data Found'),
-                    ),
-            ),
+              child: PageView(
+                controller: _controller,
+                children: [
+                  followupList(
+                    getFollowupFilter(sp.followups!, false),
+                    sp,
+                    notFoundTxt: 'No Pending Followup Data Found',
+                  ),
+                  followupList(
+                    getFollowupFilter(sp.followups!, true),
+                    sp,
+                    notFoundTxt: 'No Done Followup Data Found',
+                  ),
+                ],
+              ),
+            )
           ],
         );
       }),
@@ -71,10 +80,18 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
     );
   }
 
-  void setStatus(bool stat) {
-    setState(() {
-      status = stat;
-    });
+  Container followupList(List<Followup> followups, ServiceProvider sp,
+      {String notFoundTxt = 'No Followup Data Found'}) {
+    return Container(
+      child: followups.isNotEmpty
+          ? ListView.builder(
+              itemCount: followups.length,
+              itemBuilder: (context, index) => listItem(followups[index], sp),
+            )
+          : Center(
+              child: Text(notFoundTxt),
+            ),
+    );
   }
 
   Padding listItem(Followup followup, ServiceProvider sp) {

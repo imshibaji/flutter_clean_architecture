@@ -16,8 +16,8 @@ class ListDealForMobile extends StatefulWidget {
 }
 
 class _ListDealForMobileState extends State<ListDealForMobile> {
+  final PageController _controller = PageController();
   bool check = false;
-  String status = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -45,162 +45,186 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
           child: Row(
             children: [
               Expanded(
-                child:
-                    ChipButton(label: 'All', onPressed: () => setStatus('All')),
+                child: ChipButton(
+                  label: 'All',
+                  onPressed: () => _controller.animateToPage(
+                    0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeIn,
+                  ),
+                ),
               ),
-              for (String status in dealStatuses)
+              for (int i = 0; i < dealStatuses.length; i++)
                 Expanded(
                   child: ChipButton(
-                    label: status,
-                    onPressed: () => setStatus(status),
+                    label: dealStatuses[i],
+                    onPressed: () => _controller.animateToPage(
+                      (i + 1),
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeIn,
+                    ),
                   ),
                 ),
             ],
           ),
         ),
         Expanded(
-          child: allDeals(sp.deals ?? [], sp),
+          child: PageView(
+            controller: _controller,
+            children: [
+              allDeals(
+                getFilterDatas(sp.deals ?? [], 'All') as List<Deal>,
+                sp,
+              ),
+              for (String status in dealStatuses)
+                allDeals(
+                  getFilterDatas(sp.deals ?? [], status) as List<Deal>,
+                  sp,
+                  notFoundTxt: '$status deal list not found',
+                )
+            ],
+          ),
         ),
       ],
     );
   }
 
-  void setStatus(String stat) {
-    setState(() {
-      status = stat;
-    });
-  }
+  Widget allDeals(
+    List<Deal> deals,
+    ServiceProvider sp, {
+    String notFoundTxt = 'No Proposuls listed.',
+  }) {
+    List<Deal> allDeals = deals;
 
-  Widget allDeals(List<Deal> deals, ServiceProvider sp) {
-    List<Deal> allDeals = getFilterDatas(deals, status) as List<Deal>;
+    return Container(
+      child: allDeals.isNotEmpty
+          ? ListView.builder(
+              itemCount: allDeals.length,
+              itemBuilder: (context, index) {
+                Deal deal = allDeals[index];
+                Lead lead = sp.leads!.firstWhere(
+                  (element) => element.uid == deal.leadUid,
+                );
 
-    return allDeals.isNotEmpty
-        ? ListView.builder(
-            itemCount: allDeals.length,
-            itemBuilder: (context, index) {
-              Deal deal = allDeals[index];
-              Lead lead = sp.leads!.firstWhere(
-                (element) => element.uid == deal.leadUid,
-              );
+                var dateTime = '${deal.createdAt!.day}/'
+                    '${deal.createdAt!.month}/'
+                    '${deal.createdAt!.year} '
+                    '${deal.createdAt!.hour}:'
+                    '${deal.createdAt!.minute}';
 
-              var dateTime = '${deal.createdAt!.day}/'
-                  '${deal.createdAt!.month}/'
-                  '${deal.createdAt!.year} '
-                  '${deal.createdAt!.hour}:'
-                  '${deal.createdAt!.minute}';
-
-              return Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: ListTile(
-                  shape: Border.all(),
-                  onLongPress: () {
-                    Nav.to(context, LeadApp.viewLead, arguments: lead);
-                  },
-                  leading: InkWell(
-                    child: (deal.status != null &&
-                            deal.status!.toLowerCase() == 'paid')
-                        ? const Icon(
-                            Icons.check_box_outlined,
-                            size: 40,
-                            color: Colors.green,
-                          )
-                        : const Icon(
-                            Icons.check_box_outline_blank_outlined,
-                            size: 40,
-                            color: Colors.orange,
-                          ),
-                    onTap: () {
+                return Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: ListTile(
+                    shape: Border.all(),
+                    onLongPress: () {
                       Nav.to(context, LeadApp.viewLead, arguments: lead);
                     },
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    leading: InkWell(
+                      child: (deal.status != null &&
+                              deal.status!.toLowerCase() == 'paid')
+                          ? const Icon(
+                              Icons.check_box_outlined,
+                              size: 40,
+                              color: Colors.green,
+                            )
+                          : const Icon(
+                              Icons.check_box_outline_blank_outlined,
+                              size: 40,
+                              color: Colors.orange,
+                            ),
+                      onTap: () {
+                        Nav.to(context, LeadApp.viewLead, arguments: lead);
+                      },
+                    ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Invoice#' +
+                                    (deal.key + 1).toString() +
+                                    ' | At: ' +
+                                    dateTime,
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(fontSize: 8),
+                              ),
+                              Text(
+                                deal.name ?? 'No Name',
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(((deal.price ?? 0) - (deal.discount ?? 0))
+                            .toString()),
+                      ],
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'Invoice#' +
-                                  (deal.key + 1).toString() +
-                                  ' | At: ' +
-                                  dateTime,
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(fontSize: 8),
+                              (lead.name ?? 'No Name') + ' | ',
+                              style: const TextStyle(fontSize: 10),
                             ),
-                            Text(
-                              deal.name ?? 'No Name',
-                              textAlign: TextAlign.left,
+                            const Text(
+                              'Status: ',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            StatusText(
+                              label: deal.status ?? 'No Status',
+                              size: 10,
                             ),
                           ],
                         ),
-                      ),
-                      Text(((deal.price ?? 0) - (deal.discount ?? 0))
-                          .toString()),
-                    ],
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            (lead.name ?? 'No Name') + ' | ',
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          const Text(
-                            'Status: ',
-                            style: TextStyle(fontSize: 10),
-                          ),
-                          StatusText(
-                            label: deal.status ?? 'No Status',
-                            size: 10,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      Text(
-                        (deal.details ?? 'No Details').substring(
-                          0,
-                          (deal.details!.length > 50)
-                              ? 50
-                              : deal.details!.length,
+                        const SizedBox(
+                          height: 3,
                         ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    showDealBottomMenu(
-                      context,
-                      deal,
-                      sp,
-                      onDeal: (deal) {
-                        setState(() {
-                          check = (deal.status!.toLowerCase() == 'paid');
-                        });
-                      },
-                    );
-                  },
-                  trailing: InkWell(
+                        Text(
+                          (deal.details ?? 'No Details').substring(
+                            0,
+                            (deal.details!.length > 50)
+                                ? 50
+                                : deal.details!.length,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
                     onTap: () {
-                      Nav.to(context, LeadApp.printDeal, arguments: deal);
+                      showDealBottomMenu(
+                        context,
+                        deal,
+                        sp,
+                        onDeal: (deal) {
+                          setState(() {
+                            check = (deal.status!.toLowerCase() == 'paid');
+                          });
+                        },
+                      );
                     },
-                    child: const Icon(
-                      Icons.print_outlined,
-                      size: 40,
+                    trailing: InkWell(
+                      onTap: () {
+                        Nav.to(context, LeadApp.printDeal, arguments: deal);
+                      },
+                      child: const Icon(
+                        Icons.print_outlined,
+                        size: 40,
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-          )
-        : const Center(
-            child: Text('No Proposuls listed.'),
-          );
+                );
+              },
+            )
+          : Center(
+              child: Text(notFoundTxt),
+            ),
+    );
   }
 }

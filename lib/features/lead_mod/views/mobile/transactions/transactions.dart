@@ -14,7 +14,7 @@ class TransactionsForMobile extends StatefulWidget {
 
 class _TransactionsForMobileState extends State<TransactionsForMobile> {
   bool check = false;
-  String status = 'All';
+  final PageController _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +38,43 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
                   Expanded(
                     child: ChipButton(
                       label: 'All',
-                      onPressed: () => setStatus('All'),
+                      onPressed: () => _controller.animateToPage(
+                        0,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeIn,
+                      ),
                     ),
                   ),
-                  for (String status in transactonsStatuses)
+                  for (int i = 0; i < transactonsStatuses.length; i++)
                     Expanded(
                       child: ChipButton(
-                        label: status,
-                        onPressed: () => setStatus(status),
+                        label: transactonsStatuses[i],
+                        onPressed: () => _controller.animateToPage(
+                          (i + 1),
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeIn,
+                        ),
                       ),
                     ),
                 ],
               ),
             ),
-            transectionsList(sp.payments!),
+            Expanded(
+              child: PageView(
+                controller: _controller,
+                children: [
+                  transectionsList(
+                    getTransactionFilter(sp.payments!, 'All') as List<Payment>,
+                  ),
+                  for (String status in transactonsStatuses)
+                    transectionsList(
+                      getTransactionFilter(sp.payments!, status)
+                          as List<Payment>,
+                      notFoundTxt: 'No $status Transection Listed.',
+                    ),
+                ],
+              ),
+            ),
           ]);
         },
       ),
@@ -65,9 +88,12 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
     );
   }
 
-  Expanded transectionsList(List<Payment> payments) {
-    List trans = getTransactionFilter(payments, status);
-    return Expanded(
+  Widget transectionsList(
+    List<Payment> payments, {
+    String notFoundTxt = 'No Transection Listed.',
+  }) {
+    List trans = payments;
+    return Container(
       child: trans.isNotEmpty
           ? ListView.builder(
               itemCount: trans.length,
@@ -76,16 +102,10 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
                 trans[index],
               ),
             )
-          : const Center(
-              child: Text('No Transection Listed.'),
+          : Center(
+              child: Text(notFoundTxt),
             ),
     );
-  }
-
-  void setStatus(String stat) {
-    setState(() {
-      status = stat;
-    });
   }
 
   Padding listItem(BuildContext context, Payment payment) {
