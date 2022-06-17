@@ -15,6 +15,7 @@ class TransactionsForMobile extends StatefulWidget {
 class _TransactionsForMobileState extends State<TransactionsForMobile> {
   bool check = false;
   final PageController _controller = PageController();
+  int pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,7 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeIn,
                       ),
+                      isHighlight: (pageIndex == 0),
                     ),
                   ),
                   for (int i = 0; i < transactonsStatuses.length; i++)
@@ -54,6 +56,7 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeIn,
                         ),
+                        isHighlight: (pageIndex == (i + 1)),
                       ),
                     ),
                 ],
@@ -62,6 +65,11 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
             Expanded(
               child: PageView(
                 controller: _controller,
+                onPageChanged: (pIndex) {
+                  setState(() {
+                    pageIndex = pIndex;
+                  });
+                },
                 children: [
                   transectionsList(
                     getTransactionFilter(sp.payments!, 'All') as List<Payment>,

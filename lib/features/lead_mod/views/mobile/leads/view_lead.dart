@@ -460,9 +460,10 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
     return Form(
       key: _dealFormState,
       child: SizedBox(
-        height: formHeight,
+        // height: formHeight,
         width: double.infinity,
         child: ListView(
+          shrinkWrap: true,
           children: [
             const SizedBox(
               height: 15,
@@ -484,21 +485,6 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
               maxLines: 3,
               textInputAction: TextInputAction.done,
               contentPadding: const EdgeInsets.all(9),
-              onTap: () {
-                setState(() {
-                  formHeight = 450;
-                });
-              },
-              onSaved: (val) {
-                setState(() {
-                  formHeight = formHeight;
-                });
-              },
-              onFieldSubmitted: (val) {
-                setState(() {
-                  formHeight = formHeight;
-                });
-              },
               validator: (val) {
                 if (val!.isNotEmpty) {
                   ideal.details = val;
@@ -507,71 +493,45 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
                 return 'Input Deal Details';
               },
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: TextInputField(
-                    prefixIcon: Icons.edit_note,
-                    labelTextStr: 'Amount',
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
-                    contentPadding: const EdgeInsets.all(9),
-                    onTap: () {
-                      setState(() {
-                        formHeight = 750;
-                      });
-                    },
-                    onSaved: (val) {
-                      setState(() {
-                        formHeight = formHeight;
-                      });
-                    },
-                    onFieldSubmitted: (val) {
-                      setState(() {
-                        formHeight = formHeight;
-                      });
-                    },
-                    validator: (val) {
-                      if (val!.isNotEmpty) {
-                        ideal.price = double.parse(val);
-                        return null;
-                      }
-                      return 'Input Amount';
-                    },
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextInputField(
+                      prefixIcon: Icons.edit_note,
+                      labelTextStr: 'Amount',
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      contentPadding: const EdgeInsets.all(9),
+                      validator: (val) {
+                        if (val!.isNotEmpty) {
+                          ideal.price = double.parse(val);
+                          return null;
+                        }
+                        return 'Input Amount';
+                      },
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: TextInputField(
-                    prefixIcon: Icons.edit_note,
-                    labelTextStr: 'Discount',
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
-                    contentPadding: const EdgeInsets.all(9),
-                    onTap: () {
-                      setState(() {
-                        formHeight = 750;
-                      });
-                    },
-                    onSaved: (val) {
-                      setState(() {
-                        formHeight = formHeight;
-                      });
-                    },
-                    onFieldSubmitted: (val) {
-                      setState(() {
-                        formHeight = formHeight;
-                      });
-                    },
-                    validator: (val) {
-                      if (val!.isNotEmpty) {
-                        ideal.discount = double.parse(val);
+                  Expanded(
+                    child: TextInputField(
+                      prefixIcon: Icons.edit_note,
+                      labelTextStr: 'Discount',
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      contentPadding: const EdgeInsets.all(9),
+                      validator: (val) {
+                        if (val!.isNotEmpty) {
+                          ideal.discount = double.parse(val);
+                          return null;
+                        }
                         return null;
-                      }
-                      return null;
-                    },
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             SelectOptionField(
               prefixIcon: Icons.water_drop_outlined,

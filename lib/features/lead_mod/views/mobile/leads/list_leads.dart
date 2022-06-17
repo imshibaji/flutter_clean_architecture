@@ -16,6 +16,7 @@ class ListLeadForMobile extends StatefulWidget {
 }
 
 class _ListLeadForMobileState extends State<ListLeadForMobile> {
+  int pageIndex = 0;
   final PageController _controller = PageController();
 
   @override
@@ -30,7 +31,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
         onPressed: () {
           Nav.to(context, LeadApp.addLead);
         },
-        child: const Icon(Icons.add_circle_outline_outlined),
+        child: const Icon(Icons.person_add_alt),
       ),
       body: Consumer<ServiceProvider>(
         builder: (context, sp, child) => infoList(sp),
@@ -55,6 +56,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
                 onPressed: () => _controller.animateToPage(0,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInSine),
+                isHighlight: (pageIndex == 0),
               ),
               for (var i = 0; i < leadStatuses.length; i++)
                 ChipButton(
@@ -64,6 +66,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInSine,
                   ),
+                  isHighlight: (pageIndex == (i + 1)),
                 ),
             ],
           ),
@@ -71,6 +74,11 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
         Expanded(
           child: PageView(
             controller: _controller,
+            onPageChanged: (pIndex) {
+              setState(() {
+                pageIndex = pIndex;
+              });
+            },
             children: [
               leadList(getFilterDatas(sp.leads!.reversed.toList(), 'All'), sp),
               for (String status in leadStatuses)

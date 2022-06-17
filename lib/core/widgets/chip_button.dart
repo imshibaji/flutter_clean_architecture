@@ -11,7 +11,7 @@ class ChipButton extends StatelessWidget {
   double? paddingValue, circularValue, marginValue;
   String label;
   Function() onPressed;
-  bool? stretch;
+  bool? stretch, isHighlight;
 
   ChipButton({
     Key? key,
@@ -23,6 +23,7 @@ class ChipButton extends StatelessWidget {
     this.paddingValue = 0.0,
     this.circularValue = 0.0,
     this.stretch = false,
+    this.isHighlight = false,
   }) : super(key: key);
 
   @override
@@ -40,9 +41,10 @@ class ChipButton extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               primary: backgroundColor ??
                   (tm.isDarkMode
-                      ? const Color.fromARGB(255, 2, 61, 55).withOpacity(0.3)
-                      : const Color.fromARGB(255, 227, 253, 250)
-                          .withOpacity(1.0)),
+                      ? const Color.fromARGB(255, 2, 94, 84)
+                          .withOpacity(!isHighlight! ? 0.3 : 1.0)
+                      : const Color.fromARGB(255, 247, 252, 252)
+                          .withOpacity(!isHighlight! ? 1.0 : 0.8)),
               onPrimary: textColor,
               padding: EdgeInsets.all(paddingValue!),
               shape: RoundedRectangleBorder(
@@ -63,9 +65,10 @@ class ChipButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             primary: backgroundColor ??
                 (tm.isDarkMode
-                    ? const Color.fromARGB(255, 2, 61, 55).withOpacity(0.3)
-                    : const Color.fromARGB(255, 227, 253, 250)
-                        .withOpacity(1.0)),
+                    ? const Color.fromARGB(255, 2, 94, 84)
+                        .withOpacity(!isHighlight! ? 0.3 : 1.0)
+                    : const Color.fromARGB(255, 247, 252, 252)
+                        .withOpacity(!isHighlight! ? 1.0 : 0.8)),
             onPrimary: textColor,
             padding: EdgeInsets.all(paddingValue!),
             shape: RoundedRectangleBorder(

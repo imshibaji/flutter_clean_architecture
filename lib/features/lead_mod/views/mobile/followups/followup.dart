@@ -17,6 +17,7 @@ class FollowupForMobile extends StatefulWidget {
 
 class _FollowupForMobileState extends State<FollowupForMobile> {
   final PageController _controller = PageController();
+  int pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,58 +27,75 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
         title: const Text('Followups'),
         actions: actionsMenu(context),
       ),
-      body: Consumer<ServiceProvider>(builder: (context, sp, child) {
-        return Column(
-          children: [
-            // searchBar(),
-            Container(
-              color: Colors.teal.withOpacity(0.4),
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 3.0),
-              // height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: ChipButton(
-                      label: 'Pending',
-                      onPressed: () => _controller.previousPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInQuad),
-                    ),
-                  ),
-                  Expanded(
-                    child: ChipButton(
-                      label: 'Done',
-                      onPressed: () => _controller.nextPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInQuad),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: PageView(
-                controller: _controller,
-                children: [
-                  followupList(
-                    getFollowupFilter(sp.followups!, false),
-                    sp,
-                    notFoundTxt: 'No Pending Followup Data Found',
-                  ),
-                  followupList(
-                    getFollowupFilter(sp.followups!, true),
-                    sp,
-                    notFoundTxt: 'No Done Followup Data Found',
-                  ),
-                ],
-              ),
-            )
-          ],
-        );
-      }),
+      body: _body(),
       bottomNavigationBar: LeadAppBottomBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Nav.to(context, LeadApp.addFollowup);
+        },
+        child: const Icon(Icons.add_task_outlined),
+      ),
     );
+  }
+
+  Consumer<ServiceProvider> _body() {
+    return Consumer<ServiceProvider>(builder: (context, sp, child) {
+      return Column(
+        children: [
+          // searchBar(),
+          Container(
+            color: Colors.teal.withOpacity(0.4),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 3.0),
+            // height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: ChipButton(
+                    label: 'Pending',
+                    onPressed: () => _controller.previousPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInQuad),
+                    isHighlight: (pageIndex == 0),
+                  ),
+                ),
+                Expanded(
+                  child: ChipButton(
+                    label: 'Done',
+                    onPressed: () => _controller.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInQuad),
+                    isHighlight: (pageIndex == 1),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: PageView(
+              controller: _controller,
+              onPageChanged: (pIndex) {
+                setState(() {
+                  pageIndex = pIndex;
+                });
+              },
+              children: [
+                followupList(
+                  getFollowupFilter(sp.followups!, false),
+                  sp,
+                  notFoundTxt: 'No Pending Followup Data Found',
+                ),
+                followupList(
+                  getFollowupFilter(sp.followups!, true),
+                  sp,
+                  notFoundTxt: 'No Done Followup Data Found',
+                ),
+              ],
+            ),
+          )
+        ],
+      );
+    });
   }
 
   Container followupList(List<Followup> followups, ServiceProvider sp,

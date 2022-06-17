@@ -2,10 +2,12 @@ export './mobile/dashboard.dart';
 export 'mobile/search.dart';
 
 export 'mobile/followups/followup.dart';
+export 'mobile/followups/add_followup.dart';
 
 // Deal Views
 export 'mobile/deals/list_deals.dart';
 export 'mobile/deals/print_deal.dart';
+export 'mobile/deals/add_deal.dart';
 
 export 'mobile/transactions/transactions.dart';
 export 'mobile/transactions/transaction_utilities.dart';

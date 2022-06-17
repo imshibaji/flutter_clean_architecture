@@ -3,6 +3,7 @@ export 'search_controller.dart';
 
 export 'deals/list_deal_controller.dart';
 export 'deals/print_deal_controller.dart';
+export 'deals/add_deal_controller.dart';
 
 export 'enquery/view_enquery_controller.dart';
 export 'enquery/list_enquery_controller.dart';
@@ -17,7 +18,9 @@ export 'leads/view_lead_controller.dart';
 export 'contacts/contact_list_controller.dart';
 export 'contacts/contact_page_controller.dart';
 
-export 'followup_controller.dart';
+export 'followup/followup_controller.dart';
+export 'followup/add_followup_controller.dart';
+
 export 'transactions_controller.dart';
 
 export 'business_controller.dart';

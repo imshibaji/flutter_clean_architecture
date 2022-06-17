@@ -16,7 +16,9 @@ class LeadApp extends RouteManager {
   static const String editLead = name + '/edit_lead';
 
   static const String followup = name + '/followup';
+  static const String addFollowup = name + '/add_followup';
   static const String listDeal = name + '/list_deal';
+  static const String addDeal = name + '/add_deal';
   static const String printDeal = name + '/print_deal';
   static const String transactions = name + '/transactions';
 
@@ -46,8 +48,14 @@ class LeadApp extends RouteManager {
 
     /// ----------------------------------
     addRoute(LeadApp.followup, (context) => const FollowupController());
+    addRoute(LeadApp.addFollowup, (context) => const AddFollowupController());
+
+    // -----------------------------------
     addRoute(LeadApp.listDeal, (context) => const ListDealController());
     addRoute(printDeal, (context) => const PrintDealController());
+    addRoute(addDeal, (context) => const AddDealController());
+
+    // ------------------------------------
     addRoute(LeadApp.transactions, (context) => const TransactionsController());
 
     // -----------------------------------

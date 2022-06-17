@@ -16,6 +16,9 @@ const dealStatuses = [
 void showDealBottomMenu(BuildContext context, Deal deal, ServiceProvider sp,
     {Function(Deal)? onDeal}) {
   showModalBottomSheet(
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+    backgroundColor: Colors.black,
     context: context,
     isScrollControlled: true,
     builder: (_) => bottomDealMenus(context, deal, sp, onDeal: onDeal),

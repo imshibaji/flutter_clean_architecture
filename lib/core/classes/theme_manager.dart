@@ -55,7 +55,10 @@ class AppTheme {
 
     dark = ThemeData(
       brightness: Brightness.dark,
-      primarySwatch: Colors.yellow,
+      primarySwatch: Colors.teal,
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: Color.fromARGB(255, 2, 70, 61),
+      ),
       buttonTheme: const ButtonThemeData(
         textTheme: ButtonTextTheme.primary,
         buttonColor: Colors.white,

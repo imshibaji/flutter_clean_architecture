@@ -18,6 +18,7 @@ class ListDealForMobile extends StatefulWidget {
 class _ListDealForMobileState extends State<ListDealForMobile> {
   final PageController _controller = PageController();
   bool check = false;
+  int pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,12 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
         builder: (context, sp, child) => listItems(sp),
       ),
       bottomNavigationBar: LeadAppBottomBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Nav.to(context, LeadApp.addDeal);
+        },
+        child: const Icon(Icons.insights_rounded),
+      ),
     );
   }
 
@@ -52,6 +59,7 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn,
                   ),
+                  isHighlight: (pageIndex == 0),
                 ),
               ),
               for (int i = 0; i < dealStatuses.length; i++)
@@ -63,6 +71,7 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeIn,
                     ),
+                    isHighlight: (pageIndex == (i + 1)),
                   ),
                 ),
             ],
@@ -71,6 +80,11 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
         Expanded(
           child: PageView(
             controller: _controller,
+            onPageChanged: (pIndex) {
+              setState(() {
+                pageIndex = pIndex;
+              });
+            },
             children: [
               allDeals(
                 getFilterDatas(sp.deals ?? [], 'All') as List<Deal>,
