@@ -93,8 +93,10 @@ class _ContactListPageState extends State<ContactListPage>
           if (val != null && val.isNotEmpty && val != '') {
             searchTerm = val;
             _contacts = allContacts!
-                .where((element) => (element.displayName.startsWith(val) ||
-                    element.phones.first.number.startsWith(val)))
+                .where(
+                  (element) => element.displayName
+                      .contains(RegExp(val, caseSensitive: false)),
+                )
                 .toList();
           } else {
             _contacts = allContacts;
@@ -107,9 +109,8 @@ class _ContactListPageState extends State<ContactListPage>
           setState(() {
             if (searchTerm != null) {
               _contacts = _allContact!
-                  .where((element) =>
-                      (element.displayName.startsWith(searchTerm!) ||
-                          element.phones.first.number.startsWith(searchTerm!)))
+                  .where((element) => element.displayName
+                      .contains(RegExp(searchTerm!, caseSensitive: false)))
                   .toList();
             } else {
               _contacts = _allContact;
