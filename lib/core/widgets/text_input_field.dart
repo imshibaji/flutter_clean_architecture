@@ -14,7 +14,7 @@ class TextInputField extends StatelessWidget {
   void Function(String? value)? onSaved, onChanged, onFieldSubmitted;
   void Function()? onEditingComplete, onTap;
   Widget? suffixIcon;
-  bool autocorrect, readOnly, autofocus;
+  bool autocorrect, readOnly, autofocus, isBorder;
   Iterable<String>? autofillHints;
   int? maxLength, minLines, maxLines;
   EdgeInsetsGeometry? contentPadding;
@@ -50,6 +50,7 @@ class TextInputField extends StatelessWidget {
     this.textDirection,
     this.textAlign = TextAlign.start,
     this.textAlignVertical,
+    this.isBorder = true,
   }) : super(key: key);
 
   @override
@@ -92,12 +93,14 @@ class TextInputField extends StatelessWidget {
           labelStyle: const TextStyle(fontSize: 20),
           hintText: hintTextStr,
           contentPadding: contentPadding,
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(9),
-            ),
-            gapPadding: 0.0,
-          ),
+          border: isBorder
+              ? const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(9),
+                  ),
+                  gapPadding: 0.0,
+                )
+              : null,
           suffixIcon: suffixIcon,
         ),
       ),

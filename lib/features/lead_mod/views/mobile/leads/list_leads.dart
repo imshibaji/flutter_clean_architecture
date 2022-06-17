@@ -45,7 +45,7 @@ class _ListLeadForMobileState extends State<ListLeadForMobile> {
         // searchBar(),
         Container(
           color: Colors.teal.withOpacity(0.4),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,

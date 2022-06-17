@@ -11,6 +11,7 @@ class SelectOptionField extends StatefulWidget {
   String? labelTextStr, hintTextStr, errorTextStr;
   Widget? suffixIcon;
   Function(String?)? validator, onSaved;
+  bool? isBorder;
 
   SelectOptionField({
     Key? key,
@@ -23,6 +24,7 @@ class SelectOptionField extends StatefulWidget {
     this.suffixIcon,
     this.validator,
     this.onSaved,
+    this.isBorder = true,
   }) : super(key: key);
 
   @override
@@ -35,9 +37,8 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
   @override
   Widget build(BuildContext context) {
     ThemeProvider tp = context.watch<ThemeProvider>();
-
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 3.0),
       child: DropdownButtonFormField<String>(
         validator: (value) => widget.errorTextStr = widget.validator!(value),
         onSaved: (value) => widget.onSaved!(value),
@@ -51,11 +52,13 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
           labelStyle: const TextStyle(fontSize: 20),
           hintText: widget.hintTextStr,
           errorText: widget.errorTextStr,
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(9),
-            ),
-          ),
+          border: widget.isBorder!
+              ? const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(9),
+                  ),
+                )
+              : null,
           suffixIcon: widget.suffixIcon,
         ),
         value: widget.selected,

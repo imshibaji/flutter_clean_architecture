@@ -30,7 +30,7 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
             quickTotalView(sp),
             Container(
               color: Colors.teal.withOpacity(0.4),
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(0),
               height: 50,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

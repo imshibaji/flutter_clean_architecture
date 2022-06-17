@@ -32,8 +32,8 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
             // searchBar(),
             Container(
               color: Colors.teal.withOpacity(0.4),
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
-              height: 50,
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 3.0),
+              // height: 50,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
