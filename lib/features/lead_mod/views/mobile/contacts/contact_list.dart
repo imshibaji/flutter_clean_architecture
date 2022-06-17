@@ -123,10 +123,18 @@ class _ContactListPageState extends State<ContactListPage>
 
   Widget _body() {
     if (_permissionDenied) {
-      return const Center(child: Text('Permission denied'));
+      return const Expanded(
+        child: Center(
+          child: Text('Permission denied'),
+        ),
+      );
     }
     if (_contacts == null) {
-      return const Center(child: CircularProgressIndicator());
+      return const Expanded(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }
     return Expanded(
       child: ListView.builder(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -69,7 +70,12 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
       }
 
       if (_contact!.addresses.isNotEmpty) {
-        final adds = _contact!.addresses.first.toVCard().join();
+        String addr = '';
+        if (_contact!.addresses.first.address.isNotEmpty) {
+          addr = _contact!.addresses.first.address;
+        }
+        final adds = addr;
+        log(adds);
         address = TextEditingController(text: adds);
       }
     });
