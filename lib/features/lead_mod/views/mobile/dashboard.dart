@@ -60,6 +60,7 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
                   },
                 ),
                 shortcutButton(
+                  prefixIcon: Icons.attractions_outlined,
                   color: const Color.fromARGB(255, 247, 141, 3),
                   title: 'Followups / Activities',
                   pins: followups.isNotEmpty ? followups.length : 0,
@@ -68,6 +69,7 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
                   },
                 ),
                 shortcutButton(
+                  prefixIcon: Icons.handshake_rounded,
                   color: Colors.blueGrey,
                   title: 'Deals / Proposals',
                   pins: deals.isNotEmpty ? deals.length : 0,
@@ -76,6 +78,7 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
                   },
                 ),
                 shortcutButton(
+                  prefixIcon: Icons.accessibility_new,
                   color: const Color.fromARGB(255, 31, 151, 95),
                   title: 'Converted Leads',
                   pins: leads.isNotEmpty

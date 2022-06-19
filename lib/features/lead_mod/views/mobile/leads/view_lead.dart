@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
+import '../../../../awasome_notification/awasome_notification_service.dart';
 import '../../../dbobj/dbobjs.dart';
 import '../../../lead_app.dart';
 import '../../../providers/providers.dart';
@@ -452,6 +453,14 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
 
       showMessage(context, 'New Taks is Added');
 
+      // Setup Notification
+      AwasomeNotificationService().showActivitypNotification(
+        'Followup / Activity',
+        ifollowup.discuss!,
+        payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+        schedule: ifollowup.schedule,
+      );
+
       Nav.close(context);
     }
   }
@@ -616,6 +625,14 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
       sp.getFollowupByLead(lead!.uid!);
 
       showMessage(context, 'New Deal is Added');
+
+      // Setup Notification
+      AwasomeNotificationService().showActivitypNotification(
+        'Proposal / Deal',
+        ndeal.details!,
+        payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+        schedule: ndeal.createdAt,
+      );
 
       Nav.close(context);
     }

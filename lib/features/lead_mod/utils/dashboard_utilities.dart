@@ -99,6 +99,7 @@ Expanded ieCard({
 }
 
 InkWell shortcutButton({
+  IconData? prefixIcon,
   Color color = const Color.fromARGB(255, 233, 11, 107),
   String title = 'New Leads',
   int pins = 0,
@@ -119,8 +120,16 @@ InkWell shortcutButton({
           color: color,
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Icon(
+              prefixIcon ?? Icons.groups_outlined,
+              size: 34,
+              color: Colors.white,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
             Text(
               title,
               style: const TextStyle(
@@ -128,6 +137,7 @@ InkWell shortcutButton({
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
             ),
+            const Spacer(),
             Stack(
               alignment: Alignment.center,
               children: [

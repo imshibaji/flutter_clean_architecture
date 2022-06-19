@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../awasome_notification/awasome_notification_service.dart';
 import '../../../dbobj/dbobjs.dart';
 import '../../../providers/providers.dart';
 import '../../../services/services.dart';
@@ -193,6 +194,14 @@ class _AddDealState extends State<AddDeal> {
       sp.getAllDeals();
 
       showMessage(context, 'New Deal is Added');
+
+      // Setup Notification
+      AwasomeNotificationService().showActivitypNotification(
+        'Proposal / Deal',
+        ndeal.details!,
+        payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+        schedule: ndeal.createdAt,
+      );
 
       Nav.close(context);
     }

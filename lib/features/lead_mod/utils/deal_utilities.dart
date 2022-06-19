@@ -63,16 +63,17 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp,
       ),
       ElevatedButton.icon(
         icon: const Icon(
-          Icons.done,
+          Icons.close,
           color: Colors.orange,
         ),
         label: const Text(
-          'Pending',
+          'Rejected',
           style: TextStyle(color: Colors.orange),
         ),
         onPressed: () {
           notDoneDeal(context, deal, sp);
           onDeal!(deal);
+          showMessage(context, 'Deal/Proposal Status Update as Rejected.');
           Nav.close(context);
         },
       ),
@@ -92,7 +93,10 @@ Container bottomDealMenus(BuildContext context, Deal deal, ServiceProvider sp,
             onAction: () {
               deal.delete();
               sp.getAllDeals();
-              onDeal!(deal);
+              if (onDeal != null) {
+                onDeal(deal);
+              }
+              showMessage(context, 'Deal/Proposal Data is Deleted.');
             },
           );
         },

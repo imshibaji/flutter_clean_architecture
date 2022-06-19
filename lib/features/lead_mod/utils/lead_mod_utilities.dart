@@ -198,12 +198,14 @@ Future<void> makePhoneCall(String phoneNumber) async {
   await launchUrl(launchUri);
 }
 
-Future<void> mailTo(String email) async {
+Future<void> mailTo(String email, {String? subject, String? content}) async {
   final Uri emailLaunchUri = Uri(
     scheme: 'mailto',
     path: email,
-    query:
-        encodeQueryParameters(<String, String>{'subject': 'Contacting for '}),
+    query: encodeQueryParameters({
+      'subject': subject ?? 'Contacting for ',
+      'content': content ?? 'Contact For'
+    }),
   );
 
   await launchUrl(emailLaunchUri);

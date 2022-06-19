@@ -3,11 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
+import 'features/awasome_notification/awasome_notification_service.dart';
 // import 'core/core.dart';
 import 'hive_helper/register_adapters.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  AwasomeNotificationService().initAwasomeNotification();
+  AwasomeNotificationService().listenActionStream();
+
   Provider.debugCheckInvalidValueType = null;
 
   registerAdapters();

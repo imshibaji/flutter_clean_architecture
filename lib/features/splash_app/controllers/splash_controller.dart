@@ -41,7 +41,7 @@ class _SplashControllerState extends State<SplashController> {
             //       const TextStyle(fontSize: 70.0, fontFamily: 'Canterbury'),
             // ),
             RotateAnimatedText(
-              'LEADS BOOK',
+              'LEAD BOOK',
               textStyle:
                   const TextStyle(fontSize: 50.0, fontFamily: 'Canterbury'),
             ),

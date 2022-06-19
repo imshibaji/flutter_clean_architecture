@@ -23,6 +23,11 @@ class ActionTopButtons extends ActionButtons {
               link: LeadApp.profile,
             ),
             // ButtonData(
+            //   icon: Icons.notifications,
+            //   label: 'Awasome Notifications',
+            //   link: AwasomeNotificationApp.home,
+            // ),
+            // ButtonData(
             //   icon: Icons.help_outline_sharp,
             //   label: 'Helps & Tutorials',
             //   link: LeadApp.helpPage,

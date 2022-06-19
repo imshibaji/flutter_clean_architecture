@@ -117,8 +117,10 @@ SizedBox bottomFollowupMenus(
             onAction: () {
               followup.delete();
               sp.getAllFollowups();
+              if (onFollowup != null) {
+                onFollowup(followup);
+              }
               showMessage(context, 'Followup Data is Deleted.');
-              onFollowup!(followup);
             },
           );
         },

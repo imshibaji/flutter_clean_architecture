@@ -43,19 +43,20 @@ dependencies:
   provider: ^6.0.2
   url_launcher: ^6.1.2
   flutter_svg: ^1.0.3
-  # flutter_local_notifications: ^9.5.3+1
   hive: ^2.2.1
   hive_flutter: ^1.1.0
   animated_text_kit: ^4.2.1
   uuid: 3.0.6
   path_provider: ^2.0.10
-  # connectivity_plus: ^2.3.0
   pdf: ^3.8.1
   flutter_contacts: ^1.1.4
   flutter_speed_dial: ^6.0.0
   share_plus: ^4.0.5
   printing: ^5.9.1
   json_theme: ^4.0.0+2
+  # connectivity_plus: ^2.3.0
+  # permission_handler: ^10.0.0
+  awesome_notifications: ^0.6.21
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +89,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
       - assets/
+  #   - assets/images/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

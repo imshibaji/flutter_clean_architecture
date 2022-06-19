@@ -17,7 +17,7 @@ class AppButton extends StatelessWidget {
     this.backgroundColor,
     this.textColor,
     required this.label,
-    this.paddingValue = 0.0,
+    this.paddingValue = 8.0,
     this.marginValue = 0.0,
     required this.onPressed,
     this.stretch = false,

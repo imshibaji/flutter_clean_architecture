@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../awasome_notification/awasome_notification_service.dart';
 import '../../../dbobj/dbobjs.dart';
 import '../../../providers/providers.dart';
 import '../../../services/services.dart';
@@ -173,9 +174,17 @@ class _AddFollowupState extends State<AddFollowup> {
       // sp.updateLead(ilead);
       ilead.save();
 
-      sp.getFollowupByLead(lead!.uid!);
+      sp.getAllFollowups();
 
       showMessage(context, 'New Taks is Added');
+
+      // Setup Notification
+      AwasomeNotificationService().showActivitypNotification(
+        'Followup / Activity',
+        ifollowup.discuss!,
+        payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+        schedule: ifollowup.schedule,
+      );
 
       Nav.close(context);
     }
