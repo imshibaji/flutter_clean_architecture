@@ -179,12 +179,14 @@ class _AddFollowupState extends State<AddFollowup> {
       showMessage(context, 'New Taks is Added');
 
       // Setup Notification
-      AwasomeNotificationService().showActivitypNotification(
-        'Followup / Activity',
-        ifollowup.discuss!,
-        payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
-        schedule: ifollowup.schedule,
-      );
+      if (ifollowup.status!.toLowerCase() != 'done') {
+        AwasomeNotificationService().showActivitypNotification(
+          'Followup / Activity',
+          ifollowup.discuss!,
+          payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+          schedule: ifollowup.schedule,
+        );
+      }
 
       Nav.close(context);
     }

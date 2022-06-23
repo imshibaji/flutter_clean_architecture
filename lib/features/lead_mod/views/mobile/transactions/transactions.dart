@@ -128,14 +128,21 @@ class _TransactionsForMobileState extends State<TransactionsForMobile> {
           children: [
             StatusText(
               label: payment.type ?? 'Income',
-              size: 10,
+              size: 9,
             ),
           ],
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(payment.details ?? 'No Details'),
+            Text(
+              (payment.details ?? 'No Details').substring(
+                0,
+                (payment.details!.length > 50) ? 5 : payment.details!.length,
+              ),
+              style: const TextStyle(fontSize: 12),
+              textAlign: TextAlign.left,
+            ),
             Text(
               'At: ' + dateTime,
               style: const TextStyle(fontSize: 9),

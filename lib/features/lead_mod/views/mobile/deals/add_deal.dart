@@ -196,12 +196,14 @@ class _AddDealState extends State<AddDeal> {
       showMessage(context, 'New Deal is Added');
 
       // Setup Notification
-      AwasomeNotificationService().showActivitypNotification(
-        'Proposal / Deal',
-        ndeal.details!,
-        payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
-        schedule: ndeal.createdAt,
-      );
+      if (ndeal.status!.toLowerCase() != 'paid') {
+        AwasomeNotificationService().showActivitypNotification(
+          'Proposal / Deal',
+          ndeal.details!,
+          payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+          schedule: ndeal.createdAt,
+        );
+      }
 
       Nav.close(context);
     }

@@ -172,8 +172,10 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                             ],
                           ),
                         ),
-                        Text(((deal.price ?? 0) - (deal.discount ?? 0))
-                            .toString()),
+                        Text(
+                          ((deal.price ?? 0) - (deal.discount ?? 0)).toString(),
+                          style: const TextStyle(fontSize: 12),
+                        ),
                       ],
                     ),
                     subtitle: Column(
@@ -206,6 +208,7 @@ class _ListDealForMobileState extends State<ListDealForMobile> {
                                 ? 50
                                 : deal.details!.length,
                           ),
+                          style: const TextStyle(fontSize: 12),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),

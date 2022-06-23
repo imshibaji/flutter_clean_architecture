@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "870694041665",
+    "project_id": "leadbook-2d3d4",
+    "storage_bucket": "leadbook-2d3d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870694041665:android:1290d5f8fd20f07f3d2ec0",
+        "android_client_info": {
+          "package_name": "com.shibajidebnath.leadbook.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "870694041665-nid4v6ng61qfpgse8v6k2mf5r52lu54i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0hLXUUS17ZmEJkHDoQfjFUQGLYgez7kc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "870694041665-nid4v6ng61qfpgse8v6k2mf5r52lu54i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

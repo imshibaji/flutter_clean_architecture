@@ -412,7 +412,6 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
 
   void onFollowupSubmit() async {
     if (_followupFormState.currentState!.validate()) {
-      setState(() {});
       // Leads Assign
       Lead ilead = lead!;
       ilead.status = status;
@@ -454,12 +453,14 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
       showMessage(context, 'New Taks is Added');
 
       // Setup Notification
-      AwasomeNotificationService().showActivitypNotification(
-        'Followup / Activity',
-        ifollowup.discuss!,
-        payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
-        schedule: ifollowup.schedule,
-      );
+      if (ifollowup.status!.toLowerCase() != 'done') {
+        AwasomeNotificationService().showActivitypNotification(
+          'Followup / Activity',
+          ifollowup.discuss!,
+          payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+          schedule: ifollowup.schedule,
+        );
+      }
 
       Nav.close(context);
     }
@@ -627,12 +628,14 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
       showMessage(context, 'New Deal is Added');
 
       // Setup Notification
-      AwasomeNotificationService().showActivitypNotification(
-        'Proposal / Deal',
-        ndeal.details!,
-        payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
-        schedule: ndeal.createdAt,
-      );
+      if (ndeal.status!.toLowerCase() != 'paid') {
+        AwasomeNotificationService().showActivitypNotification(
+          'Proposal / Deal',
+          ndeal.details!,
+          payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+          schedule: ndeal.createdAt,
+        );
+      }
 
       Nav.close(context);
     }

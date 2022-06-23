@@ -24,6 +24,7 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
@@ -98,5 +99,6 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.material:material:1.6.1'
     implementation "com.google.android.gms:play-services-instantapps:17.0.0"
+    implementation 'com.google.firebase:firebase-analytics:17.4.1'
 }
 android.buildTypes.release.ndk.debugSymbolLevel = 'FULL'

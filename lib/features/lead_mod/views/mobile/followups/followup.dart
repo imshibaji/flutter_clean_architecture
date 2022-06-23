@@ -123,10 +123,21 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(followup.discuss ?? 'Deal Title'),
+            Text(
+              (lead.name ?? 'No Name') + ' | At: ' + dateTime,
+              style: const TextStyle(fontSize: 8),
+            ),
+            Text(
+              (followup.discuss ?? 'Followup Title').substring(
+                0,
+                (followup.discuss!.length > 50) ? 50 : followup.discuss!.length,
+              ),
+              style: const TextStyle(fontSize: 12),
+              textAlign: TextAlign.left,
+            ),
           ],
         ),
         subtitle: Column(
@@ -134,14 +145,31 @@ class _FollowupForMobileState extends State<FollowupForMobile> {
           children: [
             Row(
               children: [
-                Text(lead.purpose ?? 'No Purpose'),
+                Text(
+                  lead.purpose ?? 'No Purpose',
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 12),
+                ),
                 const SizedBox(
                   width: 6,
                 ),
-                StatusText(label: followup.status ?? 'new')
               ],
             ),
-            Text((lead.name ?? 'No Name') + ' | ' + dateTime)
+            Row(
+              children: [
+                const Text(
+                  'Status:',
+                  style: TextStyle(fontSize: 10),
+                ),
+                const SizedBox(
+                  width: 6,
+                ),
+                StatusText(
+                  label: followup.status ?? 'new',
+                  size: 10,
+                )
+              ],
+            ),
           ],
         ),
         shape: Border.all(width: 0.5),
