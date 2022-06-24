@@ -9,6 +9,6 @@ class SearchController extends StatelessController {
 
   @override
   Display view(BuildContext context) {
-    return Display(title: 'About', mobile: const SearchForMobile());
+    return Display(title: 'Search', mobile: const SearchForMobile());
   }
 }

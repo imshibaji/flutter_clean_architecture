@@ -1,7 +1,7 @@
-// ignore: implementation_imports
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
+import '../../providers/providers.dart';
 import '../../views/views.dart';
 
 class AddLeadController extends StatelessController {
@@ -9,8 +9,9 @@ class AddLeadController extends StatelessController {
 
   @override
   Display view(BuildContext context) {
+    FirebaseTracker().setScreen('Leads Screen');
     return Display(
-      title: 'Add New Enquery',
+      title: 'Add Lead',
       mobile: const AddLeadForMobile(),
     );
   }

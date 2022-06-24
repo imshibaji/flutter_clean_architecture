@@ -12,7 +12,7 @@ class ListLeadController extends StatelessController {
     var sp = context.read<ServiceProvider>();
     sp.getAllLeads();
     return Display(
-      title: 'Enqueries / Lead',
+      title: 'Enqueries / Leads',
       mobile: const ListLeadForMobile(),
     );
   }

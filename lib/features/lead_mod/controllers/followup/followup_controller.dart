@@ -14,7 +14,7 @@ class FollowupController extends StatelessController {
     sp.getAllLeads();
     sp.getAllFollowups();
     return Display(
-      title: 'Followup Section',
+      title: 'LeadBook - Followup',
       mobile: const FollowupForMobile(),
     );
   }

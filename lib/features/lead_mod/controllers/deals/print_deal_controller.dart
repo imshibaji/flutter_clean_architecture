@@ -14,7 +14,7 @@ class PrintDealController extends StatelessController {
     sp.getAllLeads();
     sp.getAllDeals();
     return Display(
-      title: 'Proposals / Deals',
+      title: 'Print Proposals / Deals',
       mobile: const PrintDeal(),
     );
   }

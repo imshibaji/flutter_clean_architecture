@@ -1,3 +1,4 @@
+import 'package:clean_architecture/features/lead_mod/providers/providers.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -23,6 +24,7 @@ class Display extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    FirebaseTracker().setScreen(title);
     // log(size.width.toString());
     double width = size.width;
     return Title(

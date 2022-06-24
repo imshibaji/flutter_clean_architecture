@@ -9,7 +9,7 @@ class ProfileController extends StatelessController {
   @override
   Display view(BuildContext context) {
     return Display(
-      title: 'LeadsBook - Helps',
+      title: 'LeadsBook - Profile',
       mobile: const OwnerProfileMobileView(),
     );
   }

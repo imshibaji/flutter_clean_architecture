@@ -9,6 +9,6 @@ class SettingsController extends StatelessController {
 
   @override
   Display view(BuildContext context) {
-    return Display(title: 'About', mobile: const Settings());
+    return Display(title: 'Settings', mobile: const Settings());
   }
 }

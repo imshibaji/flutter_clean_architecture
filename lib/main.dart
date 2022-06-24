@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'config/config.dart';
 import 'features/awasome_notification/awasome_notification_service.dart';
+import 'features/lead_mod/providers/firebase_tracker.dart';
 // import 'core/core.dart';
 import 'hive_helper/register_adapters.dart';
 
@@ -15,6 +16,9 @@ void main() {
   Provider.debugCheckInvalidValueType = null;
 
   registerAdapters();
+  Future.microtask(() {
+    FirebaseTracker().init();
+  });
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) async {

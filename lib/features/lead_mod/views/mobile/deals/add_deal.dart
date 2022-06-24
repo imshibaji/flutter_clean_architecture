@@ -44,9 +44,13 @@ class _AddDealState extends State<AddDeal> {
               LeadSelectOptionField(
                 prefixIcon: Icons.person,
                 options: sp.leads,
+                selected: null,
                 validator: (vlead) {
-                  lead = vlead;
-                  return null;
+                  if (vlead != null) {
+                    lead = vlead;
+                    return null;
+                  }
+                  return 'Please Choose A Lead';
                 },
               ),
               TextInputField(

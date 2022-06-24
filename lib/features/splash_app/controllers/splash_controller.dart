@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../../core/classes/classes.dart';
+import '../../lead_mod/lead_mod.dart';
 
 class SplashController extends StatefulWidget {
   const SplashController({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class _SplashControllerState extends State<SplashController> {
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
+      FirebaseTracker().setScreen('Splash Screen');
+
       Future.delayed(
         const Duration(seconds: 2),
         () => Nav.toReplace(context, '/'),
