@@ -17,12 +17,11 @@ void main() {
   Provider.debugCheckInvalidValueType = null;
 
   registerAdapters();
-  Future.microtask(() {
-    FirebaseTracker().init();
-  });
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) async {
+    await FirebaseTracker().init();
+
     runApp(MultiProvider(
       providers: appProviders,
       child: const CleanApp(
