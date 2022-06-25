@@ -5,7 +5,7 @@ import '../../config/config.dart';
 
 // ignore: must_be_immutable
 class SelectOptionField extends StatefulWidget {
-  List<String>? options;
+  List<String> options;
   String? selected;
   IconData? prefixIcon;
   String? labelTextStr, hintTextStr, errorTextStr;
@@ -15,7 +15,7 @@ class SelectOptionField extends StatefulWidget {
 
   SelectOptionField({
     Key? key,
-    this.options = const [],
+    required this.options,
     this.selected,
     this.prefixIcon,
     this.labelTextStr,
@@ -63,14 +63,21 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
           suffixIcon: widget.suffixIcon,
         ),
         value: widget.selected,
-        items: widget.options!
-            .map(
-              (String option) => DropdownMenuItem<String>(
-                value: option,
-                child: Text(option),
-              ),
-            )
-            .toList(),
+        items: widget.options.isNotEmpty
+            ? widget.options
+                .map(
+                  (String option) => DropdownMenuItem<String>(
+                    value: option,
+                    child: Text(option),
+                  ),
+                )
+                .toList()
+            : [
+                const DropdownMenuItem<String>(
+                  value: 'None',
+                  child: Text('None'),
+                ),
+              ],
         onChanged: (value) {
           widget.selected = value!;
           widget.onChanged != null ? widget.onChanged!(value) : null;

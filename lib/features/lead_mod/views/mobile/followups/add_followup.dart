@@ -19,7 +19,8 @@ class AddFollowup extends StatefulWidget {
 
 class _AddFollowupState extends State<AddFollowup> {
   final GlobalKey<FormState> _followupFormState = GlobalKey<FormState>();
-  String? discussion, status = 'Pending';
+  String? discussion, status;
+  String leadStatus = 'Pending';
   Lead? lead;
   Followup ifollowup = Followup();
   DateTime selectedDate = DateTime.now();
@@ -55,9 +56,13 @@ class _AddFollowupState extends State<AddFollowup> {
                   return 'Please Choose A Lead';
                 },
                 onChanged: (vlead) {
-                  setState(() {
-                    status = vlead!.status;
-                  });
+                  if (vlead != null &&
+                      vlead.status != null &&
+                      vlead.status!.toLowerCase() != 'new') {
+                    setState(() {
+                      leadStatus = vlead.status!;
+                    });
+                  }
                 },
               ),
               TextInputField(
@@ -83,7 +88,7 @@ class _AddFollowupState extends State<AddFollowup> {
                       prefixIcon: Icons.water_drop_outlined,
                       labelTextStr: 'Lead Status',
                       options: followupStatuses,
-                      selected: status,
+                      selected: leadStatus,
                       validator: (val) {
                         if (val!.isNotEmpty) {
                           status = val;

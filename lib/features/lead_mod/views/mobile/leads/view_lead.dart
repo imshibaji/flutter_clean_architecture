@@ -47,7 +47,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
       lead = dlead;
       followups = lead!.followups ?? [];
       deals = lead!.deals ?? [];
-      leadStatus = dlead.status;
+      if (dlead.status!.toLowerCase() != 'new') leadStatus = dlead.status;
     });
 
     return Scaffold(
