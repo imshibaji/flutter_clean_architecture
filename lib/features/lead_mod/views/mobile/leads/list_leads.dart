@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +16,30 @@ class ListLeadForMobile extends StatefulWidget {
   State<ListLeadForMobile> createState() => _ListLeadForMobileState();
 }
 
-class _ListLeadForMobileState extends State<ListLeadForMobile> {
+class _ListLeadForMobileState extends State<ListLeadForMobile>
+    with AfterLayoutMixin {
   int pageIndex = 0;
   final PageController _controller = PageController();
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    goto(context);
+  }
+
+  void goto(BuildContext context) {
+    String? type = Nav.routeData<String>(context);
+    if (type != null && type.isNotEmpty) {
+      for (var i = 0; i < leadStatuses.length; i++) {
+        if (leadStatuses[i].toLowerCase() == type.toLowerCase()) {
+          _controller.animateToPage(
+            (i + 1),
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInSine,
+          );
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

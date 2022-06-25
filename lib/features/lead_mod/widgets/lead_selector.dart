@@ -1,7 +1,8 @@
-import 'package:clean_architecture/config/config.dart';
-import 'package:clean_architecture/features/lead_mod/dbobj/dbobjs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../config/config.dart';
+import '../dbobj/dbobjs.dart';
 
 // ignore: must_be_immutable
 class LeadSelectOptionField extends StatefulWidget {
@@ -12,6 +13,7 @@ class LeadSelectOptionField extends StatefulWidget {
   Widget? suffixIcon;
   Function(Lead?) validator;
   Function(Lead?)? onSaved;
+  Function(Lead?)? onChanged;
   bool? isBorder;
 
   LeadSelectOptionField({
@@ -26,6 +28,7 @@ class LeadSelectOptionField extends StatefulWidget {
     required this.validator,
     this.onSaved,
     this.isBorder = true,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -73,6 +76,7 @@ class _SelectOptionFieldState extends State<LeadSelectOptionField> {
             .toList(),
         onChanged: (value) {
           widget.selected = value!;
+          widget.onChanged!(value);
         },
         hint: const Text('Choose'),
         autovalidateMode: AutovalidateMode.onUserInteraction,

@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +51,7 @@ class CleanApp extends StatelessWidget {
       themeMode: tm.themeMode,
       initialRoute: 'splash/',
       routes: Routes().routes,
+      navigatorKey: Nav.navigatorKey,
     );
   }
 }

@@ -1,12 +1,13 @@
 import 'dart:developer';
 
-import 'package:clean_architecture/features/lead_mod/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
+import '../../awasome_notification/awasome_notification_service.dart';
 import '../dbobj/dbobjs.dart';
 import '../providers/providers.dart';
+import '../services/services.dart';
 
 const dealStatuses = [
   'Pending',
@@ -344,6 +345,32 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
                   ideal.save();
                   final sp = context.read<ServiceProvider>();
                   sp.getAllDeals();
+
+                  // Setup Notification
+                  if (ideal.status!.toLowerCase() != 'paid') {
+                    final sp = context.read<ServiceProvider>();
+                    sp.getAllLeads();
+                    Lead ilead = sp.leads!
+                        .where(
+                          (element) => element.uid == ideal.leadUid,
+                        )
+                        .first;
+                    AwasomeNotificationService().showActivitypNotification(
+                      'Deal: ' + ideal.name!,
+                      ideal.details! +
+                          ' amount of ' +
+                          (ideal.price! - ideal.discount!).toString() +
+                          ' is ' +
+                          ideal.status!,
+                      payload: {
+                        'mobile': ilead.mobile ?? '',
+                        'email': ilead.email ?? '',
+                        'type': 'LEAD',
+                        'id': ilead.uid ?? ''
+                      },
+                      schedule: ideal.createdAt,
+                    );
+                  }
 
                   Nav.close(context);
                   showMessage(context, 'Deal Data is Updated.');

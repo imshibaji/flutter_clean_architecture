@@ -2,6 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:clean_architecture/core/core.dart';
+import 'package:clean_architecture/features/lead_mod/dbobj/dbobjs.dart';
+import 'package:clean_architecture/features/lead_mod/lead_app.dart';
+import 'package:clean_architecture/features/lead_mod/providers/providers.dart';
 import '../lead_mod/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +52,7 @@ class AwasomeNotificationService {
         .actionStream
         .listen((ReceivedNotification receivedNotification) {
       final data = jsonDecode(receivedNotification.toString());
-      // log(receivedNotification.toMap().toString());
+      log(receivedNotification.toMap().toString());
       // log(data['buttonKeyPressed']);
       log(data['payload'].toString());
       if (data['buttonKeyPressed'] == 'CALL') {
@@ -56,6 +60,15 @@ class AwasomeNotificationService {
       }
       if (data['buttonKeyPressed'] == 'EMAIL') {
         mailTo(data['payload']['email']);
+      }
+      if (data['payload']['type'] == 'LEAD') {
+        ServiceProvider sp = ServiceProvider();
+        if (sp.leads != null && sp.leads!.isNotEmpty) {
+          Lead lead = sp.leads!
+              .where((element) => element.uid == data['payload']['id'])
+              .first;
+          Nav.go(LeadApp.viewLead, arguments: lead);
+        }
       }
     });
   }

@@ -204,7 +204,12 @@ class _AddDealState extends State<AddDeal> {
         AwasomeNotificationService().showActivitypNotification(
           'Proposal / Deal',
           ndeal.details!,
-          payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+          payload: {
+            'mobile': ilead.mobile ?? '',
+            'email': ilead.email ?? '',
+            'type': 'LEAD',
+            'id': ilead.uid ?? ''
+          },
           schedule: ndeal.createdAt,
         );
       }

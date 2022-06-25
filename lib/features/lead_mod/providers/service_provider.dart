@@ -115,6 +115,14 @@ class ServiceProvider extends ChangeNotifier {
     });
   }
 
+  getDealsByLead(String uid) {
+    Future.microtask(() {
+      ds = DealService();
+      deals = ds!.getAll().where((e) => e.leadUid! == uid).toList();
+      notifyListeners();
+    });
+  }
+
   getAllPayments() {
     Future.microtask(() {
       ps = PaymentService();

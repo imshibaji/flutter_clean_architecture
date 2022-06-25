@@ -19,7 +19,7 @@ class AddFollowup extends StatefulWidget {
 
 class _AddFollowupState extends State<AddFollowup> {
   final GlobalKey<FormState> _followupFormState = GlobalKey<FormState>();
-  String? discussion, status;
+  String? discussion, status = 'Pending';
   Lead? lead;
   Followup ifollowup = Followup();
   DateTime selectedDate = DateTime.now();
@@ -54,6 +54,11 @@ class _AddFollowupState extends State<AddFollowup> {
                   }
                   return 'Please Choose A Lead';
                 },
+                onChanged: (vlead) {
+                  setState(() {
+                    status = vlead!.status;
+                  });
+                },
               ),
               TextInputField(
                 prefixIcon: Icons.edit_note,
@@ -78,7 +83,7 @@ class _AddFollowupState extends State<AddFollowup> {
                       prefixIcon: Icons.water_drop_outlined,
                       labelTextStr: 'Lead Status',
                       options: followupStatuses,
-                      selected: 'Pending',
+                      selected: status,
                       validator: (val) {
                         if (val!.isNotEmpty) {
                           status = val;
@@ -187,7 +192,12 @@ class _AddFollowupState extends State<AddFollowup> {
         AwasomeNotificationService().showActivitypNotification(
           'Followup / Activity',
           ifollowup.discuss!,
-          payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
+          payload: {
+            'mobile': ilead.mobile ?? '',
+            'email': ilead.email ?? '',
+            'type': 'LEAD',
+            'id': ilead.uid ?? ''
+          },
           schedule: ifollowup.schedule,
         );
       }

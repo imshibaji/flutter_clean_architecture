@@ -23,7 +23,7 @@ class ViewLeadForMobile extends StatefulWidget {
 class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
   final GlobalKey<FormState> _followupFormState = GlobalKey<FormState>();
   final GlobalKey<FormState> _dealFormState = GlobalKey<FormState>();
-  String? discussion, status;
+  String? discussion, status, leadStatus = 'Pending';
   List<Followup>? followups;
   List<Deal>? deals;
   Lead? lead;
@@ -47,6 +47,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
       lead = dlead;
       followups = lead!.followups ?? [];
       deals = lead!.deals ?? [];
+      leadStatus = dlead.status;
     });
 
     return Scaffold(
@@ -140,6 +141,9 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
   Expanded tabViews(ServiceProvider sp) {
     return Expanded(
       child: PageView(
+        onPageChanged: (value) => setState(() {
+          pageOffset = value;
+        }),
         scrollDirection: Axis.horizontal,
         controller: pageController,
         children: [
@@ -350,7 +354,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
                     prefixIcon: Icons.water_drop_outlined,
                     labelTextStr: 'Lead Status',
                     options: followupStatuses,
-                    selected: 'Pending',
+                    selected: leadStatus,
                     validator: (val) {
                       if (val!.isNotEmpty) {
                         status = val;
@@ -443,24 +447,37 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
         ilead.followups!.add(ifollowup);
       }
 
+      // Setup Notification
+      if (ifollowup.status!.toLowerCase() != 'done') {
+        AwasomeNotificationService().showActivitypNotification(
+          'Followup for ' + ilead.name!,
+          ifollowup.discuss!,
+          payload: {
+            'mobile': ilead.mobile ?? '',
+            'email': ilead.email ?? '',
+            'type': 'LEAD',
+            'id': ilead.uid ?? ''
+          },
+          schedule: ifollowup.schedule,
+        );
+      }
+
       // Service Provider Initilized
       final sp = context.read<ServiceProvider>();
       // sp.updateLead(ilead);
       ilead.save();
 
       sp.getFollowupByLead(lead!.uid!);
+      setState(() {
+        followups = sp.followups!;
+      });
+      pageController.animateToPage(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeIn,
+      );
 
       showMessage(context, 'New Taks is Added');
-
-      // Setup Notification
-      if (ifollowup.status!.toLowerCase() != 'done') {
-        AwasomeNotificationService().showActivitypNotification(
-          'Followup / Activity',
-          ifollowup.discuss!,
-          payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
-          schedule: ifollowup.schedule,
-        );
-      }
 
       Nav.close(context);
     }
@@ -591,8 +608,6 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
 
   void onDealSubmit() {
     if (_dealFormState.currentState!.validate()) {
-      setState(() {});
-
       // Init
       Lead ilead = lead!;
       Deal ndeal = ideal;
@@ -618,24 +633,40 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
         ilead.deals!.add(ndeal);
       }
 
+      // Setup Notification
+      if (ndeal.status!.toLowerCase() != 'paid') {
+        AwasomeNotificationService().showActivitypNotification(
+          'Deal: ' + ndeal.name!,
+          ndeal.details! +
+              ' amount of ' +
+              (ndeal.price! - ndeal.discount!).toString() +
+              ' is ' +
+              ndeal.status!,
+          payload: {
+            'mobile': ilead.mobile ?? '',
+            'email': ilead.email ?? '',
+            'type': 'LEAD',
+            'id': ilead.uid ?? ''
+          },
+          schedule: ndeal.createdAt,
+        );
+      }
+
       // Service Provider Initilized
       final sp = context.read<ServiceProvider>();
       // sp.updateLead(ilead);
       ilead.save();
 
-      sp.getFollowupByLead(lead!.uid!);
-
+      sp.getDealsByLead(lead!.uid!);
+      setState(() {
+        deals = sp.deals!;
+      });
+      pageController.animateToPage(
+        1,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeIn,
+      );
       showMessage(context, 'New Deal is Added');
-
-      // Setup Notification
-      if (ndeal.status!.toLowerCase() != 'paid') {
-        AwasomeNotificationService().showActivitypNotification(
-          'Proposal / Deal',
-          ndeal.details!,
-          payload: {'mobile': ilead.mobile ?? '', 'email': ilead.email ?? ''},
-          schedule: ndeal.createdAt,
-        );
-      }
 
       Nav.close(context);
     }

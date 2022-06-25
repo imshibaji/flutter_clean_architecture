@@ -44,15 +44,19 @@ SizedBox bottomFollowupMenus(
           Nav.close(context);
         },
       ),
-      // IconButton(
-      //   icon: const Icon(
-      //     Icons.whatsapp,
-      //     color: Colors.green,
-      //   ),
-      //   onPressed: () {
-      //     Nav.close(context);
-      //   },
-      // ),
+      IconButton(
+        icon: const Icon(
+          Icons.whatsapp,
+          color: Colors.green,
+        ),
+        onPressed: () {
+          WhatsAppMessageSender(
+            phoneNumber: lead.mobile,
+            text: followup.discuss,
+          ).sendTo();
+          Nav.close(context);
+        },
+      ),
       IconButton(
         icon: const Icon(
           Icons.email,

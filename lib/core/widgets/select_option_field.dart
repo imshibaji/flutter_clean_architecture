@@ -10,7 +10,7 @@ class SelectOptionField extends StatefulWidget {
   IconData? prefixIcon;
   String? labelTextStr, hintTextStr, errorTextStr;
   Widget? suffixIcon;
-  Function(String?)? validator, onSaved;
+  Function(String?)? validator, onSaved, onChanged;
   bool? isBorder;
 
   SelectOptionField({
@@ -24,6 +24,7 @@ class SelectOptionField extends StatefulWidget {
     this.suffixIcon,
     this.validator,
     this.onSaved,
+    this.onChanged,
     this.isBorder = true,
   }) : super(key: key);
 
@@ -72,6 +73,7 @@ class _SelectOptionFieldState extends State<SelectOptionField> {
             .toList(),
         onChanged: (value) {
           widget.selected = value!;
+          widget.onChanged != null ? widget.onChanged!(value) : null;
         },
         hint: const Text('Choose'),
         autovalidateMode: AutovalidateMode.onUserInteraction,

@@ -88,7 +88,15 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
                           .toList()
                           .length
                       : 0,
-                  onPress: () {},
+                  onPress: () {
+                    if (leads
+                        .where((element) =>
+                            element.status!.toLowerCase() == 'success')
+                        .toList()
+                        .isNotEmpty) {
+                      Nav.go(LeadApp.listLeads, arguments: 'success');
+                    }
+                  },
                 ),
               ],
             ),

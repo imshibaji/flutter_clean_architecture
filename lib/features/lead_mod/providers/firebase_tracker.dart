@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 import 'package:clean_architecture/core/core.dart';
+import 'package:clean_architecture/firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -18,21 +19,17 @@ class FirebaseTracker {
   FirebaseTracker._internal();
 
   Future<FirebaseApp> init() async {
-    // app = await Firebase.initializeApp(
-    //   name: 'LeadBooK',
-    //   options: const FirebaseOptions(
-    //     apiKey: 'AIzaSyD0hLXUUS17ZmEJkHDoQfjFUQGLYgez7kc',
-    //     appId: '1:870694041665:android:1290d5f8fd20f07f3d2ec0',
-    //     messagingSenderId: '870694041665',
-    //     projectId: 'leadbook-2d3d4',
-    //   ),
-    // );
     app = await Firebase.initializeApp(
       name: defaultFirebaseAppName,
+      options: DefaultFirebaseOptions.currentPlatform,
     );
     // log(app.toString());
-    await getAnalytics().logAppOpen();
-    getObserver().analytics.setUserId(id: uuid());
+    Future.delayed(Duration.zero, () async {
+      if (app != null) {
+        await getAnalytics().logAppOpen();
+        getObserver().analytics.setUserId(id: uuid());
+      }
+    });
     return app!;
   }
 
