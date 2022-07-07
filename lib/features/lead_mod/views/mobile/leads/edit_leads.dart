@@ -49,19 +49,6 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
               height: 15,
             ),
             TextInputField(
-              prefixIcon: Icons.edit_note,
-              labelTextStr: 'Purpose',
-              initialValue: lead!.purpose ?? '',
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  ilead.purpose = val;
-                  // setState(() {});
-                  return null;
-                }
-                return null;
-              },
-            ),
-            TextInputField(
               prefixIcon: Icons.face,
               labelTextStr: 'Name',
               initialValue: lead!.name ?? '',
@@ -72,6 +59,19 @@ class _EditLeadForMobileState extends State<EditLeadForMobile> {
                   return null;
                 }
                 return 'Input Customer Name';
+              },
+            ),
+            TextInputField(
+              prefixIcon: Icons.edit_note,
+              labelTextStr: 'Purpose',
+              initialValue: lead!.purpose ?? '',
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  ilead.purpose = val;
+                  // setState(() {});
+                  return null;
+                }
+                return null;
               },
             ),
             TextInputField(

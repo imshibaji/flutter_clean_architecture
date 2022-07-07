@@ -7,6 +7,7 @@ import '../../../../awasome_notification/awasome_notification_service.dart';
 import '../../../dbobj/dbobjs.dart';
 import '../../../providers/providers.dart';
 import '../../../services/services.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
 
 class AddDeal extends StatefulWidget {
@@ -198,7 +199,9 @@ class _AddDealState extends State<AddDeal> {
       sp.getAllDeals();
 
       showMessage(context, 'New Deal is Added');
-
+      if (ndeal.status!.toLowerCase() == 'paid') {
+        dealPaymentAdd(ndeal);
+      }
       // Setup Notification
       if (ndeal.status!.toLowerCase() != 'paid') {
         AwasomeNotificationService().showActivitypNotification(

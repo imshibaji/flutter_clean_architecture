@@ -633,6 +633,10 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
         ilead.deals!.add(ndeal);
       }
 
+      // Payment Added
+      if (ndeal.status!.toLowerCase() == 'paid') {
+        dealPaymentAdd(ndeal);
+      }
       // Setup Notification
       if (ndeal.status!.toLowerCase() != 'paid') {
         AwasomeNotificationService().showActivitypNotification(

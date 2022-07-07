@@ -389,30 +389,34 @@ void doneDeal(BuildContext context, Deal deal, ServiceProvider sp) async {
     deal.status = 'Paid';
     await deal.save();
 
-    final ls = LeadService();
-    Lead lead = ls
-        .getAll()
-        .firstWhere((element) => element.uid!.startsWith(deal.leadUid!));
-    lead.status = 'Success';
-    await lead.save();
-
-    final ps = PaymentService();
-    Payment payment = Payment();
-    payment.uid = uuid();
-    payment.dealUid = deal.uid;
-    payment.details = deal.details;
-    payment.amount = ((deal.price ?? 0) - (deal.discount ?? 0));
-    payment.leadUid = deal.leadUid;
-    payment.type = 'Income';
-    payment.createdAt = DateTime.now();
-    int i = await ps.add(payment);
-    payment.save();
-    // log(payment.toString());
+    dealPaymentAdd(deal);
     showMessage(context, 'Deal Data is Updated as Paid.');
-    log(i.toString());
   }
 
   sp.getAllDeals();
+}
+
+void dealPaymentAdd(Deal deal) async {
+  final ps = PaymentService();
+  Payment payment = Payment();
+  payment.uid = uuid();
+  payment.dealUid = deal.uid;
+  payment.details = deal.details;
+  payment.amount = ((deal.price ?? 0) - (deal.discount ?? 0));
+  payment.leadUid = deal.leadUid;
+  payment.type = 'Income';
+  payment.createdAt = DateTime.now();
+  int i = await ps.add(payment);
+  payment.save();
+  // log(payment.toString());
+  log(i.toString());
+
+  final ls = LeadService();
+  Lead lead = ls
+      .getAll()
+      .firstWhere((element) => element.uid!.startsWith(deal.leadUid!));
+  lead.status = 'Success';
+  await lead.save();
 }
 
 void notDoneDeal(BuildContext context, Deal deal, ServiceProvider sp) async {
@@ -420,27 +424,29 @@ void notDoneDeal(BuildContext context, Deal deal, ServiceProvider sp) async {
     deal.status = 'Pending';
     await deal.save();
     // log("Deal: " + deal.uid!);
-
-    final ps = PaymentService();
-    Payment payment = ps.getAll().firstWhere((pay) {
-      if (pay.dealUid != null && pay.dealUid!.isNotEmpty) {
-        return pay.dealUid!.startsWith(deal.uid!);
-      }
-      return false;
-    });
-
-    // log('PayDeal: ' + payment.dealUid!);
-    // log(payment.toString());
-    await payment.delete();
-
-    final ls = LeadService();
-    Lead lead = ls
-        .getAll()
-        .firstWhere((element) => element.uid!.startsWith(deal.leadUid!));
-    lead.status = 'Rejected';
-    await lead.save();
-
+    dealPaymentRemove(deal);
     showMessage(context, 'Deal Data is Updated as Pending.');
   }
   sp.getAllDeals();
+}
+
+void dealPaymentRemove(Deal deal) async {
+  final ps = PaymentService();
+  Payment payment = ps.getAll().firstWhere((pay) {
+    if (pay.dealUid != null && pay.dealUid!.isNotEmpty) {
+      return pay.dealUid!.startsWith(deal.uid!);
+    }
+    return false;
+  });
+
+  // log('PayDeal: ' + payment.dealUid!);
+  // log(payment.toString());
+  await payment.delete();
+
+  final ls = LeadService();
+  Lead lead = ls
+      .getAll()
+      .firstWhere((element) => element.uid!.startsWith(deal.leadUid!));
+  lead.status = 'Rejected';
+  await lead.save();
 }

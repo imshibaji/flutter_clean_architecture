@@ -117,18 +117,6 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
               height: 15,
             ),
             TextInputField(
-              prefixIcon: Icons.edit_note,
-              labelTextStr: 'Purpose',
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  lead.purpose = val;
-                  // setState(() {});
-                  return null;
-                }
-                return null;
-              },
-            ),
-            TextInputField(
               prefixIcon: Icons.face,
               labelTextStr: 'Name',
               suffixIcon: addContactFromPhone(),
@@ -140,6 +128,18 @@ class _AddLeadForMobileState extends State<AddLeadForMobile>
                   return null;
                 }
                 return 'Input Customer Name';
+              },
+            ),
+            TextInputField(
+              prefixIcon: Icons.edit_note,
+              labelTextStr: 'Purpose',
+              validator: (val) {
+                if (val!.isNotEmpty) {
+                  lead.purpose = val;
+                  // setState(() {});
+                  return null;
+                }
+                return null;
               },
             ),
             TextInputField(
