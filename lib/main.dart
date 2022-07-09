@@ -1,18 +1,28 @@
-import 'package:clean_architecture/core/core.dart';
+import 'package:clean_architecture/features/firebase_mods/cloud_messaging.dart';
+
+import 'core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
-import 'features/awasome_notification/awasome_notification_service.dart';
+import 'features/awesome_notification/awesome_notification_service.dart';
 import 'features/lead_mod/providers/firebase_tracker.dart';
 // import 'core/core.dart';
 import 'hive_helper/register_adapters.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  AwasomeNotificationService().initAwasomeNotification();
-  AwasomeNotificationService().listenActionStream();
+
+  AwesomeNotificationService().initAwesomeNotification();
+  AwesomeNotificationService().listenActionStream();
+
+  Future.delayed(const Duration(seconds: 5), () {
+    // AwesomeNotificationService().goodMorningNotify();
+    // AwesomeNotificationService().goodNightNotify();
+    AwesomeNotificationService().followupNotify();
+    AwesomeNotificationService().dealNotify();
+  });
 
   Provider.debugCheckInvalidValueType = null;
 
@@ -21,6 +31,9 @@ void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) async {
     await FirebaseTracker().init();
+    await CloudMessaging.init();
+    await CloudMessaging.listenFCM();
+    await CloudMessaging.listenFCBM();
 
     runApp(MultiProvider(
       providers: appProviders,

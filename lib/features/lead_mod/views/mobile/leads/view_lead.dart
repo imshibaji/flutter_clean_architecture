@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
-import '../../../../awasome_notification/awasome_notification_service.dart';
+import '../../../../awesome_notification/awesome_notification_service.dart';
 import '../../../dbobj/dbobjs.dart';
 import '../../../lead_app.dart';
 import '../../../providers/providers.dart';
@@ -449,7 +449,7 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
 
       // Setup Notification
       if (ifollowup.status!.toLowerCase() != 'done') {
-        AwasomeNotificationService().showActivitypNotification(
+        AwesomeNotificationService().showActivityNotification(
           'Followup for ' + ilead.name!,
           ifollowup.discuss!,
           payload: {
@@ -639,11 +639,11 @@ class _ViewLeadForMobileState extends State<ViewLeadForMobile> {
       }
       // Setup Notification
       if (ndeal.status!.toLowerCase() != 'paid') {
-        AwasomeNotificationService().showActivitypNotification(
+        AwesomeNotificationService().showActivityNotification(
           'Deal: ' + ndeal.name!,
           ndeal.details! +
               ' amount of ' +
-              (ndeal.price! - ndeal.discount!).toString() +
+              (ndeal.price! - (ndeal.discount ?? 0)).toString() +
               ' is ' +
               ndeal.status!,
           payload: {

@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../awasome_notification/awasome_notification_service.dart';
+import '../../../../awesome_notification/awesome_notification_service.dart';
 import '../../../dbobj/dbobjs.dart';
 import '../../../providers/providers.dart';
 import '../../../services/services.dart';
@@ -191,7 +191,7 @@ class _AddDealState extends State<AddDeal> {
         ilead.deals!.add(ndeal);
       }
 
-      // Service Provider Initilized
+      // Service Provider Initialized
       final sp = context.read<ServiceProvider>();
       // sp.updateLead(ilead);
       ilead.save();
@@ -204,7 +204,7 @@ class _AddDealState extends State<AddDeal> {
       }
       // Setup Notification
       if (ndeal.status!.toLowerCase() != 'paid') {
-        AwasomeNotificationService().showActivitypNotification(
+        AwesomeNotificationService().showActivityNotification(
           'Proposal / Deal',
           ndeal.details!,
           payload: {

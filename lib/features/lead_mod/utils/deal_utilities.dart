@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../../awasome_notification/awasome_notification_service.dart';
+import '../../awesome_notification/awesome_notification_service.dart';
 import '../dbobj/dbobjs.dart';
 import '../providers/providers.dart';
 import '../services/services.dart';
@@ -355,7 +355,7 @@ editDeal(BuildContext context, Deal deal, {Function(Deal)? onDeal}) {
                           (element) => element.uid == ideal.leadUid,
                         )
                         .first;
-                    AwasomeNotificationService().showActivitypNotification(
+                    AwesomeNotificationService().showActivityNotification(
                       'Deal: ' + ideal.name!,
                       ideal.details! +
                           ' amount of ' +

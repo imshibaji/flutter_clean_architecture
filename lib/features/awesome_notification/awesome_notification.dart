@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../../core/core.dart';
-import 'awasome_notification_service.dart';
+import 'awesome_notification_service.dart';
 
-class AwasomeNotificationUi extends StatefulWidget {
-  const AwasomeNotificationUi({Key? key}) : super(key: key);
+class AwesomeNotificationUi extends StatefulWidget {
+  const AwesomeNotificationUi({Key? key}) : super(key: key);
 
   @override
-  State<AwasomeNotificationUi> createState() => _AwasomeNotificationUiState();
+  State<AwesomeNotificationUi> createState() => _AwesomeNotificationUiState();
 }
 
-class _AwasomeNotificationUiState extends State<AwasomeNotificationUi> {
+class _AwesomeNotificationUiState extends State<AwesomeNotificationUi> {
   @override
   void initState() {
     super.initState();
@@ -20,7 +20,7 @@ class _AwasomeNotificationUiState extends State<AwasomeNotificationUi> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Awasome Notification'),
+        title: const Text('Awesome Notification'),
       ),
       body: SizedBox(
         width: double.infinity,
@@ -30,9 +30,9 @@ class _AwasomeNotificationUiState extends State<AwasomeNotificationUi> {
             Row(
               children: [
                 AppButton(
-                  label: 'Simple Notfication',
+                  label: 'Simple Notification',
                   onPressed: () {
-                    AwasomeNotificationService().showNotification();
+                    AwesomeNotificationService().showNotification();
                   },
                   stretch: true,
                 ),
@@ -41,9 +41,9 @@ class _AwasomeNotificationUiState extends State<AwasomeNotificationUi> {
             Row(
               children: [
                 AppButton(
-                  label: 'Followup Notfication',
+                  label: 'Followup Notification',
                   onPressed: () {
-                    AwasomeNotificationService().showActivitypNotification(
+                    AwesomeNotificationService().showActivityNotification(
                       'Followup Activity:',
                       'Do it Now.',
                     );
@@ -55,9 +55,9 @@ class _AwasomeNotificationUiState extends State<AwasomeNotificationUi> {
             Row(
               children: [
                 AppButton(
-                  label: 'Icon Notfication',
+                  label: 'Icon Notification',
                   onPressed: () {
-                    AwasomeNotificationService().showNotificationWithIcon();
+                    AwesomeNotificationService().showNotificationWithIcon();
                   },
                   stretch: true,
                 ),
@@ -66,9 +66,9 @@ class _AwasomeNotificationUiState extends State<AwasomeNotificationUi> {
             Row(
               children: [
                 AppButton(
-                  label: 'Image Notfication',
+                  label: 'Image Notification',
                   onPressed: () {
-                    AwasomeNotificationService().showNotificationWithImage();
+                    AwesomeNotificationService().showNotificationWithImage();
                   },
                   stretch: true,
                 ),
@@ -77,9 +77,9 @@ class _AwasomeNotificationUiState extends State<AwasomeNotificationUi> {
             Row(
               children: [
                 AppButton(
-                  label: 'Scheduled Notfication',
+                  label: 'Scheduled Notification',
                   onPressed: () {
-                    AwasomeNotificationService().showScheduledNotify();
+                    AwesomeNotificationService().showScheduledNotify();
                   },
                   stretch: true,
                 ),
@@ -88,9 +88,9 @@ class _AwasomeNotificationUiState extends State<AwasomeNotificationUi> {
             Row(
               children: [
                 AppButton(
-                  label: 'Remove Notfication',
+                  label: 'Remove Notification',
                   onPressed: () {
-                    AwasomeNotificationService().canceled();
+                    AwesomeNotificationService().canceled();
                   },
                   stretch: true,
                 ),

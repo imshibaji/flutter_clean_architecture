@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../awasome_notification/awasome_notification_service.dart';
+import '../../../../awesome_notification/awesome_notification_service.dart';
 import '../../../dbobj/dbobjs.dart';
 import '../../../providers/providers.dart';
 import '../../../services/services.dart';
@@ -194,7 +194,7 @@ class _AddFollowupState extends State<AddFollowup> {
 
       // Setup Notification
       if (ifollowup.status!.toLowerCase() != 'done') {
-        AwasomeNotificationService().showActivitypNotification(
+        AwesomeNotificationService().showActivityNotification(
           'Followup / Activity',
           ifollowup.discuss!,
           payload: {
