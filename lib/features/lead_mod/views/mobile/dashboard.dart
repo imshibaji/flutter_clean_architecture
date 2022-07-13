@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
@@ -13,6 +14,11 @@ class DashboardForMobile extends StatefulWidget {
 }
 
 class _DashboardForMobileState extends State<DashboardForMobile> {
+  List<TargetFocus> tergets = [];
+
+  GlobalKey tabBar = GlobalKey();
+  GlobalKey actionsButtons = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +109,7 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
           );
         },
       ),
-      bottomNavigationBar: LeadAppBottomBar(),
+      bottomNavigationBar: LeadAppBottomBar(key: tabBar),
       // floatingActionButtonLocation:
       //     FloatingActionButtonLocation.miniCenterFloat,
       // floatingActionButton: FloatingActionButton(
@@ -118,6 +124,8 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
       // ),
     );
   }
+
+  void showTutorial() {}
 
   // Not Used
   BottomAppBar bottomAppBar(BuildContext context) {

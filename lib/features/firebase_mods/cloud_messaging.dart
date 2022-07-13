@@ -6,6 +6,8 @@ import '../awesome_notification/awesome_notification_service.dart';
 
 class CloudMessaging {
   static init() async {
+    await FirebaseMessaging.instance.setAutoInitEnabled(true);
+
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     NotificationSettings settings = await messaging.requestPermission(
@@ -30,13 +32,16 @@ class CloudMessaging {
   }
 
   static getToken() async {
-    await FirebaseMessaging.instance.getToken().then((value) => log(value!));
+    return await FirebaseMessaging.instance
+        .getToken()
+        .then((value) => log(value!));
   }
 
   static listenFCM() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       log(message.notification!.title! + ',  ' + message.notification!.body!);
+      // print(message.data);
 
       AwesomeNotificationService().showFCM(
         notification!.title!,
