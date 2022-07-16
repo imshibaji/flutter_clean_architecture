@@ -149,7 +149,7 @@ void showTransactionAdd(BuildContext context) {
               SelectOptionField(
                 prefixIcon: Icons.edit,
                 options: transactonsStatuses,
-                selected: '',
+                selected: null,
                 validator: (val) {
                   if (val != null && val.isNotEmpty) {
                     payment.type = val;
