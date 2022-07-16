@@ -1,12 +1,11 @@
-import 'package:clean_architecture/features/firebase_mods/cloud_messaging.dart';
-
-import 'core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
+import 'core/core.dart';
 import 'features/awesome_notification/awesome_notification_service.dart';
+import 'features/firebase_mods/cloud_messaging.dart';
 import 'features/lead_mod/providers/firebase_tracker.dart';
 // import 'core/core.dart';
 import 'hive_helper/register_adapters.dart';
