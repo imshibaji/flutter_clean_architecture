@@ -12,11 +12,11 @@ A new Flutter Enterprize project structure. If you are interested to build Bigge
 
 This project is a Flutter application building frameworks. This structure to helps you to build a big multi-platform software development process.
 
-<!-- First download this project after then you get error from ```features/main_app/providers/news_provider.dart``` this file. -->
+First Rename `.env.sample` to  `.env` and put `key` value.
 
 ### API Key
 
-Here have a news api integrated from `rapidapi.com` apis. So for the first time you need to register on that website. then search ***free news*** api from here and subscribe this api. then goto under ***Header Parameters*** then copy `X-RapidAPI-Key` value and paste this value in `config/app_config.dart` file as a `key` value.
+Here have a news api integrated from `rapidapi.com` apis. So for the first time you need to register on that website. then search ***free news*** api from here and subscribe this api. then goto under ***Header Parameters*** then copy `X-RapidAPI-Key` value and paste this value in `.env` file as a `key` value.
 
 **Find API Key**
 ![Access Web API Key](./screenshots/Access_Web_API_Key.png)
