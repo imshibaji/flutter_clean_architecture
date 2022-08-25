@@ -1,0 +1,6 @@
+framework module share_plus_macos {
+  umbrella header "share_plus_macos-umbrella.h"
+
+  export *
+  module * { export * }
+}

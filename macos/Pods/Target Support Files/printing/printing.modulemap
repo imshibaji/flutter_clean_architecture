@@ -1,0 +1,6 @@
+framework module printing {
+  umbrella header "printing-umbrella.h"
+
+  export *
+  module * { export * }
+}

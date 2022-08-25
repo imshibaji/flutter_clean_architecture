@@ -1,0 +1,25 @@
+{
+  "name": "printing",
+  "version": "1.0.0",
+  "summary": "Plugin that allows Flutter apps to generate and print documents to android or ios compatible printers",
+  "description": "Plugin that allows Flutter apps to generate and print documents to android or ios compatible printers",
+  "homepage": "http://example.com",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Your Company": "email@example.com"
+  },
+  "source": {
+    "path": "."
+  },
+  "source_files": "Classes/**/*",
+  "dependencies": {
+    "FlutterMacOS": [
+
+    ]
+  },
+  "platforms": {
+    "osx": "10.11"
+  }
+}

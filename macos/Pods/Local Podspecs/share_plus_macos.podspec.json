@@ -1,0 +1,30 @@
+{
+  "name": "share_plus_macos",
+  "version": "0.0.1",
+  "summary": "Share Plus for macOS",
+  "description": "A Flutter plugin for sharing text and files.",
+  "homepage": "https://github.com/fluttercommunity/plus_plugins/tree/main/packages/share_plus_macos",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Flutter Community": "authors@fluttercommunity.dev"
+  },
+  "source": {
+    "path": "https://github.com/fluttercommunity/plus_plugins/tree/main/packages/share_plus_macos"
+  },
+  "source_files": "Classes/**/*",
+  "dependencies": {
+    "FlutterMacOS": [
+
+    ]
+  },
+  "platforms": {
+    "osx": "10.11"
+  },
+  "pod_target_xcconfig": {
+    "DEFINES_MODULE": "YES"
+  },
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
+}
