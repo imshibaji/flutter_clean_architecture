@@ -261,9 +261,10 @@ class AwesomeNotificationService {
         .length;
 
     if (pendings > 0) {
-      cron.schedule(Schedule(hours: [10, 13, 15, 17]), () {
+      cron.schedule(Schedule(hours: [12]), () {
         var msg = 'You have $pendings is pending.';
         var msgId = 3;
+        cron.close();
         urgentNotify(
           title: 'Followup Notification',
           msgId: msgId,
@@ -282,9 +283,10 @@ class AwesomeNotificationService {
           .toList()
           .length;
       if (pendings > 0) {
-        cron.schedule(Schedule(hours: [12, 14, 16]), () {
+        cron.schedule(Schedule(hours: [16]), () {
           var msg = 'You have $pendings is pending.'; // Every day Night 9PM
           var msgId = 4;
+          cron.close();
           urgentNotify(
             title: 'Deal Notification',
             msgId: msgId,
