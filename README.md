@@ -22,12 +22,6 @@ Here have a news api integrated from `rapidapi.com` apis. So for the first time 
 ![Access Web API Key](./screenshots/Access_Web_API_Key.png)
 
 **Use API Key**
-<<<<<<< HEAD
-=======
-Put your Rapid API Key to `.env`
-![Configuration File Rename](./screenshots/env.png)
->>>>>>> development
-
 Put your Rapid API Key to `.env`
 ![Configuration File Rename](./screenshots/env.png)
 
