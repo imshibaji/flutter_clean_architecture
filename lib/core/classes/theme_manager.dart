@@ -1,5 +1,7 @@
-import 'package:clean_archetructure/config/app_colors.dart';
+import '../../architect.dart';
 import 'package:flutter/material.dart';
+
+import '../../config/config.dart';
 
 class AppTheme {
   ThemeData? light;
@@ -14,23 +16,36 @@ class AppTheme {
           brightness: Brightness.light,
           primarySwatch: AppColors.teal,
           bottomAppBarColor: Colors.white,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 222, 255, 252),
           appBarTheme: const AppBarTheme(
             titleTextStyle: TextStyle(
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
+            backgroundColor: AppColors.teal,
+            iconTheme: IconThemeData(color: Colors.white),
           ),
           navigationBarTheme: const NavigationBarThemeData(
             backgroundColor: AppColors.teal,
           ),
+          popupMenuTheme: const PopupMenuThemeData(
+            color: Color.fromARGB(255, 11, 238, 250),
+            elevation: 15,
+            enableFeedback: true,
+          ),
+          drawerTheme: const DrawerThemeData(
+            backgroundColor: Color.fromARGB(255, 213, 247, 249),
+            elevation: 10,
+          ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: AppColors.teal,
-            selectedItemColor: Color.fromARGB(255, 248, 250, 250),
+            selectedItemColor: Colors.white,
             elevation: 10,
             showSelectedLabels: true,
           ),
           bottomAppBarTheme: const BottomAppBarTheme(color: AppColors.teal),
+          useMaterial3: true,
         );
 
     dark = dark ??
@@ -47,6 +62,7 @@ class AppTheme {
             elevation: 10,
             showSelectedLabels: true,
           ),
+          useMaterial3: true,
         );
   }
 

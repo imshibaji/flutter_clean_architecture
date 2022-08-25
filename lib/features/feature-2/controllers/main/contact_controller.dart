@@ -1,5 +1,6 @@
-import 'package:clean_archetructure/features/main_app/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/core.dart';
 
 class ContactController extends StatelessWidget {
   const ContactController({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class ContactController extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Feature 2 contact'),
       ),
-      bottomNavigationBar: const BottomBar(),
+      bottomNavigationBar: BottomBar(),
     );
   }
 }

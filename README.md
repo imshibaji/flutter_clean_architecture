@@ -2,7 +2,8 @@
 
 A new Flutter Enterprize project structure. If you are interested to build Bigger Application then you can use this application structure.
 
-**Screenhots of Application**
+***Screenhots of Application***
+
 | Application Boilerplate or Structure |
 | --------------------- |
 | ![Application Structure](./screenshots/application_structure.png) |
@@ -21,6 +22,11 @@ Here have a news api integrated from `rapidapi.com` apis. So for the first time 
 ![Access Web API Key](./screenshots/Access_Web_API_Key.png)
 
 **Use API Key**
+<<<<<<< HEAD
+=======
+Put your Rapid API Key to `.env`
+![Configuration File Rename](./screenshots/env.png)
+>>>>>>> development
 
 Put your Rapid API Key to `.env`
 ![Configuration File Rename](./screenshots/env.png)
@@ -34,6 +40,7 @@ This Project Making for focusing to Develop Bigger project.
 - Features (Modules)
 
 ### Application Screenshots Overview
+
 | Dark Login Screen |  Light Login Screen |
 | ------------------- | ----------------- |
 |![Dark Login Screen](./screenshots/Screenshot_1.png)|![Light Login Screen](./screenshots/Screenshot_2.png) |

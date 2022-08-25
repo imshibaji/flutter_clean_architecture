@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+.DS_Store
 
 # IntelliJ related
 *.iml
@@ -33,7 +34,7 @@
 /build/
 
 # Remove App Auth
-/lib/config/app_config.dart
+.env
 
 # Web related
 lib/generated_plugin_registrant.dart

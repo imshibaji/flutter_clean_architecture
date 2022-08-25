@@ -1,9 +1,8 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
-import 'package:clean_archetructure/config/app_theme.dart';
-import 'package:clean_archetructure/core/helpers/actions_helper.dart';
-import 'package:clean_archetructure/features/main_app/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../config/config.dart';
+import '../../../../core/core.dart';
 
 class Home extends StatefulWidget {
   final String? title;
@@ -65,7 +64,7 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomBar(),
+      bottomNavigationBar: BottomBar(),
     );
   }
 }

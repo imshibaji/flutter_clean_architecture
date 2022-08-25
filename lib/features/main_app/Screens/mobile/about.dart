@@ -1,7 +1,6 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
-import 'package:clean_archetructure/core/helpers/actions_helper.dart';
-import 'package:clean_archetructure/features/main_app/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/core.dart';
 
 class About extends StatefulWidget {
   final String? title;
@@ -73,7 +72,7 @@ class _AboutState extends State<About> {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomBar(),
+      bottomNavigationBar: BottomBar(),
     );
   }
 }

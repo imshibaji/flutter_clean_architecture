@@ -1,5 +1,6 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/classes/classes.dart';
 
 class MenuButtons extends StatelessWidget {
   const MenuButtons({

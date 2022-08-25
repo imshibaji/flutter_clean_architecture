@@ -1,8 +1,8 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
-import 'package:clean_archetructure/config/app_theme.dart';
-import 'package:clean_archetructure/core/utils/bottom_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../config/config.dart';
+import '../../../core/core.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({

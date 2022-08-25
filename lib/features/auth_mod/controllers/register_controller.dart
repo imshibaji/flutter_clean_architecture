@@ -1,5 +1,6 @@
-import 'package:clean_archetructure/features/auth_mod/screens/mobile/register_mobile_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../screens/mobile/register_mobile_screen.dart';
 
 class RegisterController extends StatelessWidget {
   const RegisterController({Key? key}) : super(key: key);

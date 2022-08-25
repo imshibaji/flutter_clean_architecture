@@ -1,10 +1,9 @@
-import 'package:clean_archetructure/core/classes/controller_manager.dart';
-import 'package:clean_archetructure/core/classes/display_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/core.dart';
+import '../../Screens/desktop/about.dart' as desktop;
 import '../../Screens/mobile/about.dart' as mobile;
 import '../../Screens/tablet/about.dart' as tablet;
-import '../../Screens/desktop/about.dart' as desktop;
 
 class AboutController extends StatefulController {
   final String _title = 'About Page';

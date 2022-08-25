@@ -7,15 +7,20 @@ import '../../../config/app_http.dart';
 import '../models/model.dart';
 
 class NewsProvider extends ChangeNotifier {
-  final Http _http = Http(ApiEndpoint.baseUrl, Config.host, Config.key);
+  final Http _http = Http(
+    baseUrl: ApiEndpoint.rapidUrl,
+    host: Config.host,
+    key: Config.key,
+  );
   NewsResponseModel? _nrm;
   bool isLoading = false;
 
   NewsResponseModel get newsResponse => _nrm!;
 
-  void search(String searchTerm) async {
-    isLoading = false;
-    notifyListeners();
+  void search(String searchTerm, {bool input = true}) async {
+    if (isLoading == true) {
+      isLoading = false;
+    }
 
     Response res = await _http
         .get(ApiEndpoint.news, params: {'q': searchTerm, 'lang': 'en'});
@@ -23,6 +28,7 @@ class NewsProvider extends ChangeNotifier {
       // print(res);
       _nrm = NewsResponseModel.fromJson(res.toString());
       isLoading = true;
+      input = false;
       notifyListeners();
     }
   }
