@@ -8,7 +8,7 @@ void doAuth(BuildContext context, String username, String password) async {
   AppCache ac = AppCache();
   ac.doLogin(username, password);
   if (await ac.isLogin()) {
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       Nav.to(context, '/');
     });
   }
@@ -33,7 +33,7 @@ void checkLogin(
   AppCache ac = AppCache();
   ac.isLogin().then((value) {
     if (value == false && auth! == true) {
-      SchedulerBinding.instance!.addPostFrameCallback((_) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
         Nav.to(context, loginUrl!);
       });
     }

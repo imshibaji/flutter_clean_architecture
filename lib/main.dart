@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 import 'config/app_providers.dart';
 import 'config/app_routes.dart';
 import 'config/app_theme.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Provider.debugCheckInvalidValueType = null;
 
+  await dotenv.load(fileName: ".env");
   runApp(MultiProvider(
     providers: appProviders,
     child: const MyApp(),
