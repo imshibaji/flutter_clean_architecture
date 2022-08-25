@@ -10,7 +10,7 @@ import '../models/enquery_get_models.dart';
 class EnqueryService {
   final Http _http = Http(
     baseUrl: ApiEndpoint.baseUrl,
-    token: Config.token,
+    headers: {'token': Config.token},
   );
 
   Future<Enquery?> getAll() async {
