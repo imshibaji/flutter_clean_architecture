@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 import 'auth_button.dart';
 
-TextInputField passwordField({
+CATextInputField passwordField({
   String? Function(String?)? onValid,
   bool passHide = true,
   void Function(bool)? onKeyBtnPressed,
 }) {
-  return TextInputField(
+  return CATextInputField(
     prefixIcon: Icons.security_outlined,
     labelTextStr: 'Input Password',
     validator: (val) {
@@ -31,8 +31,8 @@ TextInputField passwordField({
   );
 }
 
-TextInputField usernameField({String? Function(String?)? onValid}) {
-  return TextInputField(
+CATextInputField usernameField({String? Function(String?)? onValid}) {
+  return CATextInputField(
     prefixIcon: Icons.account_circle_outlined,
     labelTextStr: 'Input Username',
     validator: (val) {
@@ -82,11 +82,11 @@ Row loginRegisterButtons(
   );
 }
 
-LinkButton forgetButton(
+CALinkButton forgetButton(
   BuildContext context, {
   bool Function()? onForget,
 }) {
-  return LinkButton(
+  return CALinkButton(
     onPressed: () {
       debugPrint('Forget Password Click');
       var check = onForget!();

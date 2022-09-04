@@ -7,7 +7,7 @@ import '../../../config/app_http.dart';
 import '../models/model.dart';
 
 class NewsProvider extends ChangeNotifier {
-  final Http _http = Http(baseUrl: ApiEndpoint.rapidUrl, headers: {
+  final AppHttp _http = AppHttp(baseUrl: ApiEndpoint.rapidUrl, headers: {
     'x-rapidapi-host': Config.host,
     'x-rapidapi-key': Config.key,
     'Authorization': Config.token,

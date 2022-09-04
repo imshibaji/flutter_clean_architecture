@@ -25,7 +25,7 @@ class CleanApp extends StatelessWidget {
     // print("My App: " + tm.isDarkMode.toString());
 
     return MaterialApp(
-      title: 'Lead Book',
+      title: 'Clean App',
       debugShowCheckedModeBanner: false,
       theme: MyTheme().lightTheme,
       darkTheme: MyTheme().darkTheme,

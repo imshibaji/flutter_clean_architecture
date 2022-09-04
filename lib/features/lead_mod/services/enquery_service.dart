@@ -8,7 +8,7 @@ import '../../../config/app_http.dart';
 import '../models/enquery_get_models.dart';
 
 class EnqueryService {
-  final Http _http = Http(
+  final AppHttp _http = AppHttp(
     baseUrl: ApiEndpoint.baseUrl,
     headers: {'token': Config.token},
   );

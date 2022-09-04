@@ -114,7 +114,7 @@ class _ViewEnqueryForMobileState extends State<ViewEnqueryForMobile> {
             const SizedBox(
               height: 25,
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.edit_note,
               labelTextStr: 'Discuss Details',
               validator: (val) {

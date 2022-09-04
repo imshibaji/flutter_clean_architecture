@@ -42,7 +42,7 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
             const SizedBox(
               height: 15,
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.edit_note,
               labelTextStr: 'Purpose',
               initialValue: lead!.purpose ?? '',
@@ -55,7 +55,7 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
                 return 'Input Purpose';
               },
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.face,
               labelTextStr: 'Customer Name',
               initialValue: lead!.customer_name ?? '',
@@ -68,7 +68,7 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
                 return 'Input Customer Name';
               },
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.email,
               labelTextStr: 'Customer Email',
               initialValue: lead!.customer_email ?? '',
@@ -81,7 +81,7 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
                 return 'Input Customer Email';
               },
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.phone,
               labelTextStr: 'Customer Phone Number',
               initialValue: lead!.customer_mobile ?? '',
@@ -94,7 +94,7 @@ class _EditEnqueryForMobileState extends State<EditEnqueryForMobile> {
                 return 'Input Customer Mobile Number';
               },
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.source_outlined,
               labelTextStr: 'Source of Contact',
               initialValue: lead!.source ?? '',

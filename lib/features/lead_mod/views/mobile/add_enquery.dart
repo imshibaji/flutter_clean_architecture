@@ -34,7 +34,7 @@ class _AddEnqueryForMobileState extends State<AddEnqueryForMobile> {
             const SizedBox(
               height: 15,
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.edit_note,
               labelTextStr: 'Purpose',
               validator: (val) {
@@ -46,7 +46,7 @@ class _AddEnqueryForMobileState extends State<AddEnqueryForMobile> {
                 return 'Input Purpose';
               },
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.face,
               labelTextStr: 'Customer Name',
               validator: (val) {
@@ -58,7 +58,7 @@ class _AddEnqueryForMobileState extends State<AddEnqueryForMobile> {
                 return 'Input Customer Name';
               },
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.email,
               labelTextStr: 'Customer Email',
               validator: (val) {
@@ -70,7 +70,7 @@ class _AddEnqueryForMobileState extends State<AddEnqueryForMobile> {
                 return 'Input Customer Email';
               },
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.phone,
               labelTextStr: 'Customer Phone Number',
               validator: (val) {
@@ -82,7 +82,7 @@ class _AddEnqueryForMobileState extends State<AddEnqueryForMobile> {
                 return 'Input Customer Mobile Number';
               },
             ),
-            TextInputField(
+            CATextInputField(
               prefixIcon: Icons.source_outlined,
               labelTextStr: 'Source of Contact',
               validator: (val) {

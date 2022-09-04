@@ -27,23 +27,23 @@ class ProfileMobileScreen extends StatelessWidget {
         child: Form(
           child: ListView(
             children: [
-              TextInputField(
+              CATextInputField(
                 prefixIcon: Icons.edit,
                 labelTextStr: 'Input Your Name',
               ),
-              TextInputField(
+              CATextInputField(
                 prefixIcon: Icons.edit,
                 labelTextStr: 'Input Your Mobile Number',
               ),
-              TextInputField(
+              CATextInputField(
                 prefixIcon: Icons.edit,
                 labelTextStr: 'Input Your Address',
               ),
-              TextInputField(
+              CATextInputField(
                 prefixIcon: Icons.edit,
                 labelTextStr: 'Input Your Country',
               ),
-              TextInputField(
+              CATextInputField(
                 prefixIcon: Icons.edit,
                 labelTextStr: 'Input Your Pincode',
               ),
@@ -59,11 +59,11 @@ class ProfileMobileScreen extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              TextInputField(
+              CATextInputField(
                 prefixIcon: Icons.edit,
                 labelTextStr: 'Input Your Email',
               ),
-              TextInputField(
+              CATextInputField(
                 prefixIcon: Icons.edit,
                 labelTextStr: 'Input Your New Password',
                 obscureText: true,
@@ -72,7 +72,7 @@ class ProfileMobileScreen extends StatelessWidget {
                   icon: const Icon(Icons.visibility),
                 ),
               ),
-              TextInputField(
+              CATextInputField(
                 prefixIcon: Icons.edit,
                 labelTextStr: 'Input Your Confirm Password',
                 obscureText: true,
