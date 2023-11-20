@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 
 class Http extends HttpManager {
@@ -30,7 +30,7 @@ class HttpManager {
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) => true;
         return client;
-      };
+      };      
     }
   }
 

@@ -84,7 +84,7 @@ class _NewsState extends State<News> {
                             ? Image.network(articles[index].media!)
                             : Container(),
                       ),
-                      Text('News ${index + 1}: ' + articles[index].title!),
+                      Text('News ${index + 1}: ${articles[index].title!}'),
                     ],
                   ),
                 ),
@@ -96,8 +96,7 @@ class _NewsState extends State<News> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Published At: ' +
-                              articles[index].publishedDate!),
+                          Text('Published At: ${articles[index].publishedDate!}'),
                           ElevatedButton(
                             onPressed: () {
                               log(articles[index].link!);

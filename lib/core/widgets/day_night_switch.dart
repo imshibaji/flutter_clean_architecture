@@ -7,7 +7,7 @@ class DayNightSwitch extends StatefulWidget {
   const DayNightSwitch({Key? key}) : super(key: key);
 
   @override
-  _DayNightSwitchState createState() => _DayNightSwitchState();
+  State<DayNightSwitch> createState() => _DayNightSwitchState();
 }
 
 class _DayNightSwitchState extends State<DayNightSwitch> {

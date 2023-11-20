@@ -52,7 +52,7 @@ class _AboutState extends State<About> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  display = 'Welcome ' + _name.text.toString();
+                  display = 'Welcome ${_name.text}';
                 });
               },
               child: const Text('Welcome'),

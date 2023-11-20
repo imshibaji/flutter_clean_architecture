@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Desktop: " + widget.title!),
+        title: Text("Desktop: ${widget.title!}"),
         actions: const [DayNightSwitch(), MenuButtons()],
       ),
       body: SizedBox(

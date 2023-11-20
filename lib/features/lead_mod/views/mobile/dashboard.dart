@@ -53,10 +53,7 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
             Lead lead = ep.enqueries![index].attributes!;
 
             String title = lead.customer_name ?? 'No Name';
-            String details = (lead.customer_email ?? 'No Email') +
-                ' | ' +
-                (lead.customer_mobile ?? 'No Number');
-
+            String details = '${lead.customer_email ?? 'No Email'} | ${lead.customer_mobile ?? 'No Number'}';
             return Padding(
               padding: const EdgeInsets.all(3.0),
               child: ListTile(
@@ -104,9 +101,9 @@ class _DashboardForMobileState extends State<DashboardForMobile> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Are you sure?'),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: ListBody(
-              children: const <Widget>[
+              children: <Widget>[
                 Text('This is data will be deleted from the Server.'),
                 Text('Rethinking about your acction.'),
               ],

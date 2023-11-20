@@ -24,7 +24,7 @@ class EnqueryService {
 
   Future<EnquerySingle?> getOne(int id) async {
     Response res = await _http.get(
-      ApiEndpoint.enquery + '/' + id.toString() + '?populate=*',
+      '${ApiEndpoint.enquery}/$id?populate=*',
     );
     if (res.statusCode == 200) {
       EnquerySingle enquery = EnquerySingle.fromJson(jsonEncode(res.data));
@@ -67,7 +67,7 @@ class EnqueryService {
       }
     };
     Response res = await _http.put(
-      ApiEndpoint.enquery + '/' + id.toString(),
+      '${ApiEndpoint.enquery}/$id',
       data: jsonEncode(_data),
     );
     if (res.statusCode == 200 || res.statusCode == 201) {
@@ -94,7 +94,7 @@ class EnqueryService {
       }
     };
     Response res = await _http.put(
-      ApiEndpoint.enquery + '/' + id.toString(),
+      '${ApiEndpoint.enquery}/$id',
       data: jsonEncode(_data),
     );
     if (res.statusCode == 200 || res.statusCode == 201) {
@@ -106,7 +106,7 @@ class EnqueryService {
 
   Future<EnquerySingle?> delete(int id) async {
     Response res = await _http.delete(
-      ApiEndpoint.enquery + '/' + id.toString(),
+      '${ApiEndpoint.enquery}/$id',
     );
     if (res.statusCode == 200 || res.statusCode == 201) {
       EnquerySingle enquery = EnquerySingle.fromJson(jsonEncode(res.data));
