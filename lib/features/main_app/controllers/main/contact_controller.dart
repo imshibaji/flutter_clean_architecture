@@ -19,8 +19,8 @@ class ContactController extends StatelessController {
       mobile: mobile.Contact(
         title: _title,
       ),
-      tabletLandscape: tablet.Contact(title: _title),
-      desktop: desktop.Contact(title: _title),
+      tabletLandscape: const tablet.Contact(title: _title),
+      desktop: const desktop.Contact(title: _title),
     );
   }
 }

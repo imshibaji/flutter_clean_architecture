@@ -27,14 +27,14 @@ class AuthButton extends StatelessWidget {
           padding: const EdgeInsets.all(3),
           child: ElevatedButton(
             onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor,
+              foregroundColor: textColor,
+              padding: EdgeInsets.all(paddingValue!),
+            ),
             child: Text(
               label,
               style: const TextStyle(fontSize: 16),
-            ),
-            style: ElevatedButton.styleFrom(
-              primary: backgroundColor,
-              onPrimary: textColor,
-              padding: EdgeInsets.all(paddingValue!),
             ),
           ),
         ),
@@ -44,14 +44,14 @@ class AuthButton extends StatelessWidget {
         padding: const EdgeInsets.all(3),
         child: ElevatedButton(
           onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: backgroundColor,
+            foregroundColor: textColor,
+            padding: EdgeInsets.all(paddingValue!),
+          ),
           child: Text(
             label,
             style: const TextStyle(fontSize: 16),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: backgroundColor,
-            onPrimary: textColor,
-            padding: EdgeInsets.all(paddingValue!),
           ),
         ),
       );

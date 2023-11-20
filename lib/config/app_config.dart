@@ -6,5 +6,5 @@ class Config {
   static String key = dotenv.get("API_KEY");
 
   // Server Secrate Token
-  static String token = 'Bearer ' + dotenv.get("API_TOKEN");
+  static String token = 'Bearer ${dotenv.get("API_TOKEN")}';
 }

@@ -4,12 +4,12 @@ import 'controllers/controllers.dart';
 
 class LeadApp extends RouteManager {
   static const String name = '/lead';
-  static const String home = name + '/';
-  static const String search = name + '/search';
-  static const String addEnquery = name + '/add_enquery';
-  static const String editEnquery = name + '/edit_enquery';
-  static const String viewEnquery = name + '/view_enquery';
-  static const String followup = name + '/followup';
+  static const String home = '$name/';
+  static const String search = '$name/search';
+  static const String addEnquery = '$name/add_enquery';
+  static const String editEnquery = '$name/edit_enquery';
+  static const String viewEnquery = '$name/view_enquery';
+  static const String followup = '$name/followup';
 
   LeadApp() {
     addRoute(LeadApp.home, (context) => const DashboardController());

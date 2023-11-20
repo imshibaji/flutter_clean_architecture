@@ -22,9 +22,9 @@ class HomeController extends StatelessController {
 
     return Display(
       title: _title,
-      mobile: mobile.Home(title: _title),
-      tabletLandscape: tablet.Home(title: _title),
-      desktop: desktop.Home(title: _title),
+      mobile: const mobile.Home(title: _title),
+      tabletLandscape: const tablet.Home(title: _title),
+      desktop: const desktop.Home(title: _title),
     );
   }
 }
