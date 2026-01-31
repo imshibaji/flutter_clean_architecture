@@ -7,7 +7,7 @@ import '../core.dart';
 abstract class StatelessController extends StatelessWidget {
   const StatelessController({Key? key}) : super(key: key);
 
-  bool get auth => false;
+  bool get auth => Config.enableAuth;
 
   String get loginUrl => ApiEndpoint.appLoginUrl;
 
@@ -26,7 +26,7 @@ abstract class StatefulController extends StatefulWidget {
 }
 
 abstract class ControllerState<T extends StatefulController> extends State<T> {
-  bool get auth => false;
+  bool get auth => Config.enableAuth;
 
   String get loginUrl => ApiEndpoint.appLoginUrl;
 
