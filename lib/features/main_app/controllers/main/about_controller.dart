@@ -15,8 +15,9 @@ class AboutController extends StatefulController {
 }
 
 class _AboutControllerState extends ControllerState<AboutController> {
-  @override
-  bool get auth => true;
+  // Uncomment to override auth per-page
+  // @override
+  // bool get auth => true;
 
   @override
   Display view(BuildContext context) {

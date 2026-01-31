@@ -9,8 +9,9 @@ class ContactController extends StatelessController {
   final String _title = 'Contact Page';
   const ContactController({Key? key}) : super(key: key);
 
-  @override
-  bool get auth => false;
+  // Uncomment to override auth per-page
+  // @override
+  // bool get auth => false;
 
   @override
   Display view(BuildContext context) {
