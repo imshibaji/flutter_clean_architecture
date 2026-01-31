@@ -11,8 +11,9 @@ class HomeController extends StatelessController {
   final String _title = 'Home Page';
   const HomeController({Key? key}) : super(key: key);
 
-  @override
-  bool get auth => true;
+  // Uncomment to override auth per-page
+  // @override
+  // bool get auth => true;
 
   @override
   Display view(BuildContext context) {

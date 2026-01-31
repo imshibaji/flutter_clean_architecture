@@ -7,4 +7,7 @@ class Config {
 
   // Server Secrate Token
   static String token = 'Bearer ${dotenv.get("API_TOKEN")}';
+
+  // Global Auth Toggle
+  static bool enableAuth = true; // Set to true to require authentication globally
 }
