@@ -15,7 +15,6 @@ class AppTheme {
         ThemeData(
           brightness: Brightness.light,
           primarySwatch: AppColors.teal,
-          bottomAppBarColor: Colors.white,
           scaffoldBackgroundColor: const Color.fromARGB(255, 222, 255, 252),
           appBarTheme: const AppBarTheme(
             titleTextStyle: TextStyle(
@@ -44,7 +43,7 @@ class AppTheme {
             elevation: 10,
             showSelectedLabels: true,
           ),
-          bottomAppBarTheme: const BottomAppBarTheme(color: AppColors.teal),
+          bottomAppBarTheme: const BottomAppBarThemeData(color: AppColors.teal),
           useMaterial3: true,
         );
 
